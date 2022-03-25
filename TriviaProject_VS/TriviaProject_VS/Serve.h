@@ -8,7 +8,17 @@
 class serveTool
 {
 public:
-
+	serveTool(int port, int Iface);
+	void serve();
+	void receiveHandle();
+	void cHandler(SOCKET client);
 private:
+	void bindAndListen();
+	
+	int _port;
+	int _Iface;
+	SOCKET _socket;
 
+	std::mutex _mtx1;
+	std::condition_variable _cv;
 };

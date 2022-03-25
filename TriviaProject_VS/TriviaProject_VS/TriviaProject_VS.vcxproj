@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Serve.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
