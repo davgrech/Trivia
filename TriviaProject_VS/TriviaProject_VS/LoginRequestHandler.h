@@ -6,5 +6,5 @@ class LoginRequestHandler : public IRequestHandler
 private:
 
 public:
-
+	LoginRequestHandler() = default;
 };

@@ -24,7 +24,24 @@ void serveTool::receiveHandle()
 }
 void serveTool::cHandler(SOCKET client)
 {
-
+	char recMsg[256];
+	recv(client, recMsg, strlen(recMsg), 0);
+	LoginRequestHandler loginHandle;
+	while (std::strcmp(recMsg, "EXIT") == 1 || std::strlen(recMsg) == 0) {
+		addReceivedMessage(client, loginHandle);
+		recv(client, recMsg, strlen(recMsg), 0);
+		//manipulate msg then create LoginRequest in the future but for now keep it simple
+	}
+	std::cout << "Client entered exit so the program shutdown" << std::endl;
+	
+	
+}
+void serveTool::addReceivedMessage(SOCKET client, LoginRequestHandler loginHandle)
+{
+	std::unique_lock<std::mutex> lck(_mtx1);
+	this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(loginHandle, client));
+	lck.unlock();
+	this->_cv.notify_all();
 }
 void serveTool::bindAndListen()
 {

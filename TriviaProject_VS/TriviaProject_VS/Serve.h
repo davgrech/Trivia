@@ -4,14 +4,29 @@
 #include <string>
 #include <thread>
 #include <mutex>
+#include <map>
+
+#include "LoginRequestHandler.h"
+
+
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 class serveTool
 {
 public:
 	serveTool(int port, int Iface);
+	
+	//main function 
 	void serve();
+
+	//receive messages handler thread function
 	void receiveHandle();
+
+	//communicate thread's function 
 	void cHandler(SOCKET client);
+
+
+	void addReceivedMessage(SOCKET client, LoginRequestHandler loginHandle);
+
 private:
 	void bindAndListen();
 	
@@ -21,4 +36,7 @@ private:
 
 	std::mutex _mtx1;
 	std::condition_variable _cv;
+	
+	std::map<LoginRequestHandler, SOCKET> _clients;
+
 };
