@@ -144,6 +144,8 @@
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IRequestHandler.h" />
+    <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="Serve.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>

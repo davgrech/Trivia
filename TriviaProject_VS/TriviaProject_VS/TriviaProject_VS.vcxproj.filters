@@ -32,5 +32,11 @@
     <ClInclude Include="Serve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IRequestHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginRequestHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
