@@ -1,11 +1,13 @@
 #include <iostream>
 #include <WinSock2.h>
+
 #include <exception>
 #include <string>
 #include <thread>
 #include <mutex>
 #include <map>
 #include <queue>
+
 #include "LoginRequestHandler.h"
 #include "packetMessage.h"
 
@@ -25,7 +27,7 @@ public:
 	void cHandler(SOCKET client);
 
 
-	void addReceivedMessage(std::string recv);
+	void addReceivedMessage(Packet x);
 
 private:
 	void bindAndListen();
@@ -37,6 +39,6 @@ private:
 	std::mutex _mtx1;
 	std::condition_variable _cv;
 	
-	std::map<LoginRequestHandler, SOCKET> _clients;
+	std::map<SOCKET, LoginRequestHandler> _clients;
 	std::queue<Packet> _Hmsgs;
 };

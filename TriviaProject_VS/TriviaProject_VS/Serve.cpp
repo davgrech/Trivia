@@ -24,7 +24,7 @@ void serveTool::serve()
 			3. send hello whether all alright
 		*/
 		
-		this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(temp, client));
+		this->_clients.insert(std::pair<SOCKET, LoginRequestHandler>(client, temp));
 
 		
 		
@@ -38,19 +38,32 @@ void serveTool::serve()
 void serveTool::receiveHandle()
 {
 	SOCKET client = 0;
+	std::string received_msg;
 	while (true) {
 		try {
 			std::unique_lock<std::mutex> lck(this->_mtx1);
+
 			if (this->_Hmsgs.empty()) {
 				this->_cv.wait(lck);
 			}
 			if (this->_Hmsgs.empty()) {
 				continue;
 			}
+
 			//change
-			std::string msg = this->_Hmsgs.front(); // this line takes the msg received and pop him froom the list in the global variable
+			Packet msg = this->_Hmsgs.front(); // this line takes the msg received and pop him froom the list in the global variable
 			this->_Hmsgs.pop();
 			lck.unlock();
+			client = msg.getSocket();
+			received_msg = msg.getMessage();
+
+			std::cout << "Msg received: " << received_msg << std::endl;
+
+			
+			if (send(client, "HELLO", received_msg.size(), 0) == INVALID_SOCKET) {
+				throw std::exception("Error while sending message to client");
+			}
+
 			 
 			//here we need to release the socket
 
@@ -61,6 +74,8 @@ void serveTool::receiveHandle()
 		
 	}
 }
+
+
 void serveTool::cHandler(SOCKET client)
 {
 	char recMsg[256];
@@ -70,23 +85,28 @@ void serveTool::cHandler(SOCKET client)
 	while (std::strcmp(recMsg, "EXIT") || std::strlen(recMsg) == 0) {
 
 
-		//change the Hmsg
-		addReceivedMessage(recMsg);
+		
+		Packet myPacket(client, recMsg);
+		addReceivedMessage(myPacket);
 		recv(client, recMsg, strlen(recMsg), 0);
 		
 	}
 	std::cout << "Client entered exit so the program shutdown" << std::endl;
-	
+	//print his name when he leaves
+	_clients.erase(client);
 	
 }
-void serveTool::addReceivedMessage()
+
+
+void serveTool::addReceivedMessage(Packet x)
 {
 	std::unique_lock<std::mutex> lck(_mtx1);
-	this->_Hmsgs.push(recv);
-	//this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(client));
+	this->_Hmsgs.push(x);
 	lck.unlock();
 	this->_cv.notify_all();
 }
+
+
 void serveTool::bindAndListen()
 {
 	struct sockaddr_in sa = { 0 };
