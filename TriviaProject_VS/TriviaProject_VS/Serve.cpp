@@ -12,8 +12,24 @@ void serveTool::serve()
 	bindAndListen();
 	std::thread receive_thread(&serveTool::receiveHandle, this);
 	while (true) {
+		LoginRequestHandler temp;
 		SOCKET client = accept(this->_socket, NULL, NULL);
 		TRACE("Client accepted !");
+
+
+		/*
+		future features: 
+			1.recv tcp syn
+			2.insert data 
+			3. send hello whether all alright
+		*/
+		
+		this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(temp, client));
+
+		
+		
+
+		//start communicate
 		std::thread communicate(&serveTool::cHandler, this, client);
 		communicate.detach();
 	}
@@ -21,25 +37,53 @@ void serveTool::serve()
 
 void serveTool::receiveHandle()
 {
+	SOCKET client = 0;
+	while (true) {
+		try {
+			std::unique_lock<std::mutex> lck(this->_mtx1);
+			if (this->_Hmsgs.empty()) {
+				this->_cv.wait(lck);
+			}
+			if (this->_Hmsgs.empty()) {
+				continue;
+			}
+			//change
+			std::string msg = this->_Hmsgs.front(); // this line takes the msg received and pop him froom the list in the global variable
+			this->_Hmsgs.pop();
+			lck.unlock();
+			 
+			//here we need to release the socket
+
+		}
+		catch (...) {
+
+		}
+		
+	}
 }
 void serveTool::cHandler(SOCKET client)
 {
 	char recMsg[256];
 	recv(client, recMsg, strlen(recMsg), 0);
-	LoginRequestHandler loginHandle;
-	while (std::strcmp(recMsg, "EXIT") == 1 || std::strlen(recMsg) == 0) {
-		addReceivedMessage(client, loginHandle);
+	
+	//if not exit and receive msg len > 0 keep going
+	while (std::strcmp(recMsg, "EXIT") || std::strlen(recMsg) == 0) {
+
+
+		//change the Hmsg
+		addReceivedMessage(recMsg);
 		recv(client, recMsg, strlen(recMsg), 0);
-		//manipulate msg then create LoginRequest in the future but for now keep it simple
+		
 	}
 	std::cout << "Client entered exit so the program shutdown" << std::endl;
 	
 	
 }
-void serveTool::addReceivedMessage(SOCKET client, LoginRequestHandler loginHandle)
+void serveTool::addReceivedMessage()
 {
 	std::unique_lock<std::mutex> lck(_mtx1);
-	this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(loginHandle, client));
+	this->_Hmsgs.push(recv);
+	//this->_clients.insert(std::pair<LoginRequestHandler, SOCKET>(client));
 	lck.unlock();
 	this->_cv.notify_all();
 }

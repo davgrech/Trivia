@@ -5,9 +5,9 @@
 #include <thread>
 #include <mutex>
 #include <map>
-
+#include <queue>
 #include "LoginRequestHandler.h"
-
+#include "packetMessage.h"
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 class serveTool
@@ -25,7 +25,7 @@ public:
 	void cHandler(SOCKET client);
 
 
-	void addReceivedMessage(SOCKET client, LoginRequestHandler loginHandle);
+	void addReceivedMessage(std::string recv);
 
 private:
 	void bindAndListen();
@@ -38,5 +38,5 @@ private:
 	std::condition_variable _cv;
 	
 	std::map<LoginRequestHandler, SOCKET> _clients;
-
+	std::queue<Packet> _Hmsgs;
 };
