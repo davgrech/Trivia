@@ -63,7 +63,7 @@ void serveTool::receiveHandle()
 			client = msg.getSocket();
 			received_msg = msg.getMessage();
 
-			std::cout << "Msg received: " << received_msg << std::endl;
+			
 
 			
 			if (send(client, "HELLO", received_msg.size(), 0) == INVALID_SOCKET) {
@@ -85,41 +85,48 @@ void serveTool::receiveHandle()
 void serveTool::cHandler(SOCKET client)
 {
 	
-	char cleanMsg[256];
-	ZeroMemory(cleanMsg, 256);
-	int byteReceived = recv(client, cleanMsg, 256, 0);
+	char recMsg[256];
+	ZeroMemory(recMsg, 256);
+	int byteReceived = recv(client, recMsg, 256, 0);
 
-	if (checkByteReceived(byteReceived)) {
+	std::cout << "Msg received: " << recMsg << std::endl;
+
+	if (checkByteReceived(byteReceived, recMsg)) {
 		std::cerr << "connection err" << std::endl;
 		_clients.erase(client);
 	}
 
 	//if not exit and receive msg len > 0 keep going
-	while (std::strcmp(cleanMsg, "EXIT") && byteReceived != 0) {
+	while (std::strcmp(recMsg, "EXIT") && byteReceived != 0) {
 
 
-		ZeroMemory(cleanMsg, 256);
-		Packet myPacket(client, cleanMsg);
+		
+		Packet myPacket(client, recMsg);
 		addReceivedMessage(myPacket);
-		byteReceived = recv(client, cleanMsg, strlen(cleanMsg), 0);
 
-		if (checkByteReceived(byteReceived)) {
+		ZeroMemory(recMsg, 256);
+		byteReceived = recv(client, recMsg, 256, 0);
+
+		std::cout << "Msg received: " << recMsg << std::endl;
+
+		if (checkByteReceived(byteReceived, recMsg)) {
 			_clients.erase(client);
 		}
 		
 	}
+
 	
 	
 	
 }
 
-int checkByteReceived(int ByteReceived)
+int checkByteReceived(int ByteReceived, char cleanMsg[])
 {
 	if (ByteReceived == SOCKET_ERROR) {
 		std::cerr << "Error in recv(). quitting" << std::endl;
 		return 1;
 	}
-	else if (ByteReceived == 0) {
+	else if (ByteReceived == 0 || std::strcmp(cleanMsg, "EXIT") == 0) {
 		std::cout << "client disconnected" << std::endl;
 		return 1;
 	}

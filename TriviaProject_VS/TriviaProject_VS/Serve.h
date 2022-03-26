@@ -14,7 +14,7 @@
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
-int checkByteReceived(int ByteReceived);
+int checkByteReceived(int ByteReceived, char cleanMsg[]);
 
 
 class serveTool
