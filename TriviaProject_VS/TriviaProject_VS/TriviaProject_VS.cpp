@@ -4,8 +4,7 @@
 #include "WSAInitializer.h"
 #include "serve.h"
 
-#define PORT 1025
-#define IFACE 0
+
 
 
 int main()
@@ -13,7 +12,7 @@ int main()
     try {
         TRACE("Starting...");
         WSAInitializer as_told_us;
-        serveTool manager(PORT, IFACE);
+        serveTool manager;
         manager.serve();
 
     }

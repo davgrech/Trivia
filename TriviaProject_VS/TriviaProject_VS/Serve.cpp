@@ -1,10 +1,15 @@
 #include "Serve.h"
+static const unsigned short PORT = 2022;
+static const unsigned int IFACE = 0;
 
-serveTool::serveTool(int port, int Iface)
+
+serveTool::serveTool()
 {
-	this->_Iface = Iface;
-	this->_port = port;
-	
+	this->_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+}
+serveTool::~serveTool()
+{
+	closesocket(this->_socket);
 }
 
 void serveTool::serve()
@@ -13,6 +18,7 @@ void serveTool::serve()
 	std::thread receive_thread(&serveTool::receiveHandle, this);
 	while (true) {
 		LoginRequestHandler temp;
+		TRACE("waiting for client... ");
 		SOCKET client = accept(this->_socket, NULL, NULL);
 		TRACE("Client accepted !");
 
@@ -78,26 +84,51 @@ void serveTool::receiveHandle()
 
 void serveTool::cHandler(SOCKET client)
 {
-	char recMsg[256];
-	recv(client, recMsg, strlen(recMsg), 0);
 	
+	char cleanMsg[256];
+	ZeroMemory(cleanMsg, 256);
+	int byteReceived = recv(client, cleanMsg, 256, 0);
+
+	if (checkByteReceived(byteReceived)) {
+		std::cerr << "connection err" << std::endl;
+		_clients.erase(client);
+	}
+
 	//if not exit and receive msg len > 0 keep going
-	while (std::strcmp(recMsg, "EXIT") || std::strlen(recMsg) == 0) {
+	while (std::strcmp(cleanMsg, "EXIT") && byteReceived != 0) {
 
 
-		
-		Packet myPacket(client, recMsg);
+		ZeroMemory(cleanMsg, 256);
+		Packet myPacket(client, cleanMsg);
 		addReceivedMessage(myPacket);
-		recv(client, recMsg, strlen(recMsg), 0);
+		byteReceived = recv(client, cleanMsg, strlen(cleanMsg), 0);
+
+		if (checkByteReceived(byteReceived)) {
+			_clients.erase(client);
+		}
 		
 	}
-	std::cout << "Client entered exit so the program shutdown" << std::endl;
-	//print his name when he leaves
-	_clients.erase(client);
+	
+	
 	
 }
 
-
+int checkByteReceived(int ByteReceived)
+{
+	if (ByteReceived == SOCKET_ERROR) {
+		std::cerr << "Error in recv(). quitting" << std::endl;
+		return 1;
+	}
+	else if (ByteReceived == 0) {
+		std::cout << "client disconnected" << std::endl;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+	
+}
 void serveTool::addReceivedMessage(Packet x)
 {
 	std::unique_lock<std::mutex> lck(_mtx1);
@@ -110,9 +141,9 @@ void serveTool::addReceivedMessage(Packet x)
 void serveTool::bindAndListen()
 {
 	struct sockaddr_in sa = { 0 };
-	sa.sin_port = htons(this->_port);
+	sa.sin_port = htons(PORT);
 	sa.sin_family = AF_INET;
-	sa.sin_addr.s_addr = this->_Iface;
+	sa.sin_addr.s_addr = IFACE;
 	if (::bind(this->_socket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - bind");
 	TRACE("binded");

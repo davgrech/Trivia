@@ -12,11 +12,16 @@
 #include "packetMessage.h"
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
+
+
+int checkByteReceived(int ByteReceived);
+
+
 class serveTool
 {
 public:
-	serveTool(int port, int Iface);
-	
+	serveTool();
+	~serveTool();
 	//main function 
 	void serve();
 
@@ -28,12 +33,11 @@ public:
 
 
 	void addReceivedMessage(Packet x);
-
+	
 private:
 	void bindAndListen();
 	
-	int _port;
-	int _Iface;
+	
 	SOCKET _socket;
 
 	std::mutex _mtx1;
