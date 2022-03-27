@@ -64,9 +64,17 @@ void serveTool::receiveHandle()
 			received_msg = msg.getMessage();
 
 			
+			std::string send_msg;
+			if (!std::strcmp(received_msg.c_str(), "EXIT")) {
+				send_msg = "EXIT";
 
+			}
+			else {
+				send_msg = "HELLO";
+			}
+
+			if (send(client, send_msg.c_str(), send_msg.size(), 0) == INVALID_SOCKET) {
 			
-			if (send(client, "HELLO", received_msg.size(), 0) == INVALID_SOCKET) {
 				throw std::exception("Error while sending message to client");
 			}
 
@@ -92,12 +100,19 @@ void serveTool::cHandler(SOCKET client)
 	std::cout << "Msg received: " << recMsg << std::endl;
 
 	if (checkByteReceived(byteReceived, recMsg)) {
-		std::cerr << "connection err" << std::endl;
 		_clients.erase(client);
 	}
 
+	//check  if its exit to send the client exit msg
+	if (!std::strcmp(recMsg, "EXIT")) {
+
+		std::cerr << "Client Disconnected" << std::endl;
+		Packet myPacket(client, recMsg);
+		addReceivedMessage(myPacket);
+	}
+
 	//if not exit and receive msg len > 0 keep going
-	while (std::strcmp(recMsg, "EXIT") && byteReceived != 0) {
+	while (std::strcmp(recMsg, "EXIT")) {
 
 
 		
@@ -109,12 +124,24 @@ void serveTool::cHandler(SOCKET client)
 
 		std::cout << "Msg received: " << recMsg << std::endl;
 
-		if (checkByteReceived(byteReceived, recMsg)) {
+
+		if (checkByteReceived(byteReceived, recMsg)) {		
 			_clients.erase(client);
+			break;
 		}
+
+
+		//check  if its exit to send the client exit msg
+		if (!std::strcmp(recMsg, "EXIT")) {
+			std::cerr << "Client Disconnected" << std::endl;
+			Packet myPacket(client, recMsg);
+			addReceivedMessage(myPacket);
+		}
+		
 		
 	}
 
+	
 	
 	
 	
@@ -124,10 +151,6 @@ int checkByteReceived(int ByteReceived, char cleanMsg[])
 {
 	if (ByteReceived == SOCKET_ERROR) {
 		std::cerr << "Error in recv(). quitting" << std::endl;
-		return 1;
-	}
-	else if (ByteReceived == 0 || std::strcmp(cleanMsg, "EXIT") == 0) {
-		std::cout << "client disconnected" << std::endl;
 		return 1;
 	}
 	else
