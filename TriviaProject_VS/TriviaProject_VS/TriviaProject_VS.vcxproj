@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="packetMessage.cpp" />
     <ClCompile Include="Serve.cpp" />
+    <ClCompile Include="SERVER.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
@@ -149,6 +150,7 @@
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="packetMessage.h" />
     <ClInclude Include="Serve.h" />
+    <ClInclude Include="SERVER.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
