@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include "WSAInitializer.h"
-#include "serve.h"
 
+#include "SERVER.h"
 
 
 
@@ -12,8 +12,8 @@ int main()
     try {
         TRACE("Starting...");
         WSAInitializer as_told_us;
-        serveTool manager;
-        manager.serve();
+        Server manager;
+        manager.run();
 
     }
     catch (const std::exception& e) {

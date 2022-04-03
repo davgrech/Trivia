@@ -3,6 +3,8 @@ static const unsigned short PORT = 2022;
 static const unsigned int IFACE = 0;
 
 
+
+
 serveTool::serveTool()
 {
 	this->_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -12,34 +14,7 @@ serveTool::~serveTool()
 	closesocket(this->_socket);
 }
 
-void serveTool::serve()
-{
-	bindAndListen();
-	std::thread receive_thread(&serveTool::receiveHandle, this);
-	while (true) {
-		LoginRequestHandler temp;
-		TRACE("waiting for client... ");
-		SOCKET client = accept(this->_socket, NULL, NULL);
-		TRACE("Client accepted !");
 
-
-		/*
-		future features: 
-			1.recv tcp syn
-			2.insert data 
-			3. send hello whether all alright
-		*/
-		
-		this->_clients.insert(std::pair<SOCKET, LoginRequestHandler>(client, temp));
-
-		
-		
-
-		//start communicate
-		std::thread communicate(&serveTool::cHandler, this, client);
-		communicate.detach();
-	}
-}
 
 void serveTool::receiveHandle()
 {
@@ -48,6 +23,9 @@ void serveTool::receiveHandle()
 	while (true) {
 		try {
 			std::unique_lock<std::mutex> lck(this->_mtx1);
+
+			//We about to change the Hmsg format to json.
+
 
 			if (this->_Hmsgs.empty()) {
 				this->_cv.wait(lck);
@@ -65,13 +43,13 @@ void serveTool::receiveHandle()
 
 			
 			std::string send_msg;
-			if (!std::strcmp(received_msg.c_str(), "EXIT")) {
+			if (received_msg == "EXIT") {
 				send_msg = "EXIT";
-
 			}
 			else {
-				send_msg = "HELLO";
+				send_msg = "Hello";
 			}
+
 
 			if (send(client, send_msg.c_str(), send_msg.size(), 0) == INVALID_SOCKET) {
 			
@@ -99,18 +77,15 @@ void serveTool::cHandler(SOCKET client)
 
 	std::cout << "Msg received: " << recMsg << std::endl;
 
-	if (checkByteReceived(byteReceived, recMsg)) {
+	if (checkByteReceived(byteReceived)) {
 		_clients.erase(client);
 	}
 
-	//check  if its exit to send the client exit msg
-	if (!std::strcmp(recMsg, "EXIT")) {
+	
 
-		std::cerr << "Client Disconnected" << std::endl;
-		Packet myPacket(client, recMsg);
-		addReceivedMessage(myPacket);
-	}
 
+	//&& exit_thread_flag
+	// 
 	//if not exit and receive msg len > 0 keep going
 	while (std::strcmp(recMsg, "EXIT")) {
 
@@ -125,29 +100,24 @@ void serveTool::cHandler(SOCKET client)
 		std::cout << "Msg received: " << recMsg << std::endl;
 
 
-		if (checkByteReceived(byteReceived, recMsg)) {		
+		if (checkByteReceived(byteReceived)) {		
 			_clients.erase(client);
 			break;
 		}
-
-
-		//check  if its exit to send the client exit msg
-		if (!std::strcmp(recMsg, "EXIT")) {
-			std::cerr << "Client Disconnected" << std::endl;
-			Packet myPacket(client, recMsg);
-			addReceivedMessage(myPacket);
-		}
-		
-		
 	}
+	std::cout << "Client left..." << std::endl;
+	_clients.erase(client);
 
+	//send him exit msg
+	Packet myPacket(client, recMsg);
+	addReceivedMessage(myPacket);
 	
 	
 	
 	
 }
 
-int checkByteReceived(int ByteReceived, char cleanMsg[])
+int checkByteReceived(int ByteReceived)
 {
 	if (ByteReceived == SOCKET_ERROR) {
 		std::cerr << "Error in recv(). quitting" << std::endl;
@@ -182,3 +152,30 @@ void serveTool::bindAndListen()
 		throw std::exception(__FUNCTION__ " - listen");
 	TRACE("listening...");
 }
+
+
+
+void serveTool::addToClients(SOCKET client, LoginRequestHandler request) 
+{
+	
+	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, &request));
+}
+SOCKET serveTool::getSock()
+{
+	return this->_socket;
+}
+
+void serveTool::admin_acess_function()
+{
+	std::string msg;
+	while (true) {
+		std::cout << "Waiting for admin command: " << std::endl;
+		std::cin >> msg;
+		if (msg == "EXIT") {
+			
+			exit(1);
+		}
+
+	}
+}
+	
