@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="packetMessage.cpp" />
+    <ClCompile Include="Response.cpp" />
     <ClCompile Include="Serve.cpp" />
     <ClCompile Include="SERVER.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="packetMessage.h" />
+    <ClInclude Include="Response.h" />
     <ClInclude Include="Serve.h" />
     <ClInclude Include="SERVER.h" />
     <ClInclude Include="WSAInitializer.h" />
