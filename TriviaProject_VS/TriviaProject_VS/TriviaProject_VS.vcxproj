@@ -139,10 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
+    <ClCompile Include="JsonResponsePacketSerialize.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="packetMessage.cpp" />
-    <ClCompile Include="Request.cpp" />
-    <ClCompile Include="Response.cpp" />
     <ClCompile Include="Serve.cpp" />
     <ClCompile Include="SERVER.cpp" />
     <ClCompile Include="SignUpRequestHandler.cpp" />
@@ -151,6 +151,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRequestHandler.h" />
+    <ClInclude Include="JsonRequestPacketDeserialize.h" />
+    <ClInclude Include="JsonResponsePacketSerialize.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="packetMessage.h" />
     <ClInclude Include="Request.h" />

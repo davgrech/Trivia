@@ -30,16 +30,16 @@
     <ClCompile Include="SERVER.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Response.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Request.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SignUpRequestHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoginRequestHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonRequestPacketDeserialize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonResponsePacketSerialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,6 +69,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SignUpRequestHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonResponsePacketSerialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonRequestPacketDeserialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

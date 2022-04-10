@@ -13,6 +13,12 @@
 
 #include <atomic>
 
+
+#include "Request.h"
+#include "Response.h"
+
+
+
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
