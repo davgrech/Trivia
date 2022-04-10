@@ -6,16 +6,21 @@ using nlohmann::json;
 std::vector<unsigned char> JRPS::serializeResponse(ErrorResponse value)
 {
     json j;
-
-    return std::vector<unsigned char>();
+    j["message"] = value.message;
+    
+    return j;
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(LoginResponse value)
 {
-    return std::vector<unsigned char>();
+    json j;
+    j["status"] = value.status;
+    return j;
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(SignupResponse value)
 {
-    return std::vector<unsigned char>();
+    json j;
+    j["status"] = value.status;
+    return j;
 }
