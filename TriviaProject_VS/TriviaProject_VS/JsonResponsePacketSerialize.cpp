@@ -1,7 +1,12 @@
 #include "JsonResponsePacketSerialize.h"
+#include <nlohmann/json.hpp>
+
+using nlohmann::json;
 
 std::vector<unsigned char> JRPS::serializeResponse(ErrorResponse value)
 {
+    json j;
+
     return std::vector<unsigned char>();
 }
 

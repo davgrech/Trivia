@@ -2,6 +2,8 @@
 #include "Response.h"
 
 
+
+
 class JRPS {
 public:
 	static std::vector<unsigned char> serializeResponse(ErrorResponse value);

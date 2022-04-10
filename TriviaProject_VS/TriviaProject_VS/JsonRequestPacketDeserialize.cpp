@@ -1,6 +1,7 @@
 #include "JsonRequestPacketDeserialize.h"
 LoginRequest JRPD::deserializeLoginRequest(std::vector<unsigned char> buffer)
 {
+    
     return LoginRequest();
 }
 
