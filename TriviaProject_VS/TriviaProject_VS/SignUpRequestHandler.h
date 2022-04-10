@@ -1,11 +1,11 @@
 #include "IRequestHandler.h"
 
-class LoginRequestHandler : public IRequestHandler
+class SignUpRequestHandler : public IRequestHandler
 {
 private:
 
 public:
-	LoginRequestHandler() = default;
+	SignUpRequestHandler() = default;
 	virtual bool isRequestRelevant();
 	virtual RequestResult handleRequest(RequestInfo value);
 };

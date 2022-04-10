@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="packetMessage.cpp" />
     <ClCompile Include="Request.cpp" />
     <ClCompile Include="Response.cpp" />
     <ClCompile Include="Serve.cpp" />
     <ClCompile Include="SERVER.cpp" />
+    <ClCompile Include="SignUpRequestHandler.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
@@ -155,6 +157,7 @@
     <ClInclude Include="Response.h" />
     <ClInclude Include="Serve.h" />
     <ClInclude Include="SERVER.h" />
+    <ClInclude Include="SignUpRequestHandler.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
