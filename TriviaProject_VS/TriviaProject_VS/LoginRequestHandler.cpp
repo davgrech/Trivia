@@ -1,4 +1,7 @@
 #include "LoginRequestHandler.h"
+#include "Response.h"
+#include "JsonResponsePacketSerialize.h"
+#include "JsonRequestPacketDeserialize.h"
 bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 {
     if (request.id != 1)
@@ -11,8 +14,12 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 {
     LoginRequestHandler *x = nullptr;
+    LoginResponse loginResponse;
+    loginResponse.status = 1;
+    auto j = JRPS::serializeResponse(loginResponse);
+
     RequestResult u{
-        value.buffer,
+        j,
         x
     };
 

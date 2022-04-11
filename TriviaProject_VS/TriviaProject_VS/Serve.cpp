@@ -43,21 +43,32 @@ void serveTool::receiveHandle()
 			client = msg.getClient();
 			receivedMsgInfo = msg.getMsg();
 
+			SignupResponse signuprespone;
+			LoginResponse loginResponse;
+			ErrorResponse errorResponse;
 
 			//get the response serialize msg from handleRequest
 			RequestResult response;
 			if (receivedMsgInfo.id == 0) {
+				signuprespone.status = 1;
+
 				SignUpRequestHandler signUpHandle;
 				response = signUpHandle.handleRequest(receivedMsgInfo);
 			}
-			else if (receivedMsgInfo.id == 1) {
+			else if (receivedMsgInfo.id == 1) { // login
+				loginResponse.status = 1;
+
 				LoginRequestHandler loginHandle;
 				response = loginHandle.handleRequest(receivedMsgInfo);
 			}
+			else
+			{
+				errorResponse.message = "ERROR";
+			}
 
-			std::string s(response.buffer.begin(), response.buffer.end());
-
-			if (send(client, s.c_str(), s.size(), 0) == INVALID_SOCKET) {
+			std::string responseString(response.buffer.begin(), response.buffer.end());
+			std::cout << "Response sent: " << responseString << std::endl;
+			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
 			
 				throw std::exception("Error while sending message to client");
 			}
@@ -67,7 +78,7 @@ void serveTool::receiveHandle()
 
 		}
 		catch (...) {
-
+			std::cout << "dolev gay In recieved handle";
 		}
 		
 	}

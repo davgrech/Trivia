@@ -1,4 +1,6 @@
 #include "SignUpRequestHandler.h"
+#include "Response.h"
+#include "JsonResponsePacketSerialize.h"
 
 bool SignUpRequestHandler::isRequestRelevant(RequestInfo request)
 {
@@ -7,8 +9,12 @@ bool SignUpRequestHandler::isRequestRelevant(RequestInfo request)
 
 RequestResult SignUpRequestHandler::handleRequest(RequestInfo value)
 {
+    SignUpRequestHandler* x = nullptr;
+    SignupResponse Signup;
+    Signup.status = 1;
+    auto j = JRPS::serializeResponse(Signup);
     RequestResult u{
-        value.buffer,
+        j,
         NULL
     };
     return u;
