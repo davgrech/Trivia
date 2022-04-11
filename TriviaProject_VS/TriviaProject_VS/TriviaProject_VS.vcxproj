@@ -144,7 +144,7 @@
     <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
     <ClCompile Include="JsonResponsePacketSerialize.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
-    <ClCompile Include="packetMessage.cpp" />
+    <ClCompile Include="Packet.cpp" />
     <ClCompile Include="Serve.cpp" />
     <ClCompile Include="SERVER.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\user\Desktop\Dolev\magshimimProjects\Trivia_Project\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -158,7 +158,7 @@
     <ClInclude Include="JsonRequestPacketDeserialize.h" />
     <ClInclude Include="JsonResponsePacketSerialize.h" />
     <ClInclude Include="LoginRequestHandler.h" />
-    <ClInclude Include="packetMessage.h" />
+    <ClInclude Include="Packet.h" />
     <ClInclude Include="Request.h" />
     <ClInclude Include="Response.h" />
     <ClInclude Include="Serve.h" />

@@ -6,13 +6,15 @@
 
 struct RequestInfo {
 	int id;
-	time_t recevialTime;
+	char* recevialTime;
 	std::vector<unsigned char> buffer;
 }typedef RequestInfo;
 
 struct RequestResult {
+
 	std::vector<unsigned char> buffer;
 	IRequestHandler* newHandler;
+
 }typedef RequestResult;
 
 class IRequestHandler 

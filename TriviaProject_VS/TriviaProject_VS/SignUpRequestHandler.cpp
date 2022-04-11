@@ -2,10 +2,14 @@
 
 bool SignUpRequestHandler::isRequestRelevant()
 {
-    return false;
+    return true;
 }
 
 RequestResult SignUpRequestHandler::handleRequest(RequestInfo value)
 {
-    return RequestResult();
+    RequestResult u{
+        value.buffer,
+        NULL
+    };
+    return u;
 }

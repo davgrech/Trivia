@@ -1,10 +1,15 @@
 #include "LoginRequestHandler.h"
 bool LoginRequestHandler::isRequestRelevant()
 {
-    return false;
+    return true;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 {
-    return RequestResult();
+    RequestResult u{
+        value.buffer,
+        NULL
+    };
+
+    return u;
 }

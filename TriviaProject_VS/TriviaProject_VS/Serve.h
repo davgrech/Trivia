@@ -9,13 +9,16 @@
 #include <queue>
 
 #include "LoginRequestHandler.h"
-#include "packetMessage.h"
+#include "SignUpRequestHandler.h"
 
 #include <atomic>
 
 
-#include "Request.h"
-#include "Response.h"
+#include "Packet.h"
+
+
+#include "JsonRequestPacketDeserialize.h"
+#include "JsonResponsePacketSerialize.h"
 
 
 
@@ -41,6 +44,8 @@ public:
 
 
 	void addReceivedMessage(Packet x);
+	RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
+
 	SOCKET getSock();
 	void addToClients(SOCKET client, LoginRequestHandler request);
 	void admin_acess_function();
