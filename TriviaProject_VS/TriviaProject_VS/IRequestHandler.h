@@ -3,12 +3,7 @@
 #include <ctime>
 #include <vector>
 
-
-struct RequestInfo {
-	int id;
-	char* recevialTime;
-	std::vector<unsigned char> buffer;
-}typedef RequestInfo;
+class IRequestHandler;
 
 struct RequestResult {
 
@@ -17,10 +12,23 @@ struct RequestResult {
 
 }typedef RequestResult;
 
-class IRequestHandler 
+
+struct RequestInfo {
+	int id;
+	char* recevialTime;
+	std::vector<unsigned char> buffer;
+}typedef RequestInfo;
+
+
+
+class IRequestHandler
 {
 public:
-	virtual bool isRequestRelevant() = 0;
+	virtual bool isRequestRelevant(RequestInfo request) = 0;
 	virtual RequestResult handleRequest(RequestInfo value) = 0;
 
 };
+
+
+
+

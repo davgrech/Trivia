@@ -1,8 +1,8 @@
 #include "SignUpRequestHandler.h"
 
-bool SignUpRequestHandler::isRequestRelevant()
+bool SignUpRequestHandler::isRequestRelevant(RequestInfo request)
 {
-    return true;
+    return !request.id;
 }
 
 RequestResult SignUpRequestHandler::handleRequest(RequestInfo value)

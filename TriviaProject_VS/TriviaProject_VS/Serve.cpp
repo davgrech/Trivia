@@ -1,4 +1,5 @@
 #include "Serve.h"
+#define _CRT_SECURE_NO_WARNINGS
 static const unsigned short PORT = 2022;
 static const unsigned int IFACE = 0;
 
@@ -152,6 +153,21 @@ void serveTool::addReceivedMessage(Packet x)
 	this->_Hmsgs.push(x);
 	lck.unlock();
 	this->_cv.notify_all();
+}
+
+RequestInfo serveTool::createNewRequestInfo(int id, std::vector<unsigned char> value)
+{
+	time_t now = time(nullptr);
+
+	RequestInfo handle{
+
+		id,
+		ctime(&now),
+		value
+	};
+
+
+	return handle;
 }
 
 
