@@ -5,6 +5,7 @@ class Server
 {
 public:
 	Server() = default;
+	
 	void run();
 private:
 	serveTool Communicator;
