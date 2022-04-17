@@ -1,3 +1,5 @@
+
+#pragma once
 #include <iostream>
 #include <WinSock2.h>
 
@@ -9,9 +11,18 @@
 #include <queue>
 
 #include "LoginRequestHandler.h"
-#include "packetMessage.h"
+#include "SignUpRequestHandler.h"
 
 #include <atomic>
+
+
+#include "Packet.h"
+
+
+#include "JsonRequestPacketDeserialize.h"
+#include "JsonResponsePacketSerialize.h"
+
+
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
@@ -35,6 +46,8 @@ public:
 
 
 	void addReceivedMessage(Packet x);
+	RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
+
 	SOCKET getSock();
 	void addToClients(SOCKET client, LoginRequestHandler request);
 	void admin_acess_function();

@@ -1,4 +1,5 @@
 #include "Serve.h"
+#define _CRT_SECURE_NO_WARNINGS
 static const unsigned short PORT = 2022;
 static const unsigned int IFACE = 0;
 
@@ -19,7 +20,7 @@ serveTool::~serveTool()
 void serveTool::receiveHandle()
 {
 	SOCKET client = 0;
-	std::string received_msg;
+	RequestInfo receivedMsgInfo;
 	while (true) {
 		try {
 			std::unique_lock<std::mutex> lck(this->_mtx1);
@@ -34,34 +35,50 @@ void serveTool::receiveHandle()
 				continue;
 			}
 
-			//change
-			Packet msg = this->_Hmsgs.front(); // this line takes the msg received and pop him froom the list in the global variable
+			
+			 Packet msg = this->_Hmsgs.front(); // this line takes the msg received and pop him froom the list in the global variable
 			this->_Hmsgs.pop();
 			lck.unlock();
-			client = msg.getSocket();
-			received_msg = msg.getMessage();
 
-			
-			std::string send_msg;
-			if (received_msg == "EXIT") {
-				send_msg = "EXIT";
+			client = msg.getClient();
+			receivedMsgInfo = msg.getMsg();
+
+			SignupResponse signuprespone;
+			LoginResponse loginResponse;
+			ErrorResponse errorResponse;
+
+			//get the response serialize msg from handleRequest
+			RequestResult response;
+			if (receivedMsgInfo.id == 0) {
+				signuprespone.status = 1;
+
+				SignUpRequestHandler signUpHandle;
+				response = signUpHandle.handleRequest(receivedMsgInfo);
 			}
-			else {
-				send_msg = "Hello";
+			else if (receivedMsgInfo.id == 1) { // login
+				loginResponse.status = 1;
+
+				LoginRequestHandler loginHandle;
+				response = loginHandle.handleRequest(receivedMsgInfo);
+			}
+			else
+			{
+				errorResponse.message = "ERROR";
 			}
 
-
-			if (send(client, send_msg.c_str(), send_msg.size(), 0) == INVALID_SOCKET) {
+			std::string responseString(response.buffer.begin(), response.buffer.end());
+			std::cout << "Response sent: " << responseString << std::endl;
+			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
 			
 				throw std::exception("Error while sending message to client");
 			}
 
 			 
-			//here we need to release the socket
+			
 
 		}
 		catch (...) {
-
+			std::cout << "dolev gay In recieved handle";
 		}
 		
 	}
@@ -84,15 +101,20 @@ void serveTool::cHandler(SOCKET client)
 	
 
 
-	//&& exit_thread_flag
-	// 
-	//if not exit and receive msg len > 0 keep going
-	while (std::strcmp(recMsg, "EXIT")) {
+	
+	while (true) {
+
+		 std::string return_msg = recMsg;
+		int id = recMsg[0] - 48;
+		int len = std::stoi(return_msg.substr(1, 4));
+
+		std::string data = return_msg.substr(5, len);
+		std::vector<unsigned char> buffer(data.begin(), data.end());
+		RequestInfo msg_to_Receive = createNewRequestInfo(id, buffer);
 
 
-		
-		Packet myPacket(client, recMsg);
-		addReceivedMessage(myPacket);
+		Packet packet_to_receive(client, msg_to_Receive);
+		addReceivedMessage(packet_to_receive);
 
 		ZeroMemory(recMsg, 256);
 		byteReceived = recv(client, recMsg, 256, 0);
@@ -107,16 +129,23 @@ void serveTool::cHandler(SOCKET client)
 	}
 	std::cout << "Client left..." << std::endl;
 	_clients.erase(client);
-
-	//send him exit msg
-	Packet myPacket(client, recMsg);
-	addReceivedMessage(myPacket);
-	
-	
-	
-	
 }
 
+
+RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value)
+{
+	time_t now = time(nullptr);
+
+	RequestInfo handle{
+
+		id,
+		ctime(&now),
+		value
+	};
+
+
+	return handle;
+}
 int checkByteReceived(int ByteReceived)
 {
 	if (ByteReceived == SOCKET_ERROR) {
@@ -135,6 +164,21 @@ void serveTool::addReceivedMessage(Packet x)
 	this->_Hmsgs.push(x);
 	lck.unlock();
 	this->_cv.notify_all();
+}
+
+RequestInfo serveTool::createNewRequestInfo(int id, std::vector<unsigned char> value)
+{
+	time_t now = time(nullptr);
+
+	RequestInfo handle{
+
+		id,
+		ctime(&now),
+		value
+	};
+
+
+	return handle;
 }
 
 
