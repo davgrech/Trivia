@@ -152,6 +152,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\user\Desktop\Dolev\magshimimProjects\Trivia_Project\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="SignUpRequestHandler.cpp" />
+    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDatabase.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
@@ -164,10 +165,12 @@
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="Request.h" />
+    <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="Response.h" />
     <ClInclude Include="Serve.h" />
     <ClInclude Include="SERVER.h" />
     <ClInclude Include="SignUpRequestHandler.h" />
+    <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SqliteDatabase.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>

@@ -45,6 +45,9 @@
     <ClCompile Include="SqliteDatabase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sqlite3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -84,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SqliteDatabase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestHandlerFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

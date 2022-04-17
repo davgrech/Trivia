@@ -1,5 +1,13 @@
  #include "SERVER.h"
 
+Server::Server()
+{
+	SqliteDatabase* myDb= new SqliteDatabase ();
+	this->m_database = myDb;
+	this->m_database->open();
+
+}
+
 void Server::run()
 {
 	serveTool communicator;
@@ -7,7 +15,7 @@ void Server::run()
 	admin_thread.detach();
 
 	communicator.bindAndListen();
-
+	
 
 	std::thread receive_thread(&serveTool::receiveHandle, &communicator);  //&serveTool::receiveHandle
 
