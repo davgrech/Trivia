@@ -13,7 +13,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 {
-    LoginRequestHandler *x = nullptr;
+    LoginRequestHandler * x = nullptr;
     LoginResponse loginResponse;
     loginResponse.status = 1;
     auto j = JRPS::serializeResponse(loginResponse);

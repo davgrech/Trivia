@@ -145,6 +145,8 @@
   <ItemGroup>
     <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
     <ClCompile Include="JsonResponsePacketSerialize.cpp" />
+    <ClCompile Include="LoggedUser.cpp" />
+    <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="Packet.cpp" />
     <ClCompile Include="RequestHandlerFactory.cpp" />
@@ -163,6 +165,8 @@
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="JsonRequestPacketDeserialize.h" />
     <ClInclude Include="JsonResponsePacketSerialize.h" />
+    <ClInclude Include="LoggedUser.h" />
+    <ClInclude Include="LoginManager.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="Request.h" />
