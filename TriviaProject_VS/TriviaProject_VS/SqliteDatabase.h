@@ -7,6 +7,7 @@
 #define FILE_EXIST -1
 
 int findUserCallback(void* pUser, int argc, char** colData, char** colNames);
+int getPasswordCallback(void* pPassword, int argc, char** colData, char** colNames);
 
 class SqliteDatabase : public IDatabase 
 {

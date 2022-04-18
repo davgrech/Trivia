@@ -13,7 +13,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 {
-    LoginRequestHandler *x = nullptr;
+    LoginRequestHandler * x = nullptr;
     LoginResponse loginResponse;
     loginResponse.status = 1;
     auto j = JRPS::serializeResponse(loginResponse);
@@ -24,4 +24,14 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
     };
 
     return u;
+}
+
+RequestResult LoginRequestHandler::login(RequestInfo value)
+{
+    return RequestResult();
+}
+
+RequestResult LoginRequestHandler::signup(RequestInfo value)
+{
+    return RequestResult();
 }
