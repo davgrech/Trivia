@@ -25,3 +25,13 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 
     return u;
 }
+
+RequestResult LoginRequestHandler::login(RequestInfo value)
+{
+    return RequestResult();
+}
+
+RequestResult LoginRequestHandler::signup(RequestInfo value)
+{
+    return RequestResult();
+}

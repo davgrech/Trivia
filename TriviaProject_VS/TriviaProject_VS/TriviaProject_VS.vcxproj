@@ -147,6 +147,7 @@
     <ClCompile Include="JsonResponsePacketSerialize.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="Packet.cpp" />
+    <ClCompile Include="RequestHandlerFactory.cpp" />
     <ClCompile Include="Serve.cpp" />
     <ClCompile Include="SERVER.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\user\Desktop\Dolev\magshimimProjects\Trivia_Project\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
