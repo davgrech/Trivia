@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientError.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
     <ClCompile Include="JsonResponsePacketSerialize.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientError.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
