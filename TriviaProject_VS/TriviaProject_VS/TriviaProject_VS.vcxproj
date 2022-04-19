@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -103,7 +103,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\user\Desktop\Dolev\magshimimProjects\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\123dg\Desktop\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
     <ClCompile Include="JsonResponsePacketSerialize.cpp" />
     <ClCompile Include="LoggedUser.cpp" />
@@ -156,12 +157,14 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\user\Desktop\Dolev\magshimimProjects\Trivia_Project\trivia_dolev_david_2022\TriviaProject_VS\TriviaProject_VS\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="SignUpRequestHandler.cpp" />
+    <ClCompile Include="SQLCallbacks.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDatabase.cpp" />
     <ClCompile Include="TriviaProject_VS.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="JsonRequestPacketDeserialize.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="Serve.h" />
     <ClInclude Include="SERVER.h" />
     <ClInclude Include="SignUpRequestHandler.h" />
+    <ClInclude Include="SQLCallbacks.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SqliteDatabase.h" />
     <ClInclude Include="WSAInitializer.h" />
