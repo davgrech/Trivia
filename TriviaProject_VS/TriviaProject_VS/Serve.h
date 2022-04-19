@@ -16,7 +16,7 @@
 #include <atomic>
 
 
-#include "Packet.h"
+
 
 
 #include "JsonRequestPacketDeserialize.h"
@@ -28,7 +28,7 @@
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
-int checkByteReceived(int ByteReceived);
+bool checkByteReceived(int ByteReceived);
 
 
 class serveTool
@@ -40,14 +40,11 @@ public:
 	//main function 
 	void bindAndListen();
 
-	
-	void receiveHandle();
-
 	//communicate thread's function 
 	void cHandler(SOCKET client);
 
 
-	void addReceivedMessage(Packet x);
+	void startHandleRequests();
 	RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 
 	SOCKET getSock();
@@ -62,9 +59,8 @@ private:
 	SOCKET _socket;
 
 	std::mutex _mtx1;
-	std::condition_variable _cv;
-	
+
 	std::map<SOCKET, IRequestHandler*> _clients;
-	std::queue<Packet> _Hmsgs;
+	
 	RequestHandleFactory* m_handlerFactory;
 };

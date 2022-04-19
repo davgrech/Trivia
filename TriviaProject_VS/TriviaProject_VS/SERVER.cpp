@@ -11,29 +11,7 @@ void Server::run()
 	
 	std::thread admin_thread(&serveTool::admin_acess_function, &Communicator);
 	admin_thread.detach();
-
-	Communicator.bindAndListen();
+	Communicator.startHandleRequests();
 	
-
-	std::thread receive_thread(&serveTool::receiveHandle, &Communicator);  //&serveTool::receiveHandle
-
-	while (true) {
-		
-
-		TRACE("waiting for client... ");
-		SOCKET client = accept(Communicator.getSock(), NULL, NULL);
-
-
-		TRACE("Client accepted !");
-		
-		
-
-
-
-
-		//start communicate
-		std::thread communicate(&serveTool::cHandler, &Communicator, client);
-		communicate.detach();
-	}
 }
 
