@@ -1,11 +1,19 @@
 #pragma once
 #include "IRequestHandler.h"
-#include "Request.h"
+#include "LoginManager.h"
+#include "RequestHandlerFactory.h"
+
+class RequestHandleFactory;
+
 class LoginRequestHandler : public IRequestHandler
 {
 private:
-
+	LoginManager* m_loginManager;
+	RequestHandleFactory* m_handlerFactory;
 public:
+
+	LoginRequestHandler(RequestHandleFactory* _RequestHandleFactory, LoginManager* _LoginManager);
+	
 	//LoginRequestHandler() = default;
 
 	//father function 
@@ -13,6 +21,6 @@ public:
 	virtual RequestResult handleRequest(RequestInfo value);
 
 	//child functions
-	RequestResult login(RequestInfo value);
-	RequestResult signup(RequestInfo value);
+	/*RequestResult login(RequestInfo value);
+	RequestResult signup(RequestInfo value);*/
 };

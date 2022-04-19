@@ -11,6 +11,15 @@ int getPasswordCallback(void* pPassword, int argc, char** colData, char** colNam
     *password = colData[0];
     return 1;
 }
+SqliteDatabase::SqliteDatabase()
+{
+    open();
+
+}
+SqliteDatabase::~SqliteDatabase()
+{
+    close();
+}
 bool SqliteDatabase::doesUserExist(std::string userName)
 {
     std::string statement = "SELECT * FROM PLAYERS WHERE NAME = '" + userName + "';";

@@ -6,10 +6,13 @@ static const unsigned int IFACE = 0;
 
 
 
-serveTool::serveTool()
+serveTool::serveTool(RequestHandleFactory* handlerFactory)
 {
+	
+	this->m_handlerFactory = handlerFactory;
 	this->_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 }
+
 serveTool::~serveTool()
 {
 	closesocket(this->_socket);
@@ -23,9 +26,9 @@ void serveTool::receiveHandle()
 	RequestInfo receivedMsgInfo;
 	while (true) {
 		try {
+
 			std::unique_lock<std::mutex> lck(this->_mtx1);
 
-			//We about to change the Hmsg format to json.
 
 
 			if (this->_Hmsgs.empty()) {
@@ -57,9 +60,10 @@ void serveTool::receiveHandle()
 			}
 			else if (receivedMsgInfo.id == 1) { // login
 				loginResponse.status = 1;
-
-				LoginRequestHandler loginHandle;
-				response = loginHandle.handleRequest(receivedMsgInfo);
+				
+				LoginRequestHandler* loginHandle = this->m_handlerFactory->createLoginRequestHandler();
+				
+				response = loginHandle->handleRequest(receivedMsgInfo);
 			}
 			else
 			{
@@ -90,7 +94,7 @@ void serveTool::cHandler(SOCKET client)
 	
 	char recMsg[256];
 	ZeroMemory(recMsg, 256);
-	int byteReceived = recv(client, recMsg, 256, 0);
+	int byteReceived = recv(client, recMsg, 2048, 0);
 
 	std::cout << "Msg received: " << recMsg << std::endl;
 
@@ -117,7 +121,7 @@ void serveTool::cHandler(SOCKET client)
 		addReceivedMessage(packet_to_receive);
 
 		ZeroMemory(recMsg, 256);
-		byteReceived = recv(client, recMsg, 256, 0);
+		byteReceived = recv(client, recMsg, 2048, 0);
 
 		std::cout << "Msg received: " << recMsg << std::endl;
 

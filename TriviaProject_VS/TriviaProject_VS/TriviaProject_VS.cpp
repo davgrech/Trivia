@@ -12,7 +12,8 @@ int main()
     try {
         TRACE("Starting...");
         WSAInitializer as_told_us;
-        Server manager;
+        IDatabase* database = new SqliteDatabase();
+        Server manager(database);
         manager.run();
 
     }

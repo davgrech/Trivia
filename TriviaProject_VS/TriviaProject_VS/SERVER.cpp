@@ -1,40 +1,38 @@
  #include "SERVER.h"
 
-Server::Server()
-{
-	SqliteDatabase* myDb= new SqliteDatabase ();
-	this->m_database = myDb;
-	this->m_database->open();
 
+
+Server::Server(IDatabase* database) : m_database(database), m_handlerFactory(m_database), Communicator(&m_handlerFactory)
+{
 }
 
 void Server::run()
 {
-	serveTool communicator;
-	std::thread admin_thread(&serveTool::admin_acess_function, &communicator);
+	
+	std::thread admin_thread(&serveTool::admin_acess_function, &Communicator);
 	admin_thread.detach();
 
-	communicator.bindAndListen();
+	Communicator.bindAndListen();
 	
 
-	std::thread receive_thread(&serveTool::receiveHandle, &communicator);  //&serveTool::receiveHandle
+	std::thread receive_thread(&serveTool::receiveHandle, &Communicator);  //&serveTool::receiveHandle
 
 	while (true) {
-		LoginRequestHandler temp;
+		
 
 		TRACE("waiting for client... ");
-		SOCKET client = accept(communicator.getSock(), NULL, NULL);
+		SOCKET client = accept(Communicator.getSock(), NULL, NULL);
 
 
 		TRACE("Client accepted !");
 		
-		communicator.addToClients(client, temp);
+		
 
 
 
 
 		//start communicate
-		std::thread communicate(&serveTool::cHandler, &communicator, client);
+		std::thread communicate(&serveTool::cHandler, &Communicator, client);
 		communicate.detach();
 	}
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include "IDatabase.h"
@@ -12,7 +13,8 @@ int getPasswordCallback(void* pPassword, int argc, char** colData, char** colNam
 class SqliteDatabase : public IDatabase 
 {
 public:
-	SqliteDatabase() = default;
+	SqliteDatabase();
+	~SqliteDatabase();
 	bool doesUserExist(std::string userName);
 	bool doesPasswordMatch(std::string userName, std::string userPassword);
 	bool addNewUser(std::string userName, std::string userPassword, std::string userEmail);

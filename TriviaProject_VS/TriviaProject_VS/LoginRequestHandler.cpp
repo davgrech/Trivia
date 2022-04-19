@@ -1,7 +1,15 @@
 #include "LoginRequestHandler.h"
+
+#include "Request.h"
 #include "Response.h"
+
 #include "JsonResponsePacketSerialize.h"
 #include "JsonRequestPacketDeserialize.h"
+
+LoginRequestHandler::LoginRequestHandler(RequestHandleFactory* _RequestHandleFactory, LoginManager* _LoginManager) : m_handlerFactory(_RequestHandleFactory), m_loginManager(_LoginManager)
+{
+
+}
 bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 {
     if (request.id != 1)
@@ -14,6 +22,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 {
     LoginRequestHandler * x = nullptr;
+    
     LoginResponse loginResponse;
     loginResponse.status = 1;
     auto j = JRPS::serializeResponse(loginResponse);
@@ -26,12 +35,3 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
     return u;
 }
 
-RequestResult LoginRequestHandler::login(RequestInfo value)
-{
-    return RequestResult();
-}
-
-RequestResult LoginRequestHandler::signup(RequestInfo value)
-{
-    return RequestResult();
-}

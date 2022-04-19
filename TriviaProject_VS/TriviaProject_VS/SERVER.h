@@ -6,10 +6,11 @@
 class Server
 {
 public:
-	Server();
+	Server(IDatabase* database);
 	
 	void run();
 private:
+	RequestHandleFactory m_handlerFactory;
 	serveTool Communicator;
 	IDatabase* m_database;
 };

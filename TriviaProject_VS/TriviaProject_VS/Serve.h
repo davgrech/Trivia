@@ -10,7 +10,7 @@
 #include <map>
 #include <queue>
 
-#include "LoginRequestHandler.h"
+
 #include "SignUpRequestHandler.h"
 
 #include <atomic>
@@ -22,6 +22,7 @@
 #include "JsonRequestPacketDeserialize.h"
 #include "JsonResponsePacketSerialize.h"
 
+#include "RequestHandlerFactory.h"
 
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
@@ -33,7 +34,8 @@ int checkByteReceived(int ByteReceived);
 class serveTool
 {
 public:
-	serveTool();
+	
+	serveTool(RequestHandleFactory* handlerFactory);
 	~serveTool();
 	//main function 
 	void bindAndListen();
@@ -64,4 +66,5 @@ private:
 	
 	std::map<SOCKET, IRequestHandler*> _clients;
 	std::queue<Packet> _Hmsgs;
+	RequestHandleFactory* m_handlerFactory;
 };

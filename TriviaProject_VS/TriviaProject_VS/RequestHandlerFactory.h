@@ -1,13 +1,18 @@
-#include <iostream>
-#include <string>
-#include "IDatabase.h"
+#pragma once
 #include "LoginRequestHandler.h"
+class LoginRequestHandler;
+
+
 class RequestHandleFactory
 {
-private:
-	IDatabase* m_database;
+	public:
+		
+		RequestHandleFactory(IDatabase* db);
+		LoginRequestHandler* createLoginRequestHandler();
+		LoginManager& getLoginManager();
 
-public:
-	LoginRequestHandler* createLoginRequestHandler();
+	private:
+		IDatabase* m_database;
+		LoginManager m_LoginManager;
 
 };
