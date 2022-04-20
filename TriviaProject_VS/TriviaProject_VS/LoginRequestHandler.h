@@ -20,7 +20,5 @@ public:
 	virtual bool isRequestRelevant(RequestInfo request);
 	virtual RequestResult handleRequest(RequestInfo value);
 
-	//child functions
-	/*RequestResult login(RequestInfo value);
-	RequestResult signup(RequestInfo value);*/
+	
 };

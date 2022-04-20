@@ -5,9 +5,11 @@
 
 enum msgType : byte
 {
-	CLIENT_SIGNUP = 0,
-	CLIENT_LOGIN = 1,
-	SEND_MENU = 2,
-	SERVER_ERROR = 3,
+	CLIENT_SIGNUP,
+	CLIENT_LOGIN,
+	CLIENT_MENU,
+	SERVER_ERROR,
 
 };
+#define FAILED 0
+#define SUCCESS 1

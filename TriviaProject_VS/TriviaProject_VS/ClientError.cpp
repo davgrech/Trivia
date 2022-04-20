@@ -2,5 +2,5 @@
 
 const char* ClientError::what() const noexcept
 {
-    return "Client disconnected";
+    return "Client Disconnected";
 }

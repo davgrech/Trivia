@@ -7,7 +7,7 @@ class Server
 {
 public:
 	Server(IDatabase* database);
-	
+	void admin_acess_function();
 	void run();
 private:
 	RequestHandleFactory m_handlerFactory;

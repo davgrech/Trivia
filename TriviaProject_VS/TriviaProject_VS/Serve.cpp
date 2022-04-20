@@ -61,50 +61,124 @@ void serveTool::startHandleRequests()
 
 
 
+void serveTool::addToClients(SOCKET client, IRequestHandler* request)
+{
+
+	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, request));
+}
 
 
 
 void serveTool::cHandler(SOCKET client)
 {
-	
+	int byteReceived = 0;
+
 	char recMsg[2048];
 	ZeroMemory(recMsg, 2048);
 
-	int byteReceived = recv(client, recMsg, 2048, 0);
+	std::string msg; 
 
-	std::cout << "Msg received: " << recMsg << std::endl;
+	RequestResult reqResult;
 
-	if (checkByteReceived(byteReceived)) {
-		_clients.erase(client);
-	}
+	try
+	{
+		
+		while (true) {
 
-	
+			byteReceived = recv(client, recMsg, 2048, 0);
+
+			if (checkByteReceived(byteReceived)) { // ? 
+				_clients.erase(client);
+				throw ClientError();
+			}
+
+			std::cout << "Msg received: " << recMsg << std::endl;
+			msg = recMsg; // convert to srting.
+
+			//data processing
+			int id = recMsg[0] - 48;
+			int len = std::stoi(msg.substr(1, 4));
+			std::string data = msg.substr(5, len);
+
+			std::vector<unsigned char> buffer(data.begin(), data.end());
+			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
+
+			if (!(this->_clients.count(client) > 0)) //  if not found in client map
+			{
+				LoginRequestHandler* LoginHandler = this->m_handlerFactory->createLoginRequestHandler();
+				bool isRelevent = LoginHandler->isRequestRelevant(msgInfo); 
+				if (isRelevent) { // check if relevent
+
+					
+						
+					reqResult =  LoginHandler->handleRequest(msgInfo);
 
 
-	
-	while (true) {
+					//succee to login
+					if (reqResult.newHandler != nullptr)
+					{
+						addToClients(client, reqResult.newHandler);
+					}
+					
+					
+					
+				}
+				else {
+					throw std::exception("Client must login first"); 
 
-		std::string return_msg = recMsg;
-		int id = recMsg[0] - 48;
-		int len = std::stoi(return_msg.substr(1, 4));
-		std::string data = return_msg.substr(5, len);
-		std::vector<unsigned char> buffer(data.begin(), data.end());
-		RequestInfo msg_to_Receive = createNewRequestInfo(id, buffer);
+				}
+			}
+			else
+			{
+				//other codes
+			}
 
-		ZeroMemory(recMsg, 2048);
-		byteReceived = recv(client, recMsg, 2048, 0);
-
-		std::cout << "Msg received: " << recMsg << std::endl;
-
-
-		if (checkByteReceived(byteReceived)) {		
-			_clients.erase(client);
-			break;
+			//send json to the client -> 
+			std::string responseString(reqResult.buffer.begin(), reqResult.buffer.end());
+			std::cout << "Response sent: " << responseString << std::endl;
+			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
+				this->_clients.erase(client);
+				throw ClientError();
+			}
+			
 		}
+		
 	}
-	std::cout << "Client left..." << std::endl;
-	_clients.erase(client);
+	catch (const std::exception& recieveIllegal)
+	{
+		
+			//creating message to send.
+			ErrorResponse error;
+			error.message = recieveIllegal.what();
+			std::vector<unsigned char> errorMessage = JRPS::serializeResponse(error);
+			std::string responseString(errorMessage.begin(), errorMessage.end());
+
+			//sending
+			try {
+				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
+					throw std::exception("error while sending message to client.");
+				}
+			}
+			catch (const std::exception& e) {
+				std::cout << e.what() << std::endl;
+			}
+			
+
+
+
+		
+		
+		
+	}
+	catch (ClientError& clientDisconnected)
+	{
+		std::cout << clientDisconnected.what() << std::endl;
+	}
+	
 }
+
+
+
 
 
 RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value)
@@ -128,41 +202,4 @@ bool checkByteReceived(int ByteReceived)
 }
 
 
-
-RequestInfo serveTool::createNewRequestInfo(int id, std::vector<unsigned char> value)
-{
-	time_t now = time(nullptr);
-
-	RequestInfo handle{
-		id,
-		ctime(&now),
-		value
-	};
-
-
-	return handle;
-}
-
-
-void serveTool::addToClients(SOCKET client, LoginRequestHandler request) 
-{
-	
-	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, &request));
-}
-
-
-
-void serveTool::admin_acess_function()
-{
-	std::string msg;
-	while (true) {
-		std::cout << "Waiting for admin command: " << std::endl;
-		std::cin >> msg;
-		if (msg == "EXIT") {
-			
-			exit(1);
-		}
-
-	}
-}
 	

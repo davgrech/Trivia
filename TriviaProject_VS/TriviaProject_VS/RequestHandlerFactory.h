@@ -1,5 +1,8 @@
 #pragma once
 #include "LoginRequestHandler.h"
+#include "MenuRequestHandler.h"
+#include "Helper.h"
+
 class LoginRequestHandler;
 
 
@@ -9,6 +12,7 @@ class RequestHandleFactory
 
 		RequestHandleFactory(IDatabase* db);
 		LoginRequestHandler* createLoginRequestHandler();
+		MenuRequestHanlder* createMenuRequestHandler();
 		LoginManager& getLoginManager();
 
 	private:

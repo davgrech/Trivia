@@ -4,6 +4,10 @@
 #include <WinSock2.h>
 
 #include <exception>
+#include "ClientError.h"
+
+
+
 #include <string>
 #include <thread>
 #include <mutex>
@@ -23,13 +27,13 @@
 #include "JsonResponsePacketSerialize.h"
 
 #include "RequestHandlerFactory.h"
-
+#include "Helper.h"
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
 bool checkByteReceived(int ByteReceived);
-
+RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 
 class serveTool
 {
@@ -45,11 +49,12 @@ public:
 
 
 	void startHandleRequests();
-	RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
+	
 
-	SOCKET getSock();
-	void addToClients(SOCKET client, LoginRequestHandler request);
-	void admin_acess_function();
+	
+	void addToClients(SOCKET client, IRequestHandler* request);
+	
+
 	
 
 private:

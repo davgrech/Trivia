@@ -6,18 +6,21 @@ LoginManager::LoginManager(IDatabase* db)
 	this->database = db;
 }
 
-void LoginManager::signup(std::string name, std::string password, std::string email)
+bool LoginManager::signup(std::string name, std::string password, std::string email)
 {
-	this->database->addNewUser(name, password, email);
+	return this->database->addNewUser(name, password, email);
 
 }
 
-void LoginManager::login(std::string name, std::string password)
+bool LoginManager::login(std::string name, std::string password)
 {
 	LoggedUser user(name);
 	if (this->database->doesUserExist(name) && this->database->doesPasswordMatch(name, password)) {
 		this->m_loggedUsers.push_back(user);
+		return true;
 	}
+	return false;
+	
 }
 
 void LoginManager::logout(std::string name)
