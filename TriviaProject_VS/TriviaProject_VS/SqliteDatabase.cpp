@@ -4,10 +4,7 @@ SqliteDatabase::SqliteDatabase()
     open();
 
 }
-SqliteDatabase::~SqliteDatabase()
-{
-    close();
-}
+
 bool SqliteDatabase::doesUserExist(std::string userName)
 {
     std::string statement = "SELECT * FROM PLAYERS WHERE NAME = '" + userName + "';";
@@ -44,7 +41,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         if (result) {
             std::cout << "Error was: " << pError << std::endl;
             free(pError);
-            return false;
+            
         }
         return true;
     }
@@ -61,6 +58,7 @@ void SqliteDatabase::open()
     int doesFileExist = _access(sqlDatabaseName.c_str(),  0);
 
     int res = sqlite3_open(sqlDatabaseName.c_str(), &this->db);
+
     if (res != SQLITE_OK) {
         this->db = nullptr;
         std::cout << "Failed to open DB" << std::endl;

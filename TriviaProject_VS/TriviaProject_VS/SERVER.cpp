@@ -2,10 +2,17 @@
 
 
 
-Server::Server(IDatabase* database) : m_database(database), m_handlerFactory(m_database), Communicator(&m_handlerFactory)
+Server::Server(IDatabase* database) : Communicator(&this->m_handlerFactory), m_database(database), m_handlerFactory(database)
 {
+	/*this->m_database = database;
+	
+	this->m_handlerFactory = RequestHandleFactory(database);
+	this->Communicator = serveTool(&this->m_handlerFactory);*/
 }
-
+Server::~Server()
+{
+	delete this->m_database;
+}
 void Server::run()
 {
 	

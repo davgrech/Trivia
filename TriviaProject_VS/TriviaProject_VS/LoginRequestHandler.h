@@ -8,11 +8,11 @@ class RequestHandleFactory;
 class LoginRequestHandler : public IRequestHandler
 {
 private:
-	LoginManager* m_loginManager;
-	RequestHandleFactory* m_handlerFactory;
+	LoginManager& m_loginManager;
+	RequestHandleFactory& m_handlerFactory;
 public:
 
-	LoginRequestHandler(RequestHandleFactory* _RequestHandleFactory, LoginManager* _LoginManager);
+	LoginRequestHandler(RequestHandleFactory& _RequestHandleFactory);
 	
 	//LoginRequestHandler() = default;
 

@@ -14,6 +14,7 @@ int main()
         WSAInitializer as_told_us;
         IDatabase* database = new SqliteDatabase();
         Server manager(database);
+
         manager.run();
 
     }

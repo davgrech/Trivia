@@ -8,7 +8,10 @@ LoginManager::LoginManager(IDatabase* db)
 
 bool LoginManager::signup(std::string name, std::string password, std::string email)
 {
+	
 	return this->database->addNewUser(name, password, email);
+	
+	
 
 }
 

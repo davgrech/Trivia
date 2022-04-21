@@ -6,7 +6,7 @@
 #include "JsonResponsePacketSerialize.h"
 #include "JsonRequestPacketDeserialize.h"
 
-LoginRequestHandler::LoginRequestHandler(RequestHandleFactory* _RequestHandleFactory, LoginManager* _LoginManager) : m_handlerFactory(_RequestHandleFactory), m_loginManager(_LoginManager)
+LoginRequestHandler::LoginRequestHandler(RequestHandleFactory& _RequestHandleFactory) : m_loginManager(_RequestHandleFactory.getLoginManager()), m_handlerFactory(_RequestHandleFactory)
 {
 
 }
@@ -26,18 +26,19 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
     SignupResponse SignupRes;
     
     
-    
+   
 
     if (value.id == CLIENT_LOGIN) {
 
         //deserialize request
         LoginReq = JRPD::deserializeLoginRequest(value.buffer);
        
-        bool isSucceeded = this->m_loginManager->login(LoginReq.username, LoginReq.password);
+        bool isSucceeded = this->m_loginManager.login(LoginReq.username, LoginReq.password);
 
         if (isSucceeded) {
+            this->m_loginManager.login(LoginReq.username, LoginReq.password);
             //return SUCCESS RESPONSE
-            myResult.newHandler = this->m_handlerFactory->createMenuRequestHandler();
+            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler();
 
             LoginRes.status = SUCCESS;
             myResult.buffer = JRPS::serializeResponse(LoginRes);
@@ -58,9 +59,9 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
         SignupReq = JRPD::deserializeSignupRequest(value.buffer);
         
 
-        bool isSucceeded = this->m_loginManager->signup(SignupReq.username, SignupReq.password, SignupReq.email);
+        bool isSucceeded = this->m_loginManager.signup(SignupReq.username, SignupReq.password, SignupReq.email);
         if (isSucceeded) {
-            myResult.newHandler = this->m_handlerFactory->createMenuRequestHandler();
+            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler();
 
             SignupRes.status = SUCCESS;
             myResult.buffer = JRPS::serializeResponse(SignupRes);

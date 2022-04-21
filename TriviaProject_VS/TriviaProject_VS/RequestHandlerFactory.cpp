@@ -1,18 +1,36 @@
 #include "RequestHandlerFactory.h"
 
-#include "SqliteDatabase.h"
+
 #include "LoginManager.h"
 
 
-RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db)
+
+
+RequestHandleFactory& RequestHandleFactory::operator=(const RequestHandleFactory& other)
 {
+    this->m_database = other.m_database;
+    this->m_LoginManager = other.m_LoginManager;
+    
+    return *this;
+}
+
+RequestHandleFactory::RequestHandleFactory(IDatabase* db) :  m_database(db), m_LoginManager(db)
+{
+    this->m_database = db;
+    this->m_LoginManager = LoginManager(db);
 }
 //}
 //
 LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
 {
-    LoginRequestHandler* rq = new LoginRequestHandler(this, &this->m_LoginManager);
-    return rq;
+    while (true) {
+        try {
+            return new LoginRequestHandler(*this);
+        }
+        catch (...) {}
+    }
+
+   
 }
 
 MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler()

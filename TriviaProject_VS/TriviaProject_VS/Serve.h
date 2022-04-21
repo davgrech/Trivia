@@ -38,7 +38,7 @@ RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 class serveTool
 {
 public:
-	
+	serveTool& operator=(const serveTool& other);
 	serveTool(RequestHandleFactory* handlerFactory);
 	~serveTool();
 	//main function 

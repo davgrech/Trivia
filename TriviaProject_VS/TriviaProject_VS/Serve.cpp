@@ -5,10 +5,19 @@ static const unsigned int IFACE = 0;
 
 
 
+serveTool& serveTool::operator=(const serveTool& other)
+{
+	this->m_handlerFactory = other.m_handlerFactory;
+	this->_socket = other._socket;
+	
+	return *this;
+}
+
 serveTool::serveTool(RequestHandleFactory* handlerFactory)
 {
 
 	this->m_handlerFactory = handlerFactory;
+
 	this->_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 }
 
@@ -117,7 +126,9 @@ void serveTool::cHandler(SOCKET client)
 					//succee to login
 					if (reqResult.newHandler != nullptr)
 					{
+						this->_mtx1.lock();
 						addToClients(client, reqResult.newHandler);
+						this->_mtx1.unlock();
 					}
 					
 					
