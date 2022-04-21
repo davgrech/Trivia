@@ -30,8 +30,8 @@ def CreateSignup():
     username = input("enter username: ")
     password = input("enter password: ")
     email = input("enter email: ")
-    signupInfo = '{"username":' + username + ', "password":' + password + ', "email":' + email + '}'
-
+    
+    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '"}'
     msgLen = padMsg(str(len(signupInfo)), 4)
     send_str = '0' + msgLen + signupInfo
     byteStream = bytearray(send_str, 'utf-8')
@@ -59,6 +59,7 @@ def recvMsg(sock):
 def main():
     sock = connect()
     new_thread = Thread(target=recvMsg, args=(sock,))
+    new_thread.start()
     msg = ""
     while True:
         userChoice = input("1 - Send login\n2- Send signup\n")

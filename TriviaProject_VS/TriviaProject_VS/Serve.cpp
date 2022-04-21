@@ -98,7 +98,8 @@ void serveTool::cHandler(SOCKET client)
 
 			if (checkByteReceived(byteReceived)) { // ? 
 				_clients.erase(client);
-				throw ClientError();
+
+				throw std::exception("User exit");
 			}
 
 			std::cout << "Msg received: " << recMsg << std::endl;
@@ -110,6 +111,7 @@ void serveTool::cHandler(SOCKET client)
 			std::string data = msg.substr(5, len);
 
 			std::vector<unsigned char> buffer(data.begin(), data.end());
+			std::cout << data << std::endl;
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
 			if (!(this->_clients.count(client) > 0)) //  if not found in client map
@@ -157,7 +159,7 @@ void serveTool::cHandler(SOCKET client)
 	}
 	catch (const std::exception& recieveIllegal)
 	{
-		
+		std::cout << "Error: " << recieveIllegal.what() << std::endl;
 			//creating message to send.
 			ErrorResponse error;
 			error.message = recieveIllegal.what();
@@ -167,8 +169,9 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					throw std::exception("error while sending message to client.");
+					throw std::exception("Error: while sending message to client.");
 				}
+				std::cout << "Response sent: " << responseString;
 			}
 			catch (const std::exception& e) {
 				std::cout << e.what() << std::endl;

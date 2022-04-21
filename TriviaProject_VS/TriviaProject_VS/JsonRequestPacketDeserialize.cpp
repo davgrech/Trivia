@@ -7,6 +7,7 @@ using nlohmann::json;
 */
 LoginRequest JRPD::deserializeLoginRequest(std::vector<unsigned char> buffer)
 {
+    std::cout << std::string(buffer.begin(), buffer.end()) << std::endl;
     auto j = json::parse(buffer.begin(), buffer.end());
     LoginRequest loginreq;
     loginreq.username = j["username"];
@@ -19,8 +20,11 @@ LoginRequest JRPD::deserializeLoginRequest(std::vector<unsigned char> buffer)
 */
 SignupRequest JRPD::deserializeSignupRequest(std::vector<unsigned char> buffer)
 {
+   
+
     auto j = json::parse(buffer.begin(), buffer.end());
     SignupRequest signupReq;
+
     signupReq.username = j["username"];
     signupReq.password = j["password"];
     signupReq.email = j["email"];

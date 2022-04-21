@@ -54,7 +54,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
         
     }
     else if (value.id == CLIENT_SIGNUP) {
-
+        std::cout << std::string(value.buffer.begin(), value.buffer.end());
         //deserialize request
         SignupReq = JRPD::deserializeSignupRequest(value.buffer);
         
