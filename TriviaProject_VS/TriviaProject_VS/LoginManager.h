@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,11 +7,13 @@
 #include "SqliteDatabase.h"
 
 
-#include <algorithm>
+
+
 class LoginManager {
 public:
-	void signup(std::string name, std::string password, std::string email);
-	void login(std::string name, std::string password);
+	LoginManager(IDatabase* db);
+	bool signup(std::string name, std::string password, std::string email);
+	bool login(std::string name, std::string password);
 	void logout(std::string name);
 private:
 	IDatabase* database;

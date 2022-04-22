@@ -4,53 +4,57 @@
 #include <WinSock2.h>
 
 #include <exception>
+#include "ClientError.h"
+
+
+
 #include <string>
 #include <thread>
 #include <mutex>
 #include <map>
 #include <queue>
 
-#include "LoginRequestHandler.h"
+
 #include "SignUpRequestHandler.h"
 
 #include <atomic>
 
 
-#include "Packet.h"
+
 
 
 #include "JsonRequestPacketDeserialize.h"
 #include "JsonResponsePacketSerialize.h"
 
-
+#include "RequestHandlerFactory.h"
+#include "Helper.h"
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
-int checkByteReceived(int ByteReceived);
-
+bool checkByteReceived(int ByteReceived);
+RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 
 class serveTool
 {
 public:
-	serveTool();
+	serveTool& operator=(const serveTool& other);
+	serveTool(RequestHandleFactory* handlerFactory);
 	~serveTool();
 	//main function 
 	void bindAndListen();
-
-	
-	void receiveHandle();
 
 	//communicate thread's function 
 	void cHandler(SOCKET client);
 
 
-	void addReceivedMessage(Packet x);
-	RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
+	void startHandleRequests();
+	
 
-	SOCKET getSock();
-	void addToClients(SOCKET client, LoginRequestHandler request);
-	void admin_acess_function();
+	
+	void addToClients(SOCKET client, IRequestHandler* request);
+	
+
 	
 
 private:
@@ -60,8 +64,8 @@ private:
 	SOCKET _socket;
 
 	std::mutex _mtx1;
-	std::condition_variable _cv;
-	
+
 	std::map<SOCKET, IRequestHandler*> _clients;
-	std::queue<Packet> _Hmsgs;
+	
+	RequestHandleFactory* m_handlerFactory;
 };

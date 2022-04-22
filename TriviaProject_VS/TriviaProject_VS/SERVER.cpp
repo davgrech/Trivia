@@ -1,41 +1,39 @@
  #include "SERVER.h"
 
-Server::Server()
+
+
+Server::Server(IDatabase* database) : Communicator(&this->m_handlerFactory), m_database(database), m_handlerFactory(database)
 {
-	SqliteDatabase* myDb= new SqliteDatabase ();
-	this->m_database = myDb;
-	this->m_database->open();
-
+	/*this->m_database = database;
+	
+	this->m_handlerFactory = RequestHandleFactory(database);
+	this->Communicator = serveTool(&this->m_handlerFactory);*/
 }
-
+Server::~Server()
+{
+	delete this->m_database;
+}
 void Server::run()
 {
-	serveTool communicator;
-	std::thread admin_thread(&serveTool::admin_acess_function, &communicator);
+	
+	std::thread admin_thread(&Server::admin_acess_function , this);
 	admin_thread.detach();
 
-	communicator.bindAndListen();
+	Communicator.startHandleRequests();
 	
-
-	std::thread receive_thread(&serveTool::receiveHandle, &communicator);  //&serveTool::receiveHandle
-
-	while (true) {
-		LoginRequestHandler temp;
-
-		TRACE("waiting for client... ");
-		SOCKET client = accept(communicator.getSock(), NULL, NULL);
-
-
-		TRACE("Client accepted !");
-		
-		communicator.addToClients(client, temp);
-
-
-
-
-		//start communicate
-		std::thread communicate(&serveTool::cHandler, &communicator, client);
-		communicate.detach();
-	}
 }
 
+
+void Server::admin_acess_function()
+{
+	std::string msg;
+	while (true) {
+		std::cout << "Waiting for admin command: " << std::endl;
+		std::cin >> msg;
+		if (msg == "EXIT") {
+
+			exit(1);
+		}
+
+	}
+}

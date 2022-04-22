@@ -1,16 +1,10 @@
 #include "SqliteDatabase.h"
-int findUserCallback(void* pUser, int argc, char** colData, char** colNames)
+SqliteDatabase::SqliteDatabase()
 {
-    int* flag = (int*)pUser;
-    *flag = 1;
-    return 1;
+    open();
+
 }
-int getPasswordCallback(void* pPassword, int argc, char** colData, char** colNames)
-{
-    std::string* password = (std::string*)pPassword;
-    *password = colData[0];
-    return 1;
-}
+
 bool SqliteDatabase::doesUserExist(std::string userName)
 {
     std::string statement = "SELECT * FROM PLAYERS WHERE NAME = '" + userName + "';";
@@ -40,14 +34,22 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
 bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail)
 {
     char* pError = NULL;
-    std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "');";
-    int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
-    if (result) {
-        std::cout << "Error was: " << pError << std::endl;
-        free(pError);
+    if (!doesUserExist(userName))
+    {
+        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "');";
+        int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
+        if (result) {
+            std::cout << "Error was: " << pError << std::endl;
+            free(pError);
+            
+        }
+        return true;
+    }
+    else
+    {
         return false;
     }
-    return true;
+   
 }
 
 void SqliteDatabase::open()
@@ -56,6 +58,7 @@ void SqliteDatabase::open()
     int doesFileExist = _access(sqlDatabaseName.c_str(),  0);
 
     int res = sqlite3_open(sqlDatabaseName.c_str(), &this->db);
+
     if (res != SQLITE_OK) {
         this->db = nullptr;
         std::cout << "Failed to open DB" << std::endl;

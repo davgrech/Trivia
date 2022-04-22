@@ -30,8 +30,8 @@ def CreateSignup():
     username = input("enter username: ")
     password = input("enter password: ")
     email = input("enter email: ")
-    signupInfo = '{"username":' + username + ', "password":' + password + ', "email":' + email + '}'
-
+    
+    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '"}'
     msgLen = padMsg(str(len(signupInfo)), 4)
     send_str = '0' + msgLen + signupInfo
     byteStream = bytearray(send_str, 'utf-8')
@@ -63,11 +63,12 @@ def main():
     msg = ""
     while True:
         userChoice = input("1 - Send login\n2- Send signup\n")
-        if userChoice == '1':
+        if userChoice == '1': # login
             msg = CreateLogin()
-        elif userChoice == '2':
+        elif userChoice == '2':  # signup
             msg = CreateSignup()
         sock.sendall(msg)
+
 
 
 if __name__ == '__main__':
