@@ -17,7 +17,7 @@ public:
 	~SqliteDatabase();
 	bool doesUserExist(std::string userName);
 	bool doesPasswordMatch(std::string userName, std::string userPassword);
-	bool addNewUser(std::string userName, std::string userPassword, std::string userEmail);
+	bool addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber , std::string address, std::string date);
 	void open();
 	void close();
 private:

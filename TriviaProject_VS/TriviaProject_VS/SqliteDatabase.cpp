@@ -31,12 +31,13 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
     
 }
 
-bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail)
+bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
 {
+    throw(std::exception("bad client"));
     char* pError = NULL;
     if (!doesUserExist(userName))
     {
-        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "');";
+        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '"+date+"', '"+phonNumber+"', '"+address+"'); ";
         int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
         if (result) {
             std::cout << "Error was: " << pError << std::endl;
@@ -67,7 +68,7 @@ void SqliteDatabase::open()
 
     if (doesFileExist == FILE_EXIST) {
         char* errMessage = nullptr;
-        std::string playerStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMERY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL);";
+        std::string playerStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMERY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL, ADDRESS NOT NULL);";
         int res = sqlite3_exec(this->db, playerStatement.c_str(), nullptr, nullptr, &errMessage);
         if (res != SQLITE_OK) {
             std::cout << errMessage << std::endl;

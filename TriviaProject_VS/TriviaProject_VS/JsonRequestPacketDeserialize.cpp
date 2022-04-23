@@ -28,6 +28,10 @@ SignupRequest JRPD::deserializeSignupRequest(std::vector<unsigned char> buffer)
     signupReq.username = j["username"];
     signupReq.password = j["password"];
     signupReq.email = j["email"];
+    signupReq.phonNumber = j["phonNumber"];
+    signupReq.address = j["address"];
+    signupReq.dateOfBirth = j["date"];
+
 
     return signupReq;
 }
