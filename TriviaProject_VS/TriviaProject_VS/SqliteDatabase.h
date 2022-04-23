@@ -4,7 +4,7 @@
 #include "IDatabase.h"
 #include "sqlite3.h"
 #include <io.h>
-
+#include "informationVerification.h"
 #define FILE_EXIST -1
 
 int findUserCallback(void* pUser, int argc, char** colData, char** colNames);

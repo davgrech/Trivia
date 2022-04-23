@@ -1,4 +1,5 @@
 #include "SqliteDatabase.h"
+
 SqliteDatabase::SqliteDatabase()
 {
     open();
@@ -28,21 +29,38 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
     int result = sqlite3_exec(this->db, statement.c_str(), getPasswordCallback, &realPassword, &pError);
 
     return realPassword.compare(userPassword) == 0;
-    
+
 }
 
 bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
 {
-    //throw(std::exception("bad client"));
+
     char* pError = NULL;
     if (!doesUserExist(userName))
     {
-        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '"+date+"', '"+phonNumber+"', '"+address+"'); ";
+
+        if (!isPasswordValid(userPassword)) {
+            throw(std::exception(ERROR_PASSWORD));
+        }
+        if (!isBirthDateValid(date)) {
+            throw(std::exception(ERROR_DATE));
+        }
+        if (!isAddressValid(address)) {
+            throw(std::exception(ERROR_ADDRESS));
+        }
+        if (!isPhoneNumberValid(phonNumber)) {
+            throw(std::exception(ERROR_PHONE));
+        }
+        if (!isMailValid(userEmail)) {
+            throw(std::exception(ERROR_EMAIL));
+        }
+
+        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
         int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
         if (result) {
             std::cout << "Error was: " << pError << std::endl;
             free(pError);
-            
+
         }
         return true;
     }
@@ -50,13 +68,13 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
     {
         return false;
     }
-   
+
 }
 
 void SqliteDatabase::open()
 {
     std::string sqlDatabaseName = "MyDb.sqlite";
-    int doesFileExist = _access(sqlDatabaseName.c_str(),  0);
+    int doesFileExist = _access(sqlDatabaseName.c_str(), 0);
 
     int res = sqlite3_open(sqlDatabaseName.c_str(), &this->db);
 
@@ -73,7 +91,7 @@ void SqliteDatabase::open()
         if (res != SQLITE_OK) {
             std::cout << errMessage << std::endl;
             close();
-        }            
+        }
     }
 }
 
