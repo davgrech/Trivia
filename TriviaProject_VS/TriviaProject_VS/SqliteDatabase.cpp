@@ -33,11 +33,11 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
 
 bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
 {
-    throw(std::exception("bad client"));
+    //throw(std::exception("bad client"));
     char* pError = NULL;
     if (!doesUserExist(userName))
     {
-        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '"+date+"', '"+phonNumber+"', '"+address+"'); ";
+        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '"+date+"', '"+phonNumber+"', '"+address+"'); ";
         int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
         if (result) {
             std::cout << "Error was: " << pError << std::endl;
