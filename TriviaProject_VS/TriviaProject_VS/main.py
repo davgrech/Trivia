@@ -30,8 +30,11 @@ def CreateSignup():
     username = input("enter username: ")
     password = input("enter password: ")
     email = input("enter email: ")
-    
-    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '"}'
+    phoneNum = input("enter phone number: ")
+    address = input("enter address: ")
+    birthday = input("enter date of birth: ")
+    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '","phoneNumber":"' + phoneNum + '","address":"' + address + '","date":"' + birthday + '"}'
+    print(signupInfo)
     msgLen = padMsg(str(len(signupInfo)), 4)
     send_str = '0' + msgLen + signupInfo
     byteStream = bytearray(send_str, 'utf-8')
