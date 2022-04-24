@@ -12,11 +12,11 @@
 #define REGEX_DATE "^[0-9]{2}.[0-9]{2}.[0-9]{4}$"
 
 
-#define ERROR_PASSWORD "Bad passowrd format: \n- 8 letters\n- at least one uppercase\n- at least one lowercase\n- at least one numberic\n- at least one special char(!,@,#,$,%,^,&,*)"
-#define ERROR_EMAIL "Bad format of email: <x>@<y>.<z>"
-#define ERROR_ADDRESS "Bad format of address: Street, Apt, City"
-#define ERROR_PHONE "Bad format of phone: 10 numeric letters -> first letter must be 0"
-#define ERROR_DATE "Bad format of date: dd.mm.yyyy"
+#define ERROR_PASSWORD "Invalid passowrd: format -> 8 letters - at least one uppercase - at least one lowercase - at least one numberic letter - at least one special char(!,@,#,$,%,^,&,*)"
+#define ERROR_EMAIL "Invalid email: format -> <x>@<y>.<z>"
+#define ERROR_ADDRESS "Invalid address: format -> Street, Apt, City"
+#define ERROR_PHONE "Invalid phone: format -> 10 numeric letters -> first letter must be 0"
+#define ERROR_DATE "Invalid date: format -> dd.mm.yyyy"
 
 bool isPasswordValid(std::string password);
 bool isMailValid(std::string mail);

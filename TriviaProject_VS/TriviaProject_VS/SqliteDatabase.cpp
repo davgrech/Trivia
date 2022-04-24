@@ -42,25 +42,27 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         if (!isPasswordValid(userPassword)) {
             throw(std::exception(ERROR_PASSWORD));
         }
-        if (!isBirthDateValid(date)) {
-            throw(std::exception(ERROR_DATE));
+        if (!isMailValid(userEmail)) {
+            throw(std::exception(ERROR_EMAIL));
         }
         if (!isAddressValid(address)) {
             throw(std::exception(ERROR_ADDRESS));
         }
+        if (!isBirthDateValid(date)) {
+            throw(std::exception(ERROR_DATE));
+        }
+        
         if (!isPhoneNumberValid(phonNumber)) {
             throw(std::exception(ERROR_PHONE));
         }
-        if (!isMailValid(userEmail)) {
-            throw(std::exception(ERROR_EMAIL));
-        }
+       
 
         std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
         int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
         if (result) {
             std::cout << "Error was: " << pError << std::endl;
             free(pError);
-
+            return false;
         }
         return true;
     }

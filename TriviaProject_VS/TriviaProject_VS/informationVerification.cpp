@@ -39,6 +39,7 @@ bool isBirthDateValid(std::string birthdate)
 
         return isValidDate(day, month, year);
     }
+    return false;
 
 }
 
