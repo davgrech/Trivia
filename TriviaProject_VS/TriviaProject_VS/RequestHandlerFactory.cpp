@@ -14,13 +14,9 @@ RequestHandleFactory& RequestHandleFactory::operator=(const RequestHandleFactory
     return *this;
 }
 
-RequestHandleFactory::RequestHandleFactory(IDatabase* db) :  m_database(db), m_LoginManager(db)
-{
-    this->m_database = db;
-    this->m_LoginManager = LoginManager(db);
-}
-//}
-//
+RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db) {}
+
+
 LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
 {
     while (true) {
@@ -29,7 +25,7 @@ LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
         }
         catch (...) {}
     }
-
+    
    
 }
 
@@ -38,6 +34,11 @@ MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler()
     MenuRequestHanlder* value = new MenuRequestHanlder();
 
     return value;
+}
+
+RoomManager& RequestHandleFactory::getRoomManager()
+{
+    return this->m_RoomManager;
 }
 
 LoginManager& RequestHandleFactory::getLoginManager()

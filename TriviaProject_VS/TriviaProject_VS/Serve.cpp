@@ -124,8 +124,8 @@ void serveTool::cHandler(SOCKET client)
 			if (!(this->_clients.count(client) > 0)) //  if not found in client map
 			{
 				LoginRequestHandler* LoginHandler = this->m_handlerFactory->createLoginRequestHandler();
-				bool isRelevent = LoginHandler->isRequestRelevant(msgInfo); 
-				if (isRelevent) { // check if relevent
+			 
+				if (LoginHandler->isRequestRelevant(msgInfo)) { // check if relevent
 
 					
 						

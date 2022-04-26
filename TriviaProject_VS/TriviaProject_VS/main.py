@@ -68,6 +68,7 @@ def main():
         userChoice = input("1 - Send login\n2- Send signup\n")
         if userChoice == '1': # login
             msg = CreateLogin()
+            print(msg)
         elif userChoice == '2':  # signup
             msg = CreateSignup()
         sock.sendall(msg)
