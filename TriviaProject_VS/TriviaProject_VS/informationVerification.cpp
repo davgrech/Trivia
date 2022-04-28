@@ -27,7 +27,7 @@ bool isPhoneNumberValid(std::string phoneNumber)
 
 bool isBirthDateValid(std::string birthdate)
 {
-    std::regex pattern(REGEX_DATE'');
+    std::regex pattern(REGEX_DATE);
 
     if (std::regex_match(birthdate, pattern)) {
 
