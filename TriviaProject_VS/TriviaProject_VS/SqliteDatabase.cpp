@@ -6,6 +6,7 @@ SqliteDatabase::SqliteDatabase()
 
 }
 
+
 bool SqliteDatabase::doesUserExist(std::string userName)
 {
     std::string statement = "SELECT * FROM PLAYERS WHERE NAME = '" + userName + "';";
@@ -21,6 +22,7 @@ bool SqliteDatabase::doesUserExist(std::string userName)
     return foundUser;
 }
 
+
 bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPassword)
 {
     std::string realPassword;
@@ -31,6 +33,7 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
     return realPassword.compare(userPassword) == 0;
 
 }
+
 
 bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
 {
@@ -58,13 +61,11 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
        
 
         std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
-        int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
-        if (result) {
-            std::cout << "Error was: " << pError << std::endl;
-            free(pError);
-            return false;
-        }
-        return true;
+
+
+        return createTableOrInsert(statement);
+       
+      
     }
     else
     {
@@ -73,10 +74,47 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
 
 }
 
+float SqliteDatabase::getPlayersAverageAnswerTime(std::string user)
+{
+    return 0.0f;
+}
+
+int SqliteDatabase::getNumOfCorrectAnswers(std::string user)
+{
+    return 0;
+}
+
+int SqliteDatabase::getNumOfTotalAnswers(std::string user)
+{
+    return 0;
+}
+
+int SqliteDatabase::getNumOfPlayerGames(std::string user)
+{
+    return 0;
+}
+
+
+bool SqliteDatabase::createTableOrInsert(std::string statement)
+{
+    char* errMessage = nullptr;
+
+    int res = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &errMessage);
+
+
+    if (res != SQLITE_OK) {
+        std::cout << errMessage << std::endl;
+        close();
+        return false;
+    }
+    return true;
+}
+
+
 void SqliteDatabase::open()
 {
     std::string sqlDatabaseName = "MyDb.sqlite";
-    int doesFileExist = _access(sqlDatabaseName.c_str(), 0);
+    int doesFileNotExist = _access(sqlDatabaseName.c_str(), 0);
 
     int res = sqlite3_open(sqlDatabaseName.c_str(), &this->db);
 
@@ -86,16 +124,30 @@ void SqliteDatabase::open()
         exit(1);
     }
 
-    if (doesFileExist == FILE_EXIST) {
-        char* errMessage = nullptr;
-        std::string playerStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMERY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL, ADDRESS NOT NULL);";
-        int res = sqlite3_exec(this->db, playerStatement.c_str(), nullptr, nullptr, &errMessage);
-        if (res != SQLITE_OK) {
-            std::cout << errMessage << std::endl;
-            close();
-        }
-    }
+    if (doesFileNotExist == FILE_NOT_EXIST) {
+       
+        std::string playerTableStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMERY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL, ADDRESS NOT NULL);";
+        createTableOrInsert(playerTableStatement);
+
+        std::string questionsTableStatement = "CREATE TABLE QUESTIONS(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, QUESTION TEXT NOT NULL, A TEXT NOT NULL, B TEXT NOT NULL, C TEXT NOT NULL, D TEXT NOT NULL, ANSWER TEXT NOT NULL);";
+        createTableOrInsert(questionsTableStatement);
+
+
+        createTableOrInsert(Q1);
+        createTableOrInsert(Q2);
+        createTableOrInsert(Q3);
+        createTableOrInsert(Q4);
+        createTableOrInsert(Q5);
+        createTableOrInsert(Q6);
+        createTableOrInsert(Q7);
+        createTableOrInsert(Q8);
+        createTableOrInsert(Q9);
+        createTableOrInsert(Q10);
+
+
+    }   
 }
+
 
 void SqliteDatabase::close()
 {

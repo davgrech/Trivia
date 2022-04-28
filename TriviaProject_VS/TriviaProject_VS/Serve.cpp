@@ -121,7 +121,7 @@ void serveTool::cHandler(SOCKET client)
 
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
-			if (!(this->_clients.count(client) > 0)) //  if not found in client map
+			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
 				LoginRequestHandler* LoginHandler = this->m_handlerFactory->createLoginRequestHandler();
 			 
