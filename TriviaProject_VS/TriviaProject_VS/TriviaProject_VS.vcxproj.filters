@@ -66,6 +66,12 @@
     <ClCompile Include="ClientError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="informationVerification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -126,6 +132,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ClientError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="informationVerification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
