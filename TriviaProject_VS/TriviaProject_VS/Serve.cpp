@@ -96,7 +96,7 @@ void serveTool::cHandler(SOCKET client)
 
 			byteReceived = recv(client, recMsg, 2048, 0);
 
-			if (checkByteReceived(byteReceived)) { // ? 
+			if (checkByteReceived(byteReceived)) { // if client disconnected check.
 				_clients.erase(client);
 
 				throw std::exception("User exit");

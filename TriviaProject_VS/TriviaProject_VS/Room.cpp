@@ -1,5 +1,13 @@
 #include "Room.h"
 
+Room::Room(RoomData dataOfroom, std::vector<LoggedUser> users) : m_metadata(dataOfroom), m_users(users)
+{
+}
+
+Room::Room(RoomData dataOfroom) : m_metadata(dataOfroom)
+{
+}
+
 std::vector<std::string> Room::getAllUsers()
 {
     std::vector<std::string> tempVec;
@@ -25,4 +33,9 @@ bool Room::removeUser(LoggedUser user)
         return true;
     }
     return false;
+}
+
+bool Room::isActive()
+{
+    return this->m_metadata.isActive;
 }
