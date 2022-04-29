@@ -35,3 +35,33 @@ SignupRequest JRPD::deserializeSignupRequest(std::vector<unsigned char> buffer)
 
     return signupReq;
 }
+
+GetPlayersInRoomRequest JRPD::deserializeGetPlayersRequest(std::vector<unsigned char> buffer)
+{
+    auto j = json::parse(buffer.begin(), buffer.end());
+    GetPlayersInRoomRequest getPlayersReq;
+    getPlayersReq.roomId = j["roomId"];
+    return getPlayersReq;
+}
+
+JoinRoomRequest JRPD::deserializeJoinRoomRequest(std::vector<unsigned char> buffer)
+{
+    auto j = json::parse(buffer.begin(), buffer.end());
+    JoinRoomRequest joinRoomReq;
+    joinRoomReq.roomId = j["roomId"];
+    return joinRoomReq;
+}
+
+CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> buffer)
+{
+    return CreateRoomRequest();
+    auto j = json::parse(buffer.begin(), buffer.end());
+    CreateRoomRequest createRoomReq;
+    createRoomReq.answerTimeout = j["answerTimeout"];
+    createRoomReq.questionCount = j["questionCount"];
+    createRoomReq.roomName = j["roomName"];
+    createRoomReq.maxUsers = j["maxUsers"];
+
+
+    return createRoomReq;
+}
