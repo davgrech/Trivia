@@ -28,13 +28,17 @@ LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
     
    
 }
-
-MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler()
+MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler(LoggedUser logUser)
 {
-    MenuRequestHanlder* value = new MenuRequestHanlder();
+    while (true) {
+        try {
+            return new MenuRequestHanlder((*this), logUser);
+        }
+        catch (...) {}
+    }
 
-    return value;
 }
+
 
 RoomManager& RequestHandleFactory::getRoomManager()
 {

@@ -50,7 +50,8 @@ public:
 	virtual int getNumOfTotalAnswers(std::string user);
 	virtual int getNumOfPlayerGames(std::string user) ;
 
-
+	
+	//virtual void addUserStatistics();
 
 	bool createTableOrInsert(std::string statement);
 	void open();

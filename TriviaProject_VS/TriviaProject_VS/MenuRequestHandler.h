@@ -1,13 +1,44 @@
 #pragma once
-#include <iostream>
-#include <string>
+
 #include "IRequestHandler.h"
+#include "StatisticsManager.h"
+#include "LoggedUser.h"
+#include "RoomManager.h"
+#include "LoginManager.h"
+
+#include "JsonRequestPacketDeserialize.h"
+#include "JsonResponsePacketSerialize.h"
+
+
+
+class RequestHandleFactory;
+
 class MenuRequestHanlder : public IRequestHandler
 {
-private:
-	
 
 public:
+	MenuRequestHanlder(RequestHandleFactory& handleFactory, LoggedUser loggedUser);
+
+
 	virtual bool isRequestRelevant(RequestInfo request);
 	virtual RequestResult handleRequest(RequestInfo value);
+
+
+private:
+	LoggedUser m_user;
+	RoomManager& m_roomManager;
+	StatisticsManager& m_statisticsManager;
+	RequestHandleFactory& m_handlerFactory;
+
+	RequestResult signout(RequestInfo info);
+	RequestResult getRooms(RequestInfo info);
+	RequestResult getPlayersInRoom(RequestInfo info);
+	RequestResult getPersonalStats(RequestInfo info);
+	RequestResult getHighScore(RequestInfo info);
+	RequestResult joinRoom(RequestInfo info);
+	RequestResult createRoom(RequestInfo info);
+
+
+
+
 };

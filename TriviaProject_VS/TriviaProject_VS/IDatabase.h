@@ -19,6 +19,7 @@ public:
 	virtual int getNumOfTotalAnswers(std::string user) = 0;
 	virtual int getNumOfPlayerGames(std::string user) = 0;
 
+	//virtual void addUserStatistics();
 
 	virtual void open() = 0;
 	virtual void close() = 0;
