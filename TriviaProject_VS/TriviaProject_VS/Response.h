@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include "Room.h"
 
 
 
@@ -23,11 +23,16 @@ struct LogoutResponse {
 	unsigned int status;
 };
 
-struct GetRoomsResponse {
+struct GetRoomResponse {
 	unsigned int status;
+	std::vector<RoomData> rooms;
 };
 
 struct GetPlayersInRoomResponse {
+	std::vector<std::string> players;
+};
+
+struct getHighScoreResponse {
 	unsigned int status;
 	std::vector<std::string> statistics;
 };
