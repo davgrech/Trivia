@@ -35,9 +35,9 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
         bool isSucceeded = this->m_loginManager.login(LoginReq.username, LoginReq.password);
 
         if (isSucceeded) {
-            this->m_loginManager.login(LoginReq.username, LoginReq.password);
             //return SUCCESS RESPONSE
-            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler();
+            LoggedUser v1(LoginReq.username);
+            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(v1);
 
             LoginRes.status = SUCCESS;
             myResult.buffer = JRPS::serializeResponse(LoginRes);
@@ -60,7 +60,8 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
 
         bool isSucceeded = this->m_loginManager.signup(SignupReq.username, SignupReq.password, SignupReq.email, SignupReq.phonNumber, SignupReq.address, SignupReq.dateOfBirth);
         if (isSucceeded) {
-            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler();
+            LoggedUser v1(SignupReq.username);
+            myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(v1);
 
             SignupRes.status = SUCCESS;
             myResult.buffer = JRPS::serializeResponse(SignupRes);

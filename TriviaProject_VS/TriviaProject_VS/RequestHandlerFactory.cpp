@@ -6,15 +6,9 @@
 
 
 
-RequestHandleFactory& RequestHandleFactory::operator=(const RequestHandleFactory& other)
-{
-    this->m_database = other.m_database;
-    this->m_LoginManager = other.m_LoginManager;
-    
-    return *this;
-}
 
-RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db) {}
+
+RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db), m_StatisticManager(db) {}
 
 
 LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
@@ -48,5 +42,10 @@ RoomManager& RequestHandleFactory::getRoomManager()
 LoginManager& RequestHandleFactory::getLoginManager()
 {
     return this->m_LoginManager;
+}
+
+StatisticsManager& RequestHandleFactory::getStatisticManager()
+{
+    return this->m_StatisticManager;
 }
 

@@ -9,7 +9,7 @@
 #include "JsonRequestPacketDeserialize.h"
 #include "JsonResponsePacketSerialize.h"
 
-
+#include "RequestHandlerFactory.h"
 
 class RequestHandleFactory;
 

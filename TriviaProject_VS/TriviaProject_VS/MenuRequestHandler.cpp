@@ -1,5 +1,11 @@
 #include "MenuRequestHandler.h"
 
+MenuRequestHanlder::MenuRequestHanlder(RequestHandleFactory& handleFactory, LoggedUser loggedUser) : m_handlerFactory(handleFactory), m_user(loggedUser), m_roomManager(handleFactory.getRoomManager()), m_statisticsManager(handleFactory.getStatisticManager())
+{
+
+
+}
+
 bool MenuRequestHanlder::isRequestRelevant(RequestInfo request)
 {
     return false;

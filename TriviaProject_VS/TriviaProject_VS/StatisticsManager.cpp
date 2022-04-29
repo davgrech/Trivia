@@ -2,6 +2,7 @@
 
 StatisticsManager::StatisticsManager(IDatabase* db) : m_database(db)
 {
+	this->m_database = db;
 }
 
 std::vector<std::string> StatisticsManager::getHighScore()
@@ -12,5 +13,6 @@ std::vector<std::string> StatisticsManager::getHighScore()
 
 std::vector<std::string> StatisticsManager::getUserStatustics(std::string username)
 {
+
 	return std::vector<std::string>();
 }

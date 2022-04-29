@@ -31,6 +31,7 @@ int getTotalAnswersCallback(void* pTotalAnswersReturn, int argc, char** colData,
     *totalAnswer = std::stoi(colData[0]);
     return 0;
 }
+
 int getNumOfGamesCallback(void* pNumgames, int argc, char** colData, char** colName)
 {
     int* numGames = (int*)pNumgames;

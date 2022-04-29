@@ -14,15 +14,16 @@ class LoginRequestHandler;
 class RequestHandleFactory
 {
 	public:
-		RequestHandleFactory& operator=(const RequestHandleFactory& other);
+		
 		RequestHandleFactory(IDatabase* db);
 		LoginRequestHandler* createLoginRequestHandler();
 		MenuRequestHanlder* createMenuRequestHandler(LoggedUser logUser);
 		RoomManager& getRoomManager();
 		LoginManager& getLoginManager();
-
+		StatisticsManager& getStatisticManager();
 	private:
 		IDatabase* m_database;
 		LoginManager m_LoginManager;
 		RoomManager m_RoomManager;
+		StatisticsManager m_StatisticManager;
 };
