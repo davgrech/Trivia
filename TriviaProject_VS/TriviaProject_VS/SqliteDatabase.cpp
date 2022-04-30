@@ -63,7 +63,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         }
        
 
-        std::string statement = "INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
+        std::string statement = "INSERT INTO PLAYERS VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
 
 
         return createTableOrInsert(statement);
@@ -148,14 +148,13 @@ int SqliteDatabase::getNumOfPlayerGames(std::string user)
 
 bool SqliteDatabase::createTableOrInsert(std::string statement)
 {
-    char* errMessage = nullptr;
+    char* errMessage = NULL;
 
     int res = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &errMessage);
 
 
     if (res != SQLITE_OK) {
-        std::cout << errMessage << std::endl;
-        close();
+        
         return false;
     }
     return true;
@@ -180,13 +179,15 @@ void SqliteDatabase::open()
         std::string playerTableStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL, ADDRESS NOT NULL);";
         createTableOrInsert(playerTableStatement);
 
-        std::string questionsTableStatement = "CREATE TABLE QUESTIONS(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, QUESTION TEXT NOT NULL, A TEXT NOT NULL, B TEXT NOT NULL, C TEXT NOT NULL, D TEXT NOT NULL, ANSWER TEXT NOT NULL);";
+        std::string questionsTableStatement = "CREATE TABLE QUESTIONS(ID INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL, QUESTION TEXT NOT NULL, A TEXT NOT NULL, B TEXT NOT NULL, C TEXT NOT NULL, D TEXT NOT NULL, ANSWER TEXT NOT NULL);";
         createTableOrInsert(questionsTableStatement);
         
-        std::string statisticTableStatement = "CREATE TABLE STATISTICS(NAME TEXT NOT NULL PRIMARY KEY NOT NULL, ,CORRECT_ANSWERS INTEGER, TOTAL_ANSWERS INTEGER, GAMES INTEGER, AVG_TIME FLOAT, WINNER_POINTS INTEGER );";
+        std::string statisticTableStatement = "CREATE TABLE STATISTICS(NAME TEXT NOT NULL PRIMARY KEY NOT NULL, CORRECT_ANSWERS INTEGER, TOTAL_ANSWERS INTEGER, GAMES INTEGER, AVG_TIME FLOAT, WINNER_POINTS INTEGER );";
         createTableOrInsert(statisticTableStatement);
-
+        std::string statement = "INSERT INTO QUESTIONS (QUESTION, A, B, C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');";
+          
         createTableOrInsert(Q1);
+        //INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('
         createTableOrInsert(Q2);
         createTableOrInsert(Q3);
         createTableOrInsert(Q4);
