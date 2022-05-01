@@ -22,11 +22,13 @@ void Room::addUser(LoggedUser user)
 {
     //check if user already in
     //check if max players in room
+    
     if (std::find(this->m_users.begin(), this->m_users.end(), user.getUsername()) != this->m_users.end()) {
         throw std::exception("Already in the room");
     }
     else {
         if (this->m_users.size() != this->m_metadata.maxPlayers) {
+
             this->m_users.push_back(user);
         }
         else {

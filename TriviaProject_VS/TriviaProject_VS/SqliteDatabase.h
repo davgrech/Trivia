@@ -50,6 +50,7 @@ public:
 	virtual int getNumOfTotalAnswers(std::string user);
 	virtual int getNumOfPlayerGames(std::string user) ;
 
+	std::vector<int> getTopFive();
 	
 	//virtual void addUserStatistics();
 

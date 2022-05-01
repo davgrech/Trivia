@@ -7,7 +7,7 @@ StatisticsManager::StatisticsManager(IDatabase* db) : m_database(db)
 
 std::vector<std::string> StatisticsManager::getHighScore()
 {
-
+	
 	return std::vector<std::string>();
 }
 

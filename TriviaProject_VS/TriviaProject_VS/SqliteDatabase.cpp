@@ -145,6 +145,19 @@ int SqliteDatabase::getNumOfPlayerGames(std::string user)
    
 }
 
+std::vector<int> SqliteDatabase::getTopFive()
+{
+    std::vector<int> myResults;
+    char* pError = NULL;
+
+    std::string statement = "SELECT WINNER_POINTS FROM STATISTICS ORDER BY WINNER_POINTS DESC LIMIT 5;";
+  
+    int res = sqlite3_exec(this->db, statement.c_str(), getTopFiveCallBack, &myResults, &pError);
+
+
+    return myResults;
+}
+
 
 bool SqliteDatabase::createTableOrInsert(std::string statement)
 {
@@ -184,7 +197,7 @@ void SqliteDatabase::open()
         
         std::string statisticTableStatement = "CREATE TABLE STATISTICS(NAME TEXT NOT NULL PRIMARY KEY NOT NULL, CORRECT_ANSWERS INTEGER, TOTAL_ANSWERS INTEGER, GAMES INTEGER, AVG_TIME FLOAT, WINNER_POINTS INTEGER );";
         createTableOrInsert(statisticTableStatement);
-        std::string statement = "INSERT INTO QUESTIONS (QUESTION, A, B, C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');";
+   
           
         createTableOrInsert(Q1);
         //INSERT INTO PLAYERS (NAME, PASSWORD, EMAIL, DATE, PHONE, ADDRESS) VALUES('
