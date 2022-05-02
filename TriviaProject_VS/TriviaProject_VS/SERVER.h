@@ -12,6 +12,7 @@ public:
 	~Server();
 	void admin_acess_function();
 	void run();
+	
 private:
 	RequestHandleFactory m_handlerFactory;
 	serveTool Communicator;

@@ -32,10 +32,28 @@ int getTotalAnswersCallback(void* pTotalAnswersReturn, int argc, char** colData,
     return 0;
 }
 
-int getTopFiveCallBack(void* pTopFive, int argc, char** colData, char** colName)
+int getPointsCallBack(void* pTopFive, int argc, char** colData, char** colName)
 {
-    std::vector<int>* myResult = (std::vector<int>*)pTopFive;
-    myResult->push_back(std::stoi(colData[0]));
+    std::vector<std::string>* myResult = (std::vector<std::string>*)pTopFive;
+    std::string player;
+    for (int i = 0; i < argc; i++) {
+        
+        switch (i) {
+            case 0:
+            {
+                player = colData[0];
+                player += ":";
+                break;
+            }
+            case 1:
+            {
+                player += colData[1];
+                break;
+            }
+        }
+        
+    }
+    myResult->push_back(player);
 
     return 0;
 }

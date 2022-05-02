@@ -132,7 +132,7 @@ int SqliteDatabase::getNumOfPlayerGames(std::string user)
 {
     std::string statement = "SELECT GAMES FROM STATISTICS WHERE NAME ='" + user + "';";
     char* pError = NULL;
-    int numOfgames;
+    int numOfgames = 0;
 
     int res = sqlite3_exec(this->db, statement.c_str(), getNumOfGamesCallback, &numOfgames, &pError);
 
@@ -145,15 +145,41 @@ int SqliteDatabase::getNumOfPlayerGames(std::string user)
    
 }
 
-std::vector<int> SqliteDatabase::getTopFive()
+int SqliteDatabase::getWinnerPointOfUsers(std::string user)
 {
-    std::vector<int> myResults;
+    std::vector<std::string> myResults;
     char* pError = NULL;
 
-    std::string statement = "SELECT WINNER_POINTS FROM STATISTICS ORDER BY WINNER_POINTS DESC LIMIT 5;";
-  
-    int res = sqlite3_exec(this->db, statement.c_str(), getTopFiveCallBack, &myResults, &pError);
+    std::string statement = "SELECT NAME, WINNER_POINTS FROM STATISTICS WHERE NAME ='" + user + "';";
 
+
+    int res = sqlite3_exec(this->db, statement.c_str(), getPointsCallBack, &myResults, &pError);
+    if (res != SQLITE_OK) {
+        std::cout << "Error: " << pError << std::endl;
+        throw(std::exception("Error in sql "));
+
+    }
+
+    //the vector has only 1 item because NAME is a prime key.
+    //data processing the result
+    std::string stringResult = myResults[0];
+    stringResult = stringResult.substr(stringResult.find(":") + 1);
+    return std::atoi(stringResult.c_str());
+}
+
+std::vector<std::string> SqliteDatabase::getTopFive()
+{
+    std::vector<std::string> myResults;
+    char* pError = NULL;
+
+    std::string statement = "SELECT NAME, WINNER_POINTS FROM STATISTICS ORDER BY WINNER_POINTS DESC LIMIT 5;";
+  
+    int res = sqlite3_exec(this->db, statement.c_str(), getPointsCallBack, &myResults, &pError);
+    if (res != SQLITE_OK) {
+        std::cout << "Error: " << pError << std::endl;
+        throw(std::exception("Error in sql "));
+
+    }
 
     return myResults;
 }

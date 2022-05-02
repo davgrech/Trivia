@@ -1,4 +1,8 @@
 #include "RoomManager.h"
+RoomManager::RoomManager()
+{
+	m_rooms.insert({ 0,Room() });
+}
 
 void RoomManager::createRoom(LoggedUser user, RoomData var)
 {

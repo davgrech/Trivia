@@ -19,6 +19,7 @@ void Server::run()
 	std::thread admin_thread(&Server::admin_acess_function , this);
 	admin_thread.detach();
 
+	//Communicator.checkMyUpdate();
 	Communicator.startHandleRequests();
 	
 }

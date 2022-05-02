@@ -10,13 +10,6 @@ bool LoginManager::signup(std::string name, std::string password, std::string em
 {
 	//fix order of arguments.
 	return this->database->addNewUser(name, password, email, phone, address, birthDate);
-	
-4
-
-
-
-
-
 }
 
 bool LoginManager::login(std::string name, std::string password)

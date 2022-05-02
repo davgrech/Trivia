@@ -70,6 +70,7 @@ void serveTool::startHandleRequests()
 
 
 
+
 void serveTool::addToClients(SOCKET client, IRequestHandler* request)
 {
 
@@ -87,8 +88,8 @@ void serveTool::cHandler(SOCKET client)
 
 	std::string msg; 
 
-	RequestResult reqResult;
 
+	RequestResult reqResult;
 	try
 	{
 		
@@ -144,13 +145,60 @@ void serveTool::cHandler(SOCKET client)
 					
 				}
 				else {
-					throw std::exception("Client must login first"); 
+					throw std::exception("must login First"); 
 
 				}
 			}
 			else
 			{
-				//other codes
+				
+				switch (id)
+				{
+					case CLIENT_SIGNUP:
+					{
+						break;
+					}
+					case CLIENT_LOGIN:
+					{
+						break;
+					}
+					case CLIENT_LOGOUT:
+					{
+						break;
+					}
+					case CLIENT_SIGNOUT:
+					{
+						break;
+					}
+					case CLIENT_CREATE_ROOM:
+					{
+						break;
+					}
+					case CLIENT_JOIN_ROOM:
+					{
+						break;
+					}
+					case CLIENT_GET_PLAYERS_ROOM:
+					{
+						break;
+					}
+					case CLIENT_GET_ROOMS:
+					{
+						break;
+					}
+					case CLIENT_GET_STATS_USER:
+					{
+						break;
+					}
+					case CLIENT_HIGH_SCORE:
+					{
+						break;
+					}
+					default:
+					{
+						throw std::exception("not an request type");
+					}
+				}
 			}
 
 			//send json to the client -> 

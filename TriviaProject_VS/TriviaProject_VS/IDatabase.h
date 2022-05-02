@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <vector>
 class IDatabase;
 
 class IDatabase
@@ -18,7 +18,8 @@ public:
 	virtual int getNumOfCorrectAnswers(std::string user) = 0;
 	virtual int getNumOfTotalAnswers(std::string user) = 0;
 	virtual int getNumOfPlayerGames(std::string user) = 0;
-
+	virtual std::vector<std::string> getTopFive() = 0;
+	virtual int getWinnerPointOfUsers(std::string user) = 0;
 	//virtual void addUserStatistics();
 
 	virtual void open() = 0;

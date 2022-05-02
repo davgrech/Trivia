@@ -49,8 +49,10 @@ public:
 	virtual int getNumOfCorrectAnswers(std::string user);
 	virtual int getNumOfTotalAnswers(std::string user);
 	virtual int getNumOfPlayerGames(std::string user) ;
+	virtual int getWinnerPointOfUsers(std::string user);
 
-	std::vector<int> getTopFive();
+
+	virtual std::vector<std::string> getTopFive();
 	
 	//virtual void addUserStatistics();
 

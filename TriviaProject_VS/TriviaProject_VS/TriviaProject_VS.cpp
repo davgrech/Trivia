@@ -9,8 +9,6 @@
 
 int main()
 {
-
-
     
     try {
         TRACE("Starting...");

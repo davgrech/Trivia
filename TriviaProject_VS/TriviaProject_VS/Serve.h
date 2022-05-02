@@ -49,7 +49,7 @@ public:
 
 
 	void startHandleRequests();
-	
+	void checkMyUpdate();
 
 	
 	void addToClients(SOCKET client, IRequestHandler* request);

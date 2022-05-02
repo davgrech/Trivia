@@ -1,5 +1,10 @@
 #include "Room.h"
 
+Room::Room()
+{
+    this->m_metadata = RoomData();
+}
+
 Room::Room(RoomData dataOfroom, std::vector<LoggedUser> users) : m_metadata(dataOfroom), m_users(users)
 {
 }
