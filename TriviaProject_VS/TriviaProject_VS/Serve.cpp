@@ -84,7 +84,7 @@ void serveTool::cHandler(SOCKET client)
 	int byteReceived = 0;
 
 	char recMsg[2048];
-	ZeroMemory(recMsg, 2048);
+	
 
 	std::string msg; 
 
@@ -94,7 +94,7 @@ void serveTool::cHandler(SOCKET client)
 	{
 		
 		while (true) {
-
+			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
@@ -122,15 +122,17 @@ void serveTool::cHandler(SOCKET client)
 
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
+
+			IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
 			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
-				LoginRequestHandler* LoginHandler = this->m_handlerFactory->createLoginRequestHandler();
+				
 			 
-				if (LoginHandler->isRequestRelevant(msgInfo)) { // check if relevent
+				if (handler->isRequestRelevant(msgInfo)) { // check if relevent
 
 					
 						
-					reqResult =  LoginHandler->handleRequest(msgInfo);
+					reqResult = handler->handleRequest(msgInfo);
 
 
 					//succee to login
@@ -156,48 +158,89 @@ void serveTool::cHandler(SOCKET client)
 				{
 					case CLIENT_SIGNUP:
 					{
+						throw std::exception("First Logout then try to signup");
 						break;
 					}
 					case CLIENT_LOGIN:
 					{
+						throw std::exception("First Logout then try to login");
 						break;
 					}
 					case CLIENT_LOGOUT:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_SIGNOUT:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_CREATE_ROOM:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_JOIN_ROOM:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_GET_PLAYERS_ROOM:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_GET_ROOMS:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_GET_STATS_USER:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+
 						break;
 					}
 					case CLIENT_HIGH_SCORE:
 					{
+						if (handler->isRequestRelevant(msgInfo)) {
+							reqResult = handler->handleRequest(msgInfo);
+						}
+						
 						break;
 					}
 					default:
 					{
 						throw std::exception("not an request type");
 					}
+					handler = reqResult.newHandler;
+
+
+					this->_mtx1.lock();
+					this->_clients.at(client) = handler;
+					this->_mtx1.unlock();
+					
 				}
 			}
 

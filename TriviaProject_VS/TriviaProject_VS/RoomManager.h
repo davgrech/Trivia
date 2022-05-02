@@ -15,7 +15,7 @@ public:
 	unsigned int getRoomState(unsigned int ID);
 	std::vector<Room> getRooms();
 	Room& getRoom(unsigned int ID);
-
+	
 
 	//getters
 	

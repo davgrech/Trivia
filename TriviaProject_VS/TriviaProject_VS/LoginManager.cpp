@@ -32,3 +32,10 @@ void LoginManager::logout(std::string name)
 		this->m_loggedUsers.erase(it);
 	}
 }
+
+bool LoginManager::signout(std::string name)
+{
+	logout(name);
+	
+	return this->database->signout(name);
+}

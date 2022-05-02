@@ -11,7 +11,7 @@ public:
 	virtual bool doesUserExist(std::string userName) = 0 ;
 	virtual bool doesPasswordMatch(std::string v1, std::string v2) = 0;
 	virtual bool addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string date, std::string address, std::string phonNumber) = 0;
-
+	virtual bool signout(std::string userName) = 0;
 	//2.0.0
 	//virtual List<Questions> getQuestions(int) 
 	virtual float getPlayersAverageAnswerTime(std::string user) = 0;

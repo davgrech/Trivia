@@ -8,8 +8,8 @@ using nlohmann::json;
 std::vector<unsigned char> ConvertMsg(std::string msg)
 {
     std::vector<unsigned char> response;
-    std::string sizeOfmsg;
-    sizeOfmsg = std::to_string(msg.length());
+    
+
     std::copy(msg.begin(), msg.end(), std::back_inserter(response));
     return response;
 }
@@ -58,15 +58,29 @@ std::vector<unsigned char> JRPS::serializeResponse(SignupResponse value) // sign
 {
     json j;
     std::vector<unsigned char> response;
-    std::string msg, sizeOfmsg;
+    std::string msg;
     j["status"] = value.status;
     msg = j.dump();
-    sizeOfmsg = std::to_string(msg.length());
+   
 
-    //response.push_back('0');
-    //SizeToValue(sizeOfmsg, response);
+    
     std::copy(msg.begin(), msg.end(), std::back_inserter(response));
 
+    return response;
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(SignoutResponse value)
+{
+    json j;
+    std::string msg;
+    std::vector<unsigned char> response;
+  
+    j["status"] = value.status;
+    msg = j.dump();
+    
+
+    
+    std::copy(msg.begin(), msg.end(), std::back_inserter(response));
     return response;
 }
 
@@ -79,6 +93,7 @@ std::vector<unsigned char> JRPS::serializeResponse(LogoutResponse value)
     return ConvertMsg(j.dump());
 }
 
+
 std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse value)
 {
     json j;
@@ -87,7 +102,7 @@ std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse value)
     j["status"] = value.status;
     for (auto RoomIt = value.rooms.begin(); RoomIt != value.rooms.end(); RoomIt++) // itrate through all rooms
     {
-        rooms += RoomIt->name;
+        rooms += RoomIt->name + ", ";
     }
     j["Rooms"] = rooms;
     return ConvertMsg(j.dump());
@@ -98,6 +113,7 @@ std::vector<unsigned char> JRPS::serializeResponse(GetPlayersInRoomResponse valu
     json j;
     std::vector<unsigned char> response;
     std::string msg, sizeOfmsg, Players;
+    
     for (auto it = value.players.begin(); it != value.players.end(); it++)
     {
         Players += *it + ", ";
@@ -111,7 +127,7 @@ std::vector<unsigned char> JRPS::serializeResponse(JoinRoomResponse value)
 {
     json j;
     std::vector<unsigned char> response;
-    std::string msg, sizeOfmsg;
+    
     j["status"] = value.status;
     return ConvertMsg(j.dump());
 }
@@ -120,7 +136,52 @@ std::vector<unsigned char> JRPS::serializeResponse(CreateRoomResponse value)
 {
     json j;
     std::vector<unsigned char> response;
-    std::string msg, sizeOfmsg;
+    
     j["status"] = value.status;
+    return ConvertMsg(j.dump());
+}
+
+
+
+
+/*
+HighScores = '1#name=x,2#name=x,
+*/
+std::vector<unsigned char> JRPS::serializeResponse(getHighScoreResponse value)
+{
+    json j;
+    int i = 1;
+    std::vector<unsigned char> response;
+    
+    std::string scores;
+    
+    
+    for (auto it = value.statistics.begin(); it != value.statistics.end(); it++) {
+        
+        scores += std::to_string(i)+"#"+ *it + ", ";
+        i++;
+    }
+    j["HighScores"] = scores;
+
+    return ConvertMsg(j.dump());
+}
+
+
+
+/*
+ PersonalScore = 'name:X, CORRECT_ANS=X, TOTAL_ANS=X, GAMES=X, AVG_TIME=X, WINNER_POINTS=X,' 
+
+*/
+std::vector<unsigned char> JRPS::serializeResponse(getPersonalStatsResponse value)
+{
+    json j;
+    std::vector<unsigned char> response;
+    std::string scores;
+
+    for (auto it = value.statistics.begin(); it != value.statistics.end(); it++) {
+        scores += *it + ", ";
+    }
+    j["PersonalScore"] = scores;
+
     return ConvertMsg(j.dump());
 }

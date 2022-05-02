@@ -16,7 +16,10 @@ std::vector<std::string> StatisticsManager::getUserStatustics(std::string userna
 	std::string temp;
 	std::vector<std::string> myResult;
 
-	
+	temp = "NAME: ";
+	temp += username;
+	myResult.push_back(temp);
+
 	temp = "CORRECT_ANSWERS: ";
 	temp += std::to_string(this->m_database->getNumOfCorrectAnswers(username));
 	myResult.push_back(temp);
@@ -37,6 +40,6 @@ std::vector<std::string> StatisticsManager::getUserStatustics(std::string userna
 	temp += std::to_string(this->m_database->getWinnerPointOfUsers(username));
 	myResult.push_back(temp);
 
-	// (CORRECT_ANSWERS: X), (CORRECT_ANSWERS: X), (CORRECT_ANSWERS: X), (CORRECT_ANSWERS: X) 
+	// (NAME: X) (CORRECT_ANSWERS: X) (TOTAL_ANSWERS: X) (GAMES: X) (AVG_TIME: X) ...
 	return myResult;
 }

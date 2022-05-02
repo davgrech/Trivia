@@ -19,6 +19,10 @@ struct SignupResponse {
 	unsigned int status;
 };
 
+struct SignoutResponse {
+	unsigned int status;
+};
+
 struct LogoutResponse {
 	unsigned int status;
 };
@@ -33,12 +37,10 @@ struct GetPlayersInRoomResponse {
 };
 
 struct getHighScoreResponse {
-	unsigned int status;
 	std::vector<std::string> statistics;
 };
 
 struct getPersonalStatsResponse {
-	unsigned int status;
 	std::vector<std::string> statistics;
 };
 
@@ -49,5 +51,6 @@ struct JoinRoomResponse {
 struct CreateRoomResponse {
 	unsigned int status;
 };
+
 //Json requestPacketserialize
 //Json responsePacketserialize

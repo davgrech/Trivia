@@ -10,7 +10,7 @@ using nlohmann::json;
 struct GetPlayersInRoomRequest
 {
 	unsigned int roomId;
-
+	
 }typedef GetPlayersInRoomRequest;
 
 struct JoinRoomRequest

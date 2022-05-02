@@ -38,6 +38,22 @@ bool SqliteDatabase::doesPasswordMatch(std::string userName, std::string userPas
 }
 
 
+bool SqliteDatabase::signout(std::string userName)
+{
+   
+    std::string statement = "DELETE FROM PLAYERS WHERE NAME = '" + userName + "';";
+    char* pError = NULL;
+    int result = sqlite3_exec(this->db, statement.c_str(), nullptr, nullptr, &pError);
+
+    if (result != SQLITE_OK) {
+        std::cout << "Error: " << pError << std::endl;
+        throw(std::exception("Error in sql "));
+        return false;
+         
+    }
+    return true;
+    
+}
 bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
 {
 

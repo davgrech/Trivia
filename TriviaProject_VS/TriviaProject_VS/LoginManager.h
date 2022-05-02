@@ -15,6 +15,7 @@ public:
 	bool signup(std::string name, std::string password, std::string email, std::string phone, std::string address, std::string birthDate);
 	bool login(std::string name, std::string password);
 	void logout(std::string name);
+	bool signout(std::string name);
 private:
 	IDatabase* database;
 	std::vector<LoggedUser> m_loggedUsers;

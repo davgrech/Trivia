@@ -32,14 +32,14 @@ private:
 	StatisticsManager& m_statisticsManager;
 	RequestHandleFactory& m_handlerFactory;
 
-	RequestResult signout(RequestInfo info);
+	
 	RequestResult getRooms(RequestInfo info);
 	RequestResult getPlayersInRoom(RequestInfo info);
 	RequestResult getPersonalStats(RequestInfo info);
-	RequestResult getHighScore(RequestInfo info);
+	RequestResult getHighScore();
 	RequestResult joinRoom(RequestInfo info);
 	RequestResult createRoom(RequestInfo info);
-
+	RequestResult signout();
 
 
 

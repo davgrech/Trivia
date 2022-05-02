@@ -25,6 +25,7 @@ public:
 	void addUser(LoggedUser user);
 	bool removeUser(LoggedUser user);
 	bool isActive();
+	RoomData getRoomData();
 
 	//includes
 private:

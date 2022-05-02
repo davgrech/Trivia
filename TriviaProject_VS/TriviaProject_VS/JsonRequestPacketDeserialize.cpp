@@ -54,7 +54,7 @@ JoinRoomRequest JRPD::deserializeJoinRoomRequest(std::vector<unsigned char> buff
 
 CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> buffer)
 {
-    return CreateRoomRequest();
+    
     auto j = json::parse(buffer.begin(), buffer.end());
     CreateRoomRequest createRoomReq;
     createRoomReq.answerTimeout = j["answerTimeout"];

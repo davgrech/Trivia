@@ -67,3 +67,8 @@ bool Room::isActive()
 {
     return this->m_metadata.isActive;
 }
+
+RoomData Room::getRoomData()
+{
+    return this->m_metadata;
+}
