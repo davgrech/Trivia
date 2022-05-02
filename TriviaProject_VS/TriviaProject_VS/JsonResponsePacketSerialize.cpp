@@ -136,8 +136,9 @@ std::vector<unsigned char> JRPS::serializeResponse(CreateRoomResponse value)
 {
     json j;
     std::vector<unsigned char> response;
-    
+
     j["status"] = value.status;
+    
     return ConvertMsg(j.dump());
 }
 

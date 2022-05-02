@@ -40,15 +40,18 @@ GetPlayersInRoomRequest JRPD::deserializeGetPlayersRequest(std::vector<unsigned 
 {
     auto j = json::parse(buffer.begin(), buffer.end());
     GetPlayersInRoomRequest getPlayersReq;
-    getPlayersReq.roomId = j["roomId"];
+    std::string strRoomId = j["roomId"];
+    getPlayersReq.roomId = std::stoi(strRoomId);
     return getPlayersReq;
 }
 
 JoinRoomRequest JRPD::deserializeJoinRoomRequest(std::vector<unsigned char> buffer)
 {
     auto j = json::parse(buffer.begin(), buffer.end());
+    std::string strRoomId;
     JoinRoomRequest joinRoomReq;
-    joinRoomReq.roomId = j["roomId"];
+    strRoomId = j["roomId"];
+    joinRoomReq.roomId = std::stoi(strRoomId);
     return joinRoomReq;
 }
 
@@ -57,10 +60,14 @@ CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> 
     
     auto j = json::parse(buffer.begin(), buffer.end());
     CreateRoomRequest createRoomReq;
-    createRoomReq.answerTimeout = j["answerTimeout"];
-    createRoomReq.questionCount = j["questionCount"];
+    std::string cock;
+    cock = j["answerTimeout"];
+    createRoomReq.answerTimeout = std::stoi(cock);
+    cock = j["questionCount"];
+    createRoomReq.questionCount = std::stoi(cock);
     createRoomReq.roomName = j["roomName"];
-    createRoomReq.maxUsers = j["maxUsers"];
+    cock = j["maxUsers"];
+    createRoomReq.maxUsers = std::stoi(cock);
 
 
     return createRoomReq;

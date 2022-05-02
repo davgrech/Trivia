@@ -92,7 +92,7 @@ void serveTool::cHandler(SOCKET client)
 	RequestResult reqResult;
 	try
 	{
-		
+		IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
 		while (true) {
 			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
@@ -123,7 +123,7 @@ void serveTool::cHandler(SOCKET client)
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
 
-			IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
+			//IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
 			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
 				
@@ -140,6 +140,7 @@ void serveTool::cHandler(SOCKET client)
 					{
 						this->_mtx1.lock();
 						addToClients(client, reqResult.newHandler);
+						handler = reqResult.newHandler;
 						this->_mtx1.unlock();
 					}
 					
