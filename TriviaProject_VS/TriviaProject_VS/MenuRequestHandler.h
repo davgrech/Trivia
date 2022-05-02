@@ -40,7 +40,7 @@ private:
 	RequestResult joinRoom(RequestInfo info);
 	RequestResult createRoom(RequestInfo info);
 	RequestResult signout();
-
+	RequestResult logout();
 
 
 };

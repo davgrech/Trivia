@@ -21,9 +21,6 @@ bool MenuRequestHanlder::isRequestRelevant(RequestInfo request)
 RequestResult MenuRequestHanlder::handleRequest(RequestInfo value)
 {
     RequestResult myResult;
-
-    //there is no need for signout Request becuase signout is without variables
-    
     
     //roomManager related
     if (value.id == CLIENT_GET_ROOMS){ //done
@@ -32,10 +29,10 @@ RequestResult MenuRequestHanlder::handleRequest(RequestInfo value)
     else if (value.id == CLIENT_GET_PLAYERS_ROOM) { // done
         myResult = getPlayersInRoom(value);
     }
-    else if (value.id == CLIENT_JOIN_ROOM) {
+    else if (value.id == CLIENT_JOIN_ROOM) { //done
         myResult = joinRoom(value);
     }
-    else if (value.id == CLIENT_CREATE_ROOM) {
+    else if (value.id == CLIENT_CREATE_ROOM) { // done
         myResult = createRoom(value);
     }
     //statistic related
@@ -51,6 +48,9 @@ RequestResult MenuRequestHanlder::handleRequest(RequestInfo value)
         
 
 
+    }
+    else if (value.id == CLIENT_LOGOUT) { // done
+        myResult = logout();
     }
     else
     {
@@ -71,6 +71,16 @@ RequestResult MenuRequestHanlder::signout()
 
      return RequestResult{JRPS::serializeResponse(signoutRes), this->m_handlerFactory.createLoginRequestHandler()};
 }
+
+RequestResult MenuRequestHanlder::logout()
+{
+    LogoutResponse logoutRes;
+    this->m_handlerFactory.getLoginManager().logout(this->m_user.getUsername());
+
+    logoutRes.status = SUCCESS;
+    return RequestResult{JRPS::serializeResponse(logoutRes), this->m_handlerFactory.createLoginRequestHandler()};
+}
+
 RequestResult MenuRequestHanlder::getRooms(RequestInfo info)
 {
     GetRoomResponse getRoomRes;
