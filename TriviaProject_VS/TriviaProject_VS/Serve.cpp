@@ -123,7 +123,7 @@ void serveTool::cHandler(SOCKET client)
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
 
-			
+
 			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
 				
@@ -140,6 +140,7 @@ void serveTool::cHandler(SOCKET client)
 					{
 						this->_mtx1.lock();
 						addToClients(client, reqResult.newHandler);
+						handler = reqResult.newHandler;
 						this->_mtx1.unlock();
 					}
 					
