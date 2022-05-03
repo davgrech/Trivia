@@ -98,7 +98,7 @@ float SqliteDatabase::getPlayersAverageAnswerTime(std::string user)
     //CREATE TABLE STATISTICS(NAME TEXT NOT NULL PRIMARY KEY NOT NULL, ,CORRECT_ANSWERS INTEGER, TOTAL_ANSWERS INTEGER, GAMES INTEGER, AVG_TIME FLOAT, WINNER_POINTS INTEGER );
     std::string statement = "SELECT AVG_TIME FROM STATISTICS WHERE NAME ='" + user + "';";
     char* pError = NULL;
-    float AVG_TIME_FROM_TABLE;
+    float AVG_TIME_FROM_TABLE = 0;
 
     int result = sqlite3_exec(this->db, statement.c_str(), getAvgTimeCallback, &AVG_TIME_FROM_TABLE, &pError);
 
@@ -114,7 +114,7 @@ int SqliteDatabase::getNumOfCorrectAnswers(std::string user)
 {
     std::string statement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE NAME ='" + user + "';";
     char* pError = NULL;
-    int CORRECT_ANSWERS;
+    int CORRECT_ANSWERS = 0;
 
     int res = sqlite3_exec(this->db, statement.c_str(), getCorrectAnswersCallback, &CORRECT_ANSWERS, &pError);
 
@@ -132,7 +132,7 @@ int SqliteDatabase::getNumOfTotalAnswers(std::string user)
 {
     std::string statement = "SELECT TOTAL_ANSWERS FROM STATISTICS WHERE NAME ='" + user + "';";
     char* pError = NULL;
-    int totalAnswers;
+    int totalAnswers = 0;
 
     int res = sqlite3_exec(this->db, statement.c_str(), getTotalAnswersCallback, &totalAnswers, &pError);
 
@@ -175,7 +175,10 @@ int SqliteDatabase::getWinnerPointOfUsers(std::string user)
         throw(std::exception("Error in sql "));
 
     }
-
+    if (myResults.size() == 0)
+    {
+        return 0;
+    }
     //the vector has only 1 item because NAME is a prime key.
     //data processing the result
     std::string stringResult = myResults[0];

@@ -45,7 +45,7 @@ RequestResult MenuRequestHanlder::handleRequest(RequestInfo value)
     //login manager related
     else if (value.id == CLIENT_SIGNOUT) { //done 
         myResult = signout();
-        
+       
 
 
     }

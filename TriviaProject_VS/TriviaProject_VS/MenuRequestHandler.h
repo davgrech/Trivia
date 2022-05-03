@@ -31,7 +31,7 @@ private:
 	RoomManager& m_roomManager;
 	StatisticsManager& m_statisticsManager;
 	RequestHandleFactory& m_handlerFactory;
-
+	
 	
 	RequestResult getRooms(RequestInfo info);
 	RequestResult getPlayersInRoom(RequestInfo info);

@@ -92,7 +92,7 @@ void serveTool::cHandler(SOCKET client)
 	RequestResult reqResult;
 	try
 	{
-		
+		IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
 		while (true) {
 			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
@@ -123,7 +123,7 @@ void serveTool::cHandler(SOCKET client)
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
 
-			IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
+			
 			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
 				
@@ -234,15 +234,14 @@ void serveTool::cHandler(SOCKET client)
 					{
 						throw std::exception("not an request type");
 					}
-					handler = reqResult.newHandler;
-
-
-					this->_mtx1.lock();
-					this->_clients.at(client) = handler;
-					this->_mtx1.unlock();
 					
 				}
 			}
+			handler = reqResult.newHandler;
+
+			this->_mtx1.lock();
+			this->_clients.at(client) = handler;
+			this->_mtx1.unlock();
 
 			//send json to the client -> 
 			std::string responseString(reqResult.buffer.begin(), reqResult.buffer.end());
