@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\tankLoginLogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\tankLoginLogo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
   </ItemGroup>
 

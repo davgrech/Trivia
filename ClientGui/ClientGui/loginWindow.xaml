@@ -34,7 +34,7 @@
 
                     </StackPanel>
                 </materialDesign:PopupBox>
-                <Image Margin ="0 20 0 5" Source="TankLoginLogo.png" Height="107" Width="377"/>
+                <Image Margin ="0 20 0 5" Source="/Resources/TankLoginLogo.png" Height="107" Width="377"/>
 
                 <TextBlock Margin="0 25 0 5" HorizontalAlignment="Center" FontSize="28"
                            FontWeight="Bold" Text="Welcome to TankiTrivia" />
