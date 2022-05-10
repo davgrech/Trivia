@@ -14,7 +14,56 @@
         WindowStartupLocation="CenterScreen"                  
         >
 
-    <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" Margin="25">
+    <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" 
+                         Margin="25" materialDesign:ShadowAssist.ShadowDepth="Depth4">
+        <materialDesign:DialogHost CloseOnClickAway="True" x:Name="DialogHost">
+            <StackPanel>
+                <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 20 20 0"
+                                         PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Height="25">
+                    <StackPanel>
+                        <StackPanel Margin="16 10 0 6" Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center" Text="Dark Mode" />
+                            <ToggleButton Cursor="Hand" ToolTip="Enable Dark Mode" Margin="12 0 8 0"
+                                  x:Name ="themeToggle" IsChecked="{Binding isDarkTheme}" 
+                                          Click="toggleTheme"/>
+                            
+                        </StackPanel>
+                        <Button ToolTip="can't log in?" Margin="0 8 0 0" Content="Help me"/>
+                        <Button x:Name="btn_exit" ToolTip="Close Application" Content="Exit Application" Click="exitApp"/>
+
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                <Image Margin ="0 20 0 5" Source="TankLoginLogo.png" Height="107" Width="377"/>
+
+                <TextBlock Margin="0 25 0 5" HorizontalAlignment="Center" FontSize="28"
+                           FontWeight="Bold" Text="Welcome to TankiTrivia" />
+
+                <TextBlock FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"
+                           Text="Log in to your existing account" />
+                <TextBox Margin="0 50 0 0" x:Name="txtUsername" Width="300" FontSize="18"
+                         materialDesign:HintAssist.Hint="Enter Username" BorderThickness="2"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                
+                <PasswordBox Margin="0 20 0 0" x:Name="txtPassowrd" Width="300" FontSize="18"
+                             materialDesign:HintAssist.Hint="Enter Password" BorderThickness="2"
+                             BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource
+                    MaterialDesignOutlinedPasswordBox}"/>
+
+                <Button Margin="0 20 0 0" x:Name="loginBtn" Style="{StaticResource
+                    MaterialDesignFlatMidBgButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        Height="53" Width="300" materialDesign:ButtonAssist.CornerRadius="10"
+                        FontSize="25" Content="Login" />
+                <Button Margin="0 20 0 0" x:Name="signupBtn" Style="{StaticResource
+                    MaterialDesignFlatButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        Height="53" Width="300" materialDesign:ButtonAssist.CornerRadius="10"
+                        FontSize="25" Content="Signup" />
+
+
+
+            </StackPanel>
+            
+        </materialDesign:DialogHost>
 
     </materialDesign:Card>
 </Window>
