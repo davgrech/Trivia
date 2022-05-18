@@ -54,5 +54,16 @@ namespace ClientGui
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
+
+        string user;
+        string passwordBox;
+        private void toggle_login(object sender, RoutedEventArgs e)
+        {
+            user = txtUsername.Text;
+            passwordBox = txtPassowrd.Password;
+            
+
+
+        }
     }
 }
