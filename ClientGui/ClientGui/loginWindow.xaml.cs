@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using System.Text.Json;
+
+using System.Net.Sockets;
+using System.Net;
 
 namespace ClientGui
 {
@@ -20,14 +24,22 @@ namespace ClientGui
     /// </summary>
     public partial class loginWindow : Window
     {
-        public loginWindow()
+
+        private static Socket mySock = null;
+
+        public loginWindow(Socket _clientSocket)
         {
             InitializeComponent();
-           
+            mySock = _clientSocket;
           
         }
+
         public bool isDarkTheme { get; set; }
         private readonly PaletteHelper paletteHelper = new PaletteHelper();
+
+
+
+        //dark mode.
         private void toggleTheme(object sender, RoutedEventArgs e)
         {
             ITheme theme = paletteHelper.GetTheme();
@@ -44,26 +56,86 @@ namespace ClientGui
             paletteHelper.SetTheme(theme);
         }
 
+
+        // exit button
         private void exitApp(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
             Environment.Exit(0);
         }
+
+        //drag the window
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
 
-        string user;
-        string passwordBox;
+
+        //class of login request to json
+        public class loginRequest
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+        }
+
+
         private void toggle_login(object sender, RoutedEventArgs e)
         {
-            user = txtUsername.Text;
-            passwordBox = txtPassowrd.Password;
+
+            //create a loginRequest class
+            var login_info = new loginRequest
+            {
+                username = txtUsername.Text,
+                password = txtPassowrd.Password
+            };
+
+            string jsonString = JsonSerializer.Serialize(login_info);
             
-
-
         }
+        
+
+
+
+        //connection functions
+        private void SendInfrmaionToServer(string userInfo)
+        {
+            if (mySock.Connected)
+            {
+                // 1 convert the form informatino to byte array
+                byte[] userData = Encoding.ASCII.GetBytes(userInfo);
+                // send data to the server as byte array
+                mySock.Send(userData);
+            }
+        }
+
+        private string ReciveInformationFromServer()
+        {
+            try
+            {
+                
+                //preper to recive data from the server
+                //1.preper byte array to get all the bytes from the servr
+                byte[] reciveBuffer = new byte[2048];
+                //2.recive the data from the server in to the byte array and
+                //return the size of bvtes how recive
+                int rec = mySock.Receive(reciveBuffer);
+                //3. preper byte array with the size of bytes how recive frm
+                //the servr
+                byte[] data = new byte[rec];
+                //4. copy the byte array how reive in to the byte array with
+                //the correct size
+                Array.Copy(reciveBuffer, data, rec);
+                //5. convert the byte array to Ascii
+                string returnFormServer = Encoding.ASCII.GetString(data);
+                return returnFormServer;
+            }
+            catch (Exception e)
+            {
+                //LBserverStatus.Text = "not ok";
+            }
+            return "";
+        }
+
     }
 }

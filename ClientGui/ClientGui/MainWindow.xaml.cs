@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Net.Sockets;
+using System.Net;
 namespace ClientGui
 {
     /// <summary>
@@ -20,12 +21,33 @@ namespace ClientGui
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static Socket _clientSocket = null;
+
         public MainWindow()
         {
+            
+
             InitializeComponent();
-            loginWindow hi = new loginWindow();
+            _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ConnectToServer();
+            loginWindow hi = new loginWindow(_clientSocket);
             this.Visibility = Visibility.Hidden;
             hi.Show();
+        }
+        private void ConnectToServer()
+        {
+            if (!_clientSocket.Connected)
+            {
+                try
+                {
+                    _clientSocket.Connect(IPAddress.Loopback, 2022);
+
+                }
+                catch (SocketException)
+                {
+                    //error with connections
+                }
+            }
         }
     }
 }
