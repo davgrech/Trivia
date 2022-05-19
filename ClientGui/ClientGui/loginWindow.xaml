@@ -13,9 +13,11 @@
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
-    
-    <materialDesign:DialogHost>
+
+    <materialDesign:DialogHost DialogOpened="openCB" DialogClosing="closingCB">
+
         <materialDesign:DialogHost.DialogContent>
+            
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -25,7 +27,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="Logging in ..."  FontWeight="SemiBold" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Grid.Row ="1" IsIndeterminate="True" HorizontalAlignment="Center" Margin="0,10,0,0"></ProgressBar>
-                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"  Grid.Row ="2" Content="Cancel"  VerticalAlignment="Center" Margin="0,10,0,0" ></Button>
+                <Button 
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Style="{StaticResource MaterialDesignRaisedAccentButton}"  Grid.Row ="2" Content="Cancel"  VerticalAlignment="Center" Margin="0,10,0,0" ></Button>
             </Grid>
         </materialDesign:DialogHost.DialogContent>
         <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" 
@@ -54,8 +58,36 @@
                 <TextBlock Margin="0 25 0 5" HorizontalAlignment="Center" FontSize="28"
                            FontWeight="Bold" Text="Welcome to TankiTrivia" />
 
-                <TextBlock FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center"
-                           Text="Log in to your existing account" />
+                <TextBlock x:Name="loginStatus" Text="Login Status"
+                           Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="15">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value="Login Status"></Setter>
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                            <Setter Property="Visibility" Value ="Collapsed"></Setter>
+                            <Style.Triggers>
+                            
+                                <DataTrigger Binding="{Binding Path=IsLoggedIn, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    
+                                    <Setter Property="Text" Value="Login Seccess"></Setter>
+                                    <Setter Property="Foreground" Value="Green"></Setter>
+                                    
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Path=IsLoggedIn, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    <Setter Property="Text" Value="Login failed"></Setter>
+                                    <Setter Property="Foreground" Value="Red"></Setter>
+                                   
+                                </DataTrigger>
+                                 
+                         </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0 40 0 0"
+                           Text="Log in to your existing account" Height="25" />
                 <TextBox Margin="0 50 0 0" x:Name="txtUsername" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Enter Username" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>

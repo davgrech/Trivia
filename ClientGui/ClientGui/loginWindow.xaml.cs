@@ -16,17 +16,41 @@ using System.Text.Json;
 
 using System.Net.Sockets;
 using System.Net;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ClientGui
 {
     /// <summary>
     /// Interaction logic for loginWindow.xaml
     /// </summary>
-    public partial class loginWindow : Window
+    public partial class loginWindow : Window, INotifyPropertyChanged
     {
 
         private static Socket mySock = null;
+        private bool isLoggedIn = false;
+       
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
+        public bool IsLoggedIn 
+        {
+            get { return isLoggedIn; } 
+            set
+            {
+                isLoggedIn = value;
+                NotifyPropertyChanged();
+            }
+           
 
+        }
+        
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));   
+            }
+        }
         public loginWindow(Socket _clientSocket)
         {
             InitializeComponent();
@@ -35,7 +59,11 @@ namespace ClientGui
         }
 
         public bool isDarkTheme { get; set; }
+        
+
         private readonly PaletteHelper paletteHelper = new PaletteHelper();
+
+       
 
 
 
@@ -137,5 +165,64 @@ namespace ClientGui
             return "";
         }
 
+        //just a simulator
+        private async Task<bool> validateCreds()
+        {
+            await Task.Delay(2000);
+            Random gen = new Random();
+            int loginProb = gen.Next(100);
+            //TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            //tcs.SetResult(loginProb <= 40);
+            //reduce the probability by x%
+            return loginProb <= 50;
+        }
+        private async void openCB(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            try
+            {
+                bool isLoggedIn = await validateCreds();
+                if(isLoggedIn)
+                {
+                    //success
+                    eventArgs.Session.Close(true);
+
+                    
+                }
+                else
+                {
+                    //invalid login
+                    eventArgs.Session.Close(false);
+
+                  
+                    
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+     
+
+        private void closingCB(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (((bool)eventArgs.Parameter) == true)
+            {
+                //login Success
+                IsLoggedIn = true;
+                IsLoggedIn = true;
+                loginStatus.Text = "Login Succeed";
+                loginStatus.Visibility = Visibility.Visible;
+            }
+            else if (((bool)eventArgs.Parameter) == false)
+            {
+                //login Failed
+                IsLoggedIn = false;
+                IsLoggedIn = false;
+                loginStatus.Text = "Login Failed";
+                loginStatus.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

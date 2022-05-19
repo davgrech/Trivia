@@ -28,12 +28,27 @@ namespace ClientGui
             
 
             InitializeComponent();
-            _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            ConnectToServer();
-            loginWindow hi = new loginWindow(_clientSocket);
             this.Visibility = Visibility.Hidden;
+
+
+            //create a sock
+            _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            
+           
+
+            //bind to the server
+            ConnectToServer();
+
+            //login handler
+            loginWindow hi = new loginWindow(_clientSocket);
+           
+            //show login handler
             hi.Show();
         }
+
+
+
+        //connection to the server
         private void ConnectToServer()
         {
             if (!_clientSocket.Connected)
@@ -45,7 +60,7 @@ namespace ClientGui
                 }
                 catch (SocketException)
                 {
-                    //error with connections
+                    //Environment.Exit(0);
                 }
             }
         }
