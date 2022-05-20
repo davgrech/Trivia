@@ -107,7 +107,14 @@ namespace ClientGui
             public string password { get; set; }
         }
 
-
+        public string padMsg(string msg, int len)
+        {
+            while(msg.Length < len)
+            {
+                msg = "0" + msg;
+             }
+            return msg;
+        }
         private void toggle_login(object sender, RoutedEventArgs e)
         {
 
@@ -119,7 +126,13 @@ namespace ClientGui
             };
 
             string jsonString = JsonSerializer.Serialize(login_info);
-            
+            string len = padMsg(jsonString.Length.ToString(), 4);
+
+            string to_send = "1" + len + jsonString;
+
+            SendInfrmaionToServer(to_send);
+
+
         }
         
 
@@ -166,36 +179,28 @@ namespace ClientGui
         }
 
         //just a simulator
-        private async Task<bool> validateCreds()
-        {
-            await Task.Delay(2000);
-            Random gen = new Random();
-            int loginProb = gen.Next(100);
-            //TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
-            //tcs.SetResult(loginProb <= 40);
-            //reduce the probability by x%
-            return loginProb <= 50;
-        }
+       
         private async void openCB(object sender, DialogOpenedEventArgs eventArgs)
         {
             try
             {
-                bool isLoggedIn = await validateCreds();
-                if(isLoggedIn)
-                {
-                    //success
-                    eventArgs.Session.Close(true);
+                await Task.Delay(2000);
 
-                    
+                
+               
+                string recieved = ReciveInformationFromServer();
+                if(recieved[10] == '1')
+                {
+                    isLoggedIn = true;
+                    eventArgs.Session.Close(true);
                 }
                 else
                 {
-                    //invalid login
+                    isLoggedIn = false;
                     eventArgs.Session.Close(false);
 
-                  
-                    
                 }
+                
             }
             catch
             {
@@ -207,22 +212,27 @@ namespace ClientGui
 
         private void closingCB(object sender, DialogClosingEventArgs eventArgs)
         {
-            if (((bool)eventArgs.Parameter) == true)
+            
+            if(eventArgs.Parameter != null)
             {
-                //login Success
-                IsLoggedIn = true;
-                IsLoggedIn = true;
-                loginStatus.Text = "Login Succeed";
-                loginStatus.Visibility = Visibility.Visible;
+                if (((bool)eventArgs.Parameter) == true)
+                {
+                    //login Success
+                    IsLoggedIn = true;
+
+                    loginStatus.Text = "Login Succeed";
+                    loginStatus.Visibility = Visibility.Visible;
+                }
+                else if (((bool)eventArgs.Parameter) == false)
+                {
+                    //login Failed
+                    IsLoggedIn = false;
+
+                    loginStatus.Text = "Login Failed";
+                    loginStatus.Visibility = Visibility.Visible;
+                }
             }
-            else if (((bool)eventArgs.Parameter) == false)
-            {
-                //login Failed
-                IsLoggedIn = false;
-                IsLoggedIn = false;
-                loginStatus.Text = "Login Failed";
-                loginStatus.Visibility = Visibility.Visible;
-            }
+           
         }
     }
 }

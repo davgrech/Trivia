@@ -84,16 +84,17 @@ void serveTool::cHandler(SOCKET client)
 	int byteReceived = 0;
 
 	char recMsg[2048];
-	
 
-	std::string msg; 
+
+	std::string msg;
 
 
 	RequestResult reqResult;
-	try
-	{
-		IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
-		while (true) {
+
+	IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
+	while (true) {
+		try
+		{
 			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
 
@@ -103,7 +104,7 @@ void serveTool::cHandler(SOCKET client)
 				throw std::exception("User exit");
 			}
 
-			
+
 			msg = recMsg; // convert to srting.
 
 			//data processing
@@ -126,12 +127,12 @@ void serveTool::cHandler(SOCKET client)
 
 			if (!(this->_clients.count(client) > 0)) //  client has to login first
 			{
-				
-			 
+
+
 				if (handler->isRequestRelevant(msgInfo)) { // check if relevent
 
-					
-						
+
+
 					reqResult = handler->handleRequest(msgInfo);
 
 
@@ -143,106 +144,108 @@ void serveTool::cHandler(SOCKET client)
 						handler = reqResult.newHandler;
 						this->_mtx1.unlock();
 					}
-					
-					
-					
+
+
+
 				}
 				else {
-					throw std::exception("must login First"); 
+					throw std::exception("must login First");
 
 				}
 			}
 			else
 			{
-				
+
 				switch (id)
 				{
-					case CLIENT_SIGNUP:
-					{
-						throw std::exception("First Logout then try to signup");
-						break;
-					}
-					case CLIENT_LOGIN:
-					{
-						throw std::exception("First Logout then try to login");
-						break;
-					}
-					case CLIENT_LOGOUT:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_SIGNOUT:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_CREATE_ROOM:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_JOIN_ROOM:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_GET_PLAYERS_ROOM:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_GET_ROOMS:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_GET_STATS_USER:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-
-						break;
-					}
-					case CLIENT_HIGH_SCORE:
-					{
-						if (handler->isRequestRelevant(msgInfo)) {
-							reqResult = handler->handleRequest(msgInfo);
-						}
-						
-						break;
-					}
-					default:
-					{
-						throw std::exception("not an request type");
-					}
-					
+				case CLIENT_SIGNUP:
+				{
+					throw std::exception("First Logout then try to signup");
+					break;
 				}
-			}
-			handler = reqResult.newHandler;
+				case CLIENT_LOGIN:
+				{
+					throw std::exception("First Logout then try to login");
+					break;
+				}
+				case CLIENT_LOGOUT:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
 
-			this->_mtx1.lock();
-			this->_clients.at(client) = handler;
-			this->_mtx1.unlock();
+					break;
+				}
+				case CLIENT_SIGNOUT:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_CREATE_ROOM:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_JOIN_ROOM:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_GET_PLAYERS_ROOM:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_GET_ROOMS:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_GET_STATS_USER:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				case CLIENT_HIGH_SCORE:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						reqResult = handler->handleRequest(msgInfo);
+					}
+
+					break;
+				}
+				default:
+				{
+					throw std::exception("not an request type");
+				}
+
+				}
+				handler = reqResult.newHandler;
+
+				this->_mtx1.lock();
+				this->_clients.at(client) = handler;
+				this->_mtx1.unlock();
+
+			}
+
 
 			//send json to the client -> 
 			std::string responseString(reqResult.buffer.begin(), reqResult.buffer.end());
@@ -251,13 +254,11 @@ void serveTool::cHandler(SOCKET client)
 				this->_clients.erase(client);
 				throw ClientError();
 			}
-			
+
 		}
-		
-	}
-	catch (const std::exception& recieveIllegal)
-	{
-		std::cout << "Error: " << recieveIllegal.what() << std::endl;
+		catch (const std::exception& recieveIllegal)
+		{
+			std::cout << "Error: " << recieveIllegal.what() << std::endl;
 			//creating message to send.
 			ErrorResponse error;
 			error.message = recieveIllegal.what();
@@ -274,18 +275,20 @@ void serveTool::cHandler(SOCKET client)
 			catch (const std::exception& e) {
 				std::cout << e.what() << std::endl;
 			}
-			
 
 
 
-		
-		
-		
+
+
+
+
+		}
+		catch (ClientError& clientDisconnected)
+		{
+			std::cout << clientDisconnected.what() << std::endl;
+		}
 	}
-	catch (ClientError& clientDisconnected)
-	{
-		std::cout << clientDisconnected.what() << std::endl;
-	}
+		
 	
 }
 

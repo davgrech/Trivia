@@ -60,7 +60,7 @@ namespace ClientGui
                 }
                 catch (SocketException)
                 {
-                    //Environment.Exit(0);
+                    Environment.Exit(0);
                 }
             }
         }
