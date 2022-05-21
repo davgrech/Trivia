@@ -22,56 +22,46 @@ using System.Runtime.CompilerServices;
 namespace ClientGui
 {
     /// <summary>
-    /// Interaction logic for loginWindow.xaml
+    /// Interaction logic for SignUp.xaml
     /// </summary>
-    public partial class loginWindow : Window, INotifyPropertyChanged
+    public partial class SignUp : Window, INotifyPropertyChanged
     {
 
         private static Socket mySock = null;
-        private bool isLoggedIn = false;
-       
+        private bool isSignedUp = false;
+
         public event PropertyChangedEventHandler? PropertyChanged;
-        
-        public bool IsLoggedIn 
+
+        public bool IsSignedUp
         {
-            get { return isLoggedIn; } 
+            get { return isSignedUp; }
             set
             {
-                isLoggedIn = value;
+                isSignedUp = value;
                 NotifyPropertyChanged();
             }
-           
 
         }
-        
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             if (PropertyChanged != null)
             {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));   
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public loginWindow(Socket _clientSocket)
+        public SignUp(Socket _clientSocket)
         {
             InitializeComponent();
             mySock = _clientSocket;
-          
         }
-
         public bool isDarkTheme { get; set; }
-        
+
 
         private readonly PaletteHelper paletteHelper = new PaletteHelper();
-
-       
-
-
-
-        //dark mode.
         private void toggleTheme(object sender, RoutedEventArgs e)
         {
             ITheme theme = paletteHelper.GetTheme();
-            if(isDarkTheme = theme.GetBaseTheme() == BaseTheme.Dark) 
+            if (isDarkTheme = theme.GetBaseTheme() == BaseTheme.Dark)
             {
                 isDarkTheme = false;
                 theme.SetBaseTheme(Theme.Light);
@@ -83,8 +73,6 @@ namespace ClientGui
             }
             paletteHelper.SetTheme(theme);
         }
-
-
         // exit button
         private void exitApp(object sender, RoutedEventArgs e)
         {
@@ -99,63 +87,11 @@ namespace ClientGui
             DragMove();
         }
 
-
-        //class of login request to json
-        public class loginRequest
-        {
-            public string username { get; set; }
-            public string password { get; set; }
-        }
-
-        public string padMsg(string msg, int len)
-        {
-            while(msg.Length < len)
-            {
-                msg = "0" + msg;
-             }
-            return msg;
-        }
-        private void toggle_login(object sender, RoutedEventArgs e)
-        {
-
-            //create a loginRequest class
-            var login_info = new loginRequest
-            {
-                username = txtUsername.Text,
-                password = txtPassowrd.Password
-            };
-
-            string jsonString = JsonSerializer.Serialize(login_info);
-            string len = padMsg(jsonString.Length.ToString(), 4);
-
-            string to_send = "1" + len + jsonString;
-
-            SendInfrmaionToServer(to_send);
-
-
-        }
-
-
-
-
-
-        //connection functions
-        private void SendInfrmaionToServer(string userInfo)
-        {
-            if (mySock.Connected)
-            {
-                // 1 convert the form informatino to byte array
-                byte[] userData = Encoding.ASCII.GetBytes(userInfo);
-                // send data to the server as byte array
-                mySock.Send(userData);
-            }
-        }
-
         private string ReciveInformationFromServer()
         {
             try
             {
-                
+
                 //preper to recive data from the server
                 //1.preper byte array to get all the bytes from the servr
                 byte[] reciveBuffer = new byte[2048];
@@ -180,28 +116,28 @@ namespace ClientGui
         }
 
         //just a simulator
-       
+
         private async void openCB(object sender, DialogOpenedEventArgs eventArgs)
         {
             try
             {
                 await Task.Delay(2000);
 
-                
-               
+
+
                 string recieved = ReciveInformationFromServer();
-                if(recieved[10] == '1')
+                if (recieved[10] == '0')
                 {
-                    isLoggedIn = true;
+                    isSignedUp = true;
                     eventArgs.Session.Close(true);
                 }
                 else
                 {
-                    isLoggedIn = false;
+                    isSignedUp = false;
                     eventArgs.Session.Close(false);
 
                 }
-                
+
             }
             catch
             {
@@ -209,39 +145,87 @@ namespace ClientGui
             }
         }
 
-     
+
 
         private void closingCB(object sender, DialogClosingEventArgs eventArgs)
         {
-            
-            if(eventArgs.Parameter != null)
+
+            if (eventArgs.Parameter != null)
             {
                 if (((bool)eventArgs.Parameter) == true)
                 {
-                    //login Success
-                    IsLoggedIn = true;
+                    //SignedUp Success
+                    IsSignedUp = true;
 
-                    loginStatus.Text = "Login Succeed";
-                    loginStatus.Visibility = Visibility.Visible;
+                    SignUpStatus.Text = "Signed up successfully";
+                    SignUpStatus.Visibility = Visibility.Visible;
                 }
                 else if (((bool)eventArgs.Parameter) == false)
                 {
-                    //login Failed
-                    IsLoggedIn = false;
+                    //SignedUp Failed
+                    IsSignedUp = false;
 
-                    loginStatus.Text = "Login Failed";
-                    loginStatus.Visibility = Visibility.Visible;
+                    SignUpStatus.Text = "Sign up Failed";
+                    SignUpStatus.Visibility = Visibility.Visible;
                 }
             }
-           
+
         }
-        /*
-         * onclikc func that redirects user to sign up page
-         */
-        private void signupBtn_Click(object sender, RoutedEventArgs e)
+        private void SendInfrmaionToServer(string userInfo)
         {
-            SignUp newSignup = new SignUp(mySock);
-            newSignup.Show();
+            if (mySock.Connected)
+            {
+                // 1 convert the form informatino to byte array
+                byte[] userData = Encoding.ASCII.GetBytes(userInfo);
+                // send data to the server as byte array
+                mySock.Send(userData);
+            }
+        }
+
+
+        public class SignUpRequest
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string email { get; set; }
+            public string phoneNumber { get;set; }
+            public string date { get; set; }
+
+            public string address { get; set; }
+        }
+        public string padMsg(string msg, int len)
+        {
+            while (msg.Length < len)
+            {
+                msg = "0" + msg;
+            }
+            return msg;
+        }
+        private void onClick_SignUp(object sender, RoutedEventArgs e)
+        {
+            var signUp_info = new SignUpRequest
+            {
+                username = SignUpUsername.Text,
+                password = SignUpPassword.Password,
+                email = SignUpEmail.Text,
+                phoneNumber = SignUpPhoneNumber.Text,
+                date = SignUpDate.Text, 
+                address = "aa, 11, bb" // this is just for checking
+            };
+
+            string jsonString = JsonSerializer.Serialize(signUp_info);
+            string len = padMsg(jsonString.Length.ToString(), 4);
+
+            string to_send = "0" + len + jsonString;
+
+            SendInfrmaionToServer(to_send);
+        }
+        
+
+        private void returnToLogin_Click(object sender, RoutedEventArgs e)
+        {
+            loginWindow returnToLogin = new loginWindow(mySock);
+            returnToLogin.Show();
             this.Close();
         }
     }
