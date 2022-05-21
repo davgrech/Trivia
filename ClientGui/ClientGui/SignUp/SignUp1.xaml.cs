@@ -171,5 +171,54 @@ namespace ClientGui
             }
 
         }
+        private void SendInfrmaionToServer(string userInfo)
+        {
+            if (mySock.Connected)
+            {
+                // 1 convert the form informatino to byte array
+                byte[] userData = Encoding.ASCII.GetBytes(userInfo);
+                // send data to the server as byte array
+                mySock.Send(userData);
+            }
+        }
+
+
+        public class SignUpRequest
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string email { get; set; }
+            public string phoneNumber { get;set; }
+            public string date { get; set; }
+
+            public string address { get; set; }
+        }
+        public string padMsg(string msg, int len)
+        {
+            while (msg.Length < len)
+            {
+                msg = "0" + msg;
+            }
+            return msg;
+        }
+        private void onClick_SignUp(object sender, RoutedEventArgs e)
+        {
+            var signUp_info = new SignUpRequest
+            {
+                username = SignUpUsername.Text,
+                password = SignUpPassword.Password,
+                email = SignUpEmail.Text,
+                phoneNumber = SignUpPhoneNumber.Text,
+                date = SignUpDate.Text, 
+                address = "aa, 11, bb"
+            };
+
+            string jsonString = JsonSerializer.Serialize(signUp_info);
+            string len = padMsg(jsonString.Length.ToString(), 4);
+
+            string to_send = "0" + len + jsonString;
+
+            SendInfrmaionToServer(to_send);
+        }
     }
 }

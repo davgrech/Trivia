@@ -88,24 +88,31 @@
                 </TextBlock>
                 <TextBlock FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0 40 0 0"
                            Text="Create A New Account" Height="25" />
-                <TextBox Margin="0 50 0 0" x:Name="SignUpUsername" Width="300" FontSize="18"
+                <TextBox Margin="0 20 0 0" x:Name="SignUpUsername" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Username" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
+                <PasswordBox Margin="0 20 0 0" x:Name="SignUpPassword" Width="300" FontSize="18"
+                             materialDesign:HintAssist.Hint="Password" BorderThickness="2"
+                             BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource
+                    MaterialDesignOutlinedPasswordBox}"/>
 
-
-                <TextBox Margin="0 50 0 0" x:Name="SignUpEmail" Width="300" FontSize="18"
+                <TextBox Margin="0 20 0 0" x:Name="SignUpEmail" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Email" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
-                <TextBox Margin="0 50 0 0" x:Name="SignUpPhoneNumber" Width="300" FontSize="18"
+                <TextBox Margin="0 20 0 0" x:Name="SignUpPhoneNumber" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Phone" BorderThickness="2"
+                         BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                
+                <TextBox Margin="0 20 0 0" x:Name="SignUpDate" Width="300" FontSize="18"
+                         materialDesign:HintAssist.Hint="Date of Birth" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
                 <Button Margin="0 20 0 0" x:Name="SignUpBtn" Style="{StaticResource
                     MaterialDesignFlatButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
                         Height="53" Width="300" materialDesign:ButtonAssist.CornerRadius="10"
-                        FontSize="25" Content="Sign Up" />
+                        FontSize="25" Content="Sign Up" Click="onClick_SignUp" />
 
 
 

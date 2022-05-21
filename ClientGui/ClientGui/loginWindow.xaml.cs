@@ -19,7 +19,6 @@ using System.Net;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-#include 
 namespace ClientGui
 {
     /// <summary>
@@ -135,15 +134,7 @@ namespace ClientGui
 
 
         }
-        /*
-         * On click Func that redirects you to signUp page :)
-         */
-        private void toggle_signup_on_login()
-        {
-            SignUp newSignup = new SignUp(mySock);
-            newSignup.Show();
-            this.Close();
-        }
+
 
 
 
@@ -243,6 +234,15 @@ namespace ClientGui
                 }
             }
            
+        }
+        /*
+         * onclikc func that redirects user to sign up page
+         */
+        private void signupBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SignUp newSignup = new SignUp(mySock);
+            newSignup.Show();
+            this.Close();
         }
     }
 }
