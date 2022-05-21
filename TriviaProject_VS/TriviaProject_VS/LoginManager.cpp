@@ -15,6 +15,10 @@ bool LoginManager::signup(std::string name, std::string password, std::string em
 bool LoginManager::login(std::string name, std::string password)
 {
 	LoggedUser user(name);
+	if (!notloggedAlready(name))
+	{
+		throw std::exception("Logged already in other client");
+	}
 	if (this->database->doesUserExist(name) && this->database->doesPasswordMatch(name, password)) {
 		this->m_loggedUsers.push_back(user);
 		return true;
@@ -38,4 +42,12 @@ bool LoginManager::signout(std::string name)
 	logout(name);
 	
 	return this->database->signout(name);
+}
+
+bool LoginManager::notloggedAlready(std::string name)
+{
+	LoggedUser user(name);
+	auto it = std::find(this->m_loggedUsers.begin(), this->m_loggedUsers.end(), user);
+	
+	return it == this->m_loggedUsers.end();
 }

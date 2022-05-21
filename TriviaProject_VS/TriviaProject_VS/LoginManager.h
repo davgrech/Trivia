@@ -16,6 +16,7 @@ public:
 	bool login(std::string name, std::string password);
 	void logout(std::string name);
 	bool signout(std::string name);
+	bool notloggedAlready(std::string name);
 private:
 	IDatabase* database;
 	std::vector<LoggedUser> m_loggedUsers;
