@@ -32,7 +32,7 @@ namespace ClientGui
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool IsLoggedIn
+        public bool IsSignedUp
         {
             get { return isSignedUp; }
             set
@@ -154,16 +154,16 @@ namespace ClientGui
             {
                 if (((bool)eventArgs.Parameter) == true)
                 {
-                    //login Success
-                    IsLoggedIn = true;
+                    //SignedUp Success
+                    IsSignedUp = true;
 
                     SignUpStatus.Text = "Signed up successfully";
                     SignUpStatus.Visibility = Visibility.Visible;
                 }
                 else if (((bool)eventArgs.Parameter) == false)
                 {
-                    //login Failed
-                    IsLoggedIn = false;
+                    //SignedUp Failed
+                    IsSignedUp = false;
 
                     SignUpStatus.Text = "Sign up Failed";
                     SignUpStatus.Visibility = Visibility.Visible;
@@ -210,7 +210,7 @@ namespace ClientGui
                 email = SignUpEmail.Text,
                 phoneNumber = SignUpPhoneNumber.Text,
                 date = SignUpDate.Text, 
-                address = "aa, 11, bb"
+                address = "aa, 11, bb" // this is just for checking
             };
 
             string jsonString = JsonSerializer.Serialize(signUp_info);
@@ -219,6 +219,14 @@ namespace ClientGui
             string to_send = "0" + len + jsonString;
 
             SendInfrmaionToServer(to_send);
+        }
+        
+
+        private void returnToLogin_Click(object sender, RoutedEventArgs e)
+        {
+            loginWindow returnToLogin = new loginWindow(mySock);
+            returnToLogin.Show();
+            this.Close();
         }
     }
 }
