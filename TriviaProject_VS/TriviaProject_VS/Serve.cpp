@@ -92,7 +92,7 @@ void serveTool::cHandler(SOCKET client)
 	RequestResult reqResult;
 
 	IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
-	while (true) {
+	while (true ) {
 		try
 		{
 			ZeroMemory(recMsg, 2048);
@@ -100,8 +100,7 @@ void serveTool::cHandler(SOCKET client)
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
 				_clients.erase(client);
-
-				throw std::exception("User exit");
+				return;
 			}
 
 
@@ -252,6 +251,7 @@ void serveTool::cHandler(SOCKET client)
 			std::cout << "Response sent: " << responseString << std::endl;
 			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
 				this->_clients.erase(client);
+				return;
 				throw ClientError();
 			}
 
