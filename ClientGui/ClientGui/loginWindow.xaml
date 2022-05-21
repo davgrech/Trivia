@@ -107,7 +107,7 @@
                 <Button Margin="0 20 0 0" x:Name="signupBtn" Style="{StaticResource
                     MaterialDesignFlatButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
                         Height="53" Width="300" materialDesign:ButtonAssist.CornerRadius="10"
-                        FontSize="25" Content="Signup" />
+                        FontSize="25" Content="Signup" Click="toggle_signup_on_login"/>
 
 
 
