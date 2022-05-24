@@ -75,7 +75,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         if (!isPhoneNumberValid(phonNumber)) {
             throw(std::exception(ERROR_PHONE));
         }
-       
+      
 
         std::string statement = "INSERT INTO PLAYERS VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "'); ";
                                     //INSET INTO PLAYERS VALUES ("lol", 
@@ -232,7 +232,7 @@ void SqliteDatabase::open()
 
     if (doesFileNotExist == FILE_NOT_EXIST) {
        
-        std::string playerTableStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL, ADDRESS NOT NULL);";
+        std::string playerTableStatement = "CREATE TABLE PLAYERS(NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, DATE TEXT NOT NULL, PHONE TEXT NOT NULL);";
         createTableOrInsert(playerTableStatement);
 
         std::string questionsTableStatement = "CREATE TABLE QUESTIONS(ID INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL, QUESTION TEXT NOT NULL, A TEXT NOT NULL, B TEXT NOT NULL, C TEXT NOT NULL, D TEXT NOT NULL, ANSWER TEXT NOT NULL);";
