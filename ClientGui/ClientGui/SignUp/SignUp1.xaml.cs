@@ -117,33 +117,7 @@ namespace ClientGui
 
         //just a simulator
 
-        private async void openCB(object sender, DialogOpenedEventArgs eventArgs)
-        {
-            try
-            {
-                await Task.Delay(2000);
 
-
-
-                string recieved = ReciveInformationFromServer();
-                if (recieved[10] == '0')
-                {
-                    isSignedUp = true;
-                    eventArgs.Session.Close(true);
-                }
-                else
-                {
-                    isSignedUp = false;
-                    eventArgs.Session.Close(false);
-
-                }
-
-            }
-            catch
-            {
-
-            }
-        }
 
 
 
@@ -227,6 +201,59 @@ namespace ClientGui
             loginWindow returnToLogin = new loginWindow(mySock);
             returnToLogin.Show();
             this.Close();
+        }
+
+
+        private async void DialogHost_DialogOpened_1(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            try
+            {
+                await Task.Delay(2000);
+
+
+
+                string recieved = ReciveInformationFromServer();
+                if (recieved[10] == '1')
+                {
+                    isSignedUp = true;
+                    eventArgs.Session.Close(true);
+                }
+                else
+                {
+                    isSignedUp = false;
+                    eventArgs.Session.Close(false);
+
+                }
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void DialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+
+            if (eventArgs.Parameter != null)
+            {
+                if (((bool)eventArgs.Parameter) == true)
+                {
+                    //SignedUp Success
+                    IsSignedUp = true;
+
+                    SignUpStatus.Text = "Signed up successfully";
+                    SignUpStatus.Visibility = Visibility.Visible;
+                }
+                else if (((bool)eventArgs.Parameter) == false)
+                {
+                    //SignedUp Failed
+                    IsSignedUp = false;
+
+                    SignUpStatus.Text = "Sign up Failed";
+                    SignUpStatus.Visibility = Visibility.Visible;
+                }
+            }
         }
     }
 }

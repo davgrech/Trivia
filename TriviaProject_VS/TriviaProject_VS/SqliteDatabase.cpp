@@ -78,7 +78,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
        
 
         std::string statement = "INSERT INTO PLAYERS VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "'); ";
-
+                                    //INSET INTO PLAYERS VALUES ("lol", 
 
         return createTableOrInsert(statement);
        
