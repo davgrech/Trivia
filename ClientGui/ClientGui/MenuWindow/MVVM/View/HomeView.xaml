@@ -6,7 +6,117 @@
              xmlns:local="clr-namespace:ClientGui.MenuWindow.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <StackPanel>
+        <TextBlock Text="Discover"
+                       Foreground="White"
+                       FontSize="28"
+                       HorizontalAlignment="Left"
+                       Margin="0,0,0,20"/>
+
+        <StackPanel Orientation="Horizontal">
+            <Border Width="400"
+                    Height="200">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                        <GradientStop Color="#3aa0ff" Offset="1"/>
+
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Border.Clip>
+                    <RectangleGeometry RadiusX="10"
+                                       RadiusY="10"
+                                       Rect="0,0,400,200"/>
+                </Border.Clip>
+
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Quick&#x0a;Room Creation"
+                                   Foreground="White"
+                                   Margin="20,10,10,0"
+                                   FontSize="28"
+                                   
+                                   />
+                        <TextBlock Text="Play Now!"
+                                   Foreground="White"
+                                   Margin="20,10,10,0"
+                                   FontSize="18"
+                                   VerticalAlignment="Bottom"
+                                   
+                                   />
+                    </StackPanel>
+
+                    <Image Width="204" Height="208"
+                           Source="/MenuWindow/Images/woman.png"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Margin="269,0,0,0"
+                           />
+
+
+                </Grid>
+
+
+            </Border>
+
+            <Border Width="200"
+                    Height="200"
+                    CornerRadius="10"
+                    Margin="45, 0,0,0">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                        <GradientStop Color="#ffc554" Offset="0.0"/>
+                        <GradientStop Color="#ffb73a" Offset="1"/>
+
+                    </LinearGradientBrush>
+                </Border.Background>
+                <TextBlock Text="Quick Join&#x0a;A Game"
+                                   Foreground="White"
+                                   Margin="15,26,15,0"
+                                   FontSize="28"
+                                   VerticalAlignment="Top">
+
+                </TextBlock>
+            </Border>
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Margin" Value="15,0,0,0"/>
+                </Style>
+                
+            </StackPanel.Resources>
+            <TextBlock Text="Learn More"
+                       Foreground="White"
+                       FontSize="20"
+                       HorizontalAlignment="Left"
+                       Margin="0,0,0,10"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Border Width="150" 
+                        Height="150" 
+                        Background="#844eff"
+                        CornerRadius="10"
+                        Margin="0"/>
+
+                <Border Width="150" 
+                        Height="150" 
+                        Background="#4e99ff"
+                        CornerRadius="10"/>
+
+                <Border Width="150" 
+                        Height="150" 
+                        Background="#4eff90"
+                        CornerRadius="10"/>
+
+                <Border Width="150" 
+                        Height="150" 
+                        Background="#ecff90"
+                        CornerRadius="10"/>
+
+            </StackPanel>
+
+        </StackPanel>
+    </StackPanel>
 </UserControl>

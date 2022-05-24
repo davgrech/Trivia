@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MenuWindow\Fonts\" />
-    <Folder Include="MenuWindow\Images\" />
     <Folder Include="MenuWindow\MVVM\Model\" />
+    <Folder Include="MenuWindow\Images\" />
+    <Folder Include="MenuWindow\Fonts\" />
   </ItemGroup>
 
 </Project>
