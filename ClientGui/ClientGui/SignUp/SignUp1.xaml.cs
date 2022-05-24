@@ -188,6 +188,9 @@ namespace ClientGui
                 {
                     isSignedUp = true;
                     eventArgs.Session.Close(true);
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler();
+                    this.Close();
+                    moveToMenu.Show();  // when sign up is complete go to menu
                 }
                 else
                 {

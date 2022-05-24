@@ -27,7 +27,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             
-            <TextBlock Text="DolevAndDavid"
+            <TextBlock Text="Main Menu"
+                      
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Foreground="White"
