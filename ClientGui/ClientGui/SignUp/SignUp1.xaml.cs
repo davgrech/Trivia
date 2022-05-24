@@ -32,7 +32,7 @@ namespace ClientGui
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool IsSignedUp
+        public bool IsSigned
         {
             get { return isSignedUp; }
             set
@@ -116,35 +116,6 @@ namespace ClientGui
         }
 
         //just a simulator
-
-
-
-
-
-        private void closingCB(object sender, DialogClosingEventArgs eventArgs)
-        {
-
-            if (eventArgs.Parameter != null)
-            {
-                if (((bool)eventArgs.Parameter) == true)
-                {
-                    //SignedUp Success
-                    IsSignedUp = true;
-
-                    SignUpStatus.Text = "Signed up successfully";
-                    SignUpStatus.Visibility = Visibility.Visible;
-                }
-                else if (((bool)eventArgs.Parameter) == false)
-                {
-                    //SignedUp Failed
-                    IsSignedUp = false;
-
-                    SignUpStatus.Text = "Sign up Failed";
-                    SignUpStatus.Visibility = Visibility.Visible;
-                }
-            }
-
-        }
         private void SendInfrmaionToServer(string userInfo)
         {
             if (mySock.Connected)
@@ -240,7 +211,7 @@ namespace ClientGui
                 if (((bool)eventArgs.Parameter) == true)
                 {
                     //SignedUp Success
-                    IsSignedUp = true;
+                    IsSigned = true;
 
                     SignUpStatus.Text = "Signed up successfully";
                     SignUpStatus.Visibility = Visibility.Visible;
@@ -248,7 +219,7 @@ namespace ClientGui
                 else if (((bool)eventArgs.Parameter) == false)
                 {
                     //SignedUp Failed
-                    IsSignedUp = false;
+                    IsSigned = false;
 
                     SignUpStatus.Text = "Sign up Failed";
                     SignUpStatus.Visibility = Visibility.Visible;
