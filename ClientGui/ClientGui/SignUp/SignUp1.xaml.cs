@@ -32,7 +32,7 @@ namespace ClientGui
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool IsSignedUp
+        public bool IsSigned
         {
             get { return isSignedUp; }
             set
@@ -116,61 +116,6 @@ namespace ClientGui
         }
 
         //just a simulator
-
-        private async void openCB(object sender, DialogOpenedEventArgs eventArgs)
-        {
-            try
-            {
-                await Task.Delay(2000);
-
-
-
-                string recieved = ReciveInformationFromServer();
-                if (recieved[10] == '0')
-                {
-                    isSignedUp = true;
-                    eventArgs.Session.Close(true);
-                }
-                else
-                {
-                    isSignedUp = false;
-                    eventArgs.Session.Close(false);
-
-                }
-
-            }
-            catch
-            {
-
-            }
-        }
-
-
-
-        private void closingCB(object sender, DialogClosingEventArgs eventArgs)
-        {
-
-            if (eventArgs.Parameter != null)
-            {
-                if (((bool)eventArgs.Parameter) == true)
-                {
-                    //SignedUp Success
-                    IsSignedUp = true;
-
-                    SignUpStatus.Text = "Signed up successfully";
-                    SignUpStatus.Visibility = Visibility.Visible;
-                }
-                else if (((bool)eventArgs.Parameter) == false)
-                {
-                    //SignedUp Failed
-                    IsSignedUp = false;
-
-                    SignUpStatus.Text = "Sign up Failed";
-                    SignUpStatus.Visibility = Visibility.Visible;
-                }
-            }
-
-        }
         private void SendInfrmaionToServer(string userInfo)
         {
             if (mySock.Connected)
@@ -191,7 +136,7 @@ namespace ClientGui
             public string phoneNumber { get;set; }
             public string date { get; set; }
 
-            public string address { get; set; }
+            //public string address { get; set; }
         }
         public string padMsg(string msg, int len)
         {
@@ -210,7 +155,7 @@ namespace ClientGui
                 email = SignUpEmail.Text,
                 phoneNumber = SignUpPhoneNumber.Text,
                 date = SignUpDate.Text, 
-                address = "aa, 11, bb" // this is just for checking
+                //address = "aa, 11, bb" // this is just for checking
             };
 
             string jsonString = JsonSerializer.Serialize(signUp_info);
@@ -227,6 +172,59 @@ namespace ClientGui
             loginWindow returnToLogin = new loginWindow(mySock);
             returnToLogin.Show();
             this.Close();
+        }
+
+
+        private async void DialogHost_DialogOpened_1(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            try
+            {
+                await Task.Delay(2000);
+
+
+
+                string recieved = ReciveInformationFromServer();
+                if (recieved[10] == '1')
+                {
+                    isSignedUp = true;
+                    eventArgs.Session.Close(true);
+                }
+                else
+                {
+                    isSignedUp = false;
+                    eventArgs.Session.Close(false);
+
+                }
+
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void DialogHost_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+
+            if (eventArgs.Parameter != null)
+            {
+                if (((bool)eventArgs.Parameter) == true)
+                {
+                    //SignedUp Success
+                    IsSigned = true;
+
+                    SignUpStatus.Text = "Signed up successfully";
+                    SignUpStatus.Visibility = Visibility.Visible;
+                }
+                else if (((bool)eventArgs.Parameter) == false)
+                {
+                    //SignedUp Failed
+                    IsSigned = false;
+
+                    SignUpStatus.Text = "Sign up Failed";
+                    SignUpStatus.Visibility = Visibility.Visible;
+                }
+            }
         }
     }
 }

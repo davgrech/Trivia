@@ -14,7 +14,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
 
-    <materialDesign:DialogHost DialogOpened="openCB" DialogClosing="closingCB">
+    <materialDesign:DialogHost DialogOpened="DialogHost_DialogOpened_1" DialogClosing="DialogHost_DialogClosing">
 
         <materialDesign:DialogHost.DialogContent>
 
@@ -67,7 +67,7 @@
                             <Setter Property="Visibility" Value ="Collapsed"></Setter>
                             <Style.Triggers>
 
-                                <DataTrigger Binding="{Binding Path=IsSignedUp, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                <DataTrigger Binding="{Binding Path=IsSigned, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
 
                                     <Setter Property="Text" Value="Sign Up Completed"></Setter>
@@ -75,7 +75,7 @@
 
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding Path=IsSignedUp, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                                <DataTrigger Binding="{Binding Path=IsSigned, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed"></Setter>
                                     <Setter Property="Text" Value="Sign up failed"></Setter>
                                     <Setter Property="Foreground" Value="Red"></Setter>
@@ -111,6 +111,7 @@
 
                 <Button Margin="0 15 0 0" x:Name="SignUpBtn" Style="{StaticResource
                     MaterialDesignFlatButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                         Height="53" Width="300" materialDesign:ButtonAssist.CornerRadius="10"
                         FontSize="25" Content="Sign Up" Click="onClick_SignUp" />
 

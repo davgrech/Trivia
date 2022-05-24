@@ -58,7 +58,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
         SignupReq = JRPD::deserializeSignupRequest(value.buffer);
         
 
-        bool isSucceeded = this->m_loginManager.signup(SignupReq.username, SignupReq.password, SignupReq.email, SignupReq.phonNumber, SignupReq.address, SignupReq.dateOfBirth);
+        bool isSucceeded = this->m_loginManager.signup(SignupReq.username, SignupReq.password, SignupReq.email, SignupReq.phonNumber, SignupReq.dateOfBirth);
         if (isSucceeded) {
             LoggedUser v1(SignupReq.username);
             myResult.newHandler = this->m_handlerFactory.createMenuRequestHandler(v1);
