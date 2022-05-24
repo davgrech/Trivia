@@ -14,7 +14,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
 
-    <materialDesign:DialogHost DialogOpened="openCB" DialogClosing="closingCB">
+    <materialDesign:DialogHost DialogOpened="DialogHost_DialogOpened_1" DialogClosing="DialogHost_DialogClosing">
 
         <materialDesign:DialogHost.DialogContent>
 

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #define MAX_VALID_YR 2030
-#define MIN_VALID_YR 2022
+#define MIN_VALID_YR 1904 // the oldest human alive rn (Lucile Randon)
 
 #define REGEX_EMAIL "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
 #define REGEX_PASSWORD "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,8}$"
@@ -20,7 +20,7 @@
 
 bool isPasswordValid(std::string password);
 bool isMailValid(std::string mail);
-bool isAddressValid(std::string address);
+//bool isAddressValid(std::string address);
 bool isPhoneNumberValid(std::string phoneNumber);
 bool isBirthDateValid(std::string birthdate);
 
