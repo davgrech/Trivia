@@ -20,7 +20,7 @@
 
 bool isPasswordValid(std::string password);
 bool isMailValid(std::string mail);
-bool isAddressValid(std::string address);
+//bool isAddressValid(std::string address);
 bool isPhoneNumberValid(std::string phoneNumber);
 bool isBirthDateValid(std::string birthdate);
 
