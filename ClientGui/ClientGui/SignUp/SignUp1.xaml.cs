@@ -191,7 +191,7 @@ namespace ClientGui
             public string phoneNumber { get;set; }
             public string date { get; set; }
 
-            public string address { get; set; }
+            //public string address { get; set; }
         }
         public string padMsg(string msg, int len)
         {
@@ -210,7 +210,7 @@ namespace ClientGui
                 email = SignUpEmail.Text,
                 phoneNumber = SignUpPhoneNumber.Text,
                 date = SignUpDate.Text, 
-                address = "aa, 11, bb" // this is just for checking
+                //address = "aa, 11, bb" // this is just for checking
             };
 
             string jsonString = JsonSerializer.Serialize(signUp_info);
