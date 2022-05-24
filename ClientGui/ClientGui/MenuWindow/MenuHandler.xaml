@@ -4,16 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientGui.MenuWindow"
+        xmlns:ViewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="MenuHandler" Height="600" Width="920"
         WindowStyle = "None"
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
         >
     <Window.DataContext>
-        <viewModel:MenuViewModel/>
+        <ViewModel:MainViewModel/>
     </Window.DataContext>
     <Border Background="#272537"
             CornerRadius="20">
@@ -35,6 +35,13 @@
                        FontSize="22"
                        Margin="20,0,0,0"/>
             <StackPanel Grid.Row="1">
+                <RadioButton Content="Home"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             IsChecked="True"
+                             Command="{Binding HomeViewCommand}"
+                             Style="{StaticResource CreateRoomButtonTheme}"/>
                 <RadioButton Content="Create Room"
                              Height="70"
                              Foreground="White"
@@ -49,11 +56,13 @@
                              Height="70"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding UserStatisticsViewCommand}"
                              Style="{StaticResource CreateRoomButtonTheme}"/>
                 <RadioButton Content="High Scores"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding HighScoresViewCommand}"
                              Style="{StaticResource CreateRoomButtonTheme}"/>
             </StackPanel>
             <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
