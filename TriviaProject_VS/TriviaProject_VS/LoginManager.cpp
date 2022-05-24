@@ -6,10 +6,10 @@ LoginManager::LoginManager(IDatabase* db)
 	this->database = db;
 }
 
-bool LoginManager::signup(std::string name, std::string password, std::string email, std::string phone, std::string address, std::string birthDate)
+bool LoginManager::signup(std::string name, std::string password, std::string email, std::string phone, std::string birthDate)
 {
 	//fix order of arguments.
-	return this->database->addNewUser(name, password, email, phone, address, birthDate);
+	return this->database->addNewUser(name, password, email, phone, birthDate);
 }
 
 bool LoginManager::login(std::string name, std::string password)

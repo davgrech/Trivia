@@ -54,7 +54,7 @@ bool SqliteDatabase::signout(std::string userName)
     return true;
     
 }
-bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string address, std::string date)
+bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, std::string userEmail, std::string phonNumber, std::string date)
 {
 
     char* pError = NULL;
@@ -67,9 +67,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         if (!isMailValid(userEmail)) {
             throw(std::exception(ERROR_EMAIL));
         }
-        if (!isAddressValid(address)) {
-            throw(std::exception(ERROR_ADDRESS));
-        }
+        
         if (!isBirthDateValid(date)) {
             throw(std::exception(ERROR_DATE));
         }
@@ -79,7 +77,7 @@ bool SqliteDatabase::addNewUser(std::string userName, std::string userPassword, 
         }
        
 
-        std::string statement = "INSERT INTO PLAYERS VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "', '" + address + "'); ";
+        std::string statement = "INSERT INTO PLAYERS VALUES('" + userName + "', '" + userPassword + "', '" + userEmail + "', '" + date + "', '" + phonNumber + "'); ";
 
 
         return createTableOrInsert(statement);
