@@ -33,15 +33,18 @@ namespace ClientGui
 
             //create a sock
             _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            
-           
+
+            //test
+            //MenuWindow.MenuHandler MenuWindow= new MenuWindow.MenuHandler();
+            //MenuWindow.Show();
+
 
             //bind to the server
             ConnectToServer();
 
             //login handler
             loginWindow hi = new loginWindow(_clientSocket);
-           
+
             //show login handler
             hi.Show();
         }

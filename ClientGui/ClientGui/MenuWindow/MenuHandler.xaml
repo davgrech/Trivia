@@ -5,8 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientGui.MenuWindow"
         mc:Ignorable="d"
-        Title="MenuHandler" Height="600" Width="920">
-    <Grid>
+        Title="MenuHandler" Height="600" Width="920"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
+        >
+    <Window.DataContext>
+        <viewModel:MenuViewModel/>
+    </Window.DataContext>
+    <Border Background="#272537"
+            CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=" 75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Text="DolevAndDavid"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="White"
+                       FontSize="22"
+                       Margin="20,0,0,0"/>
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Create Room"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource CreateRoomButtonTheme}"/>
+                <RadioButton Content="Join Room"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource CreateRoomButtonTheme}"/>
+                <RadioButton Content="Personal Statistics"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource CreateRoomButtonTheme}"/>
+                <RadioButton Content="Highest Statistics"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource CreateRoomButtonTheme}"/>
+            </StackPanel>
+            <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
+                            Content="{Binding CurrectView}"/>
+        </Grid>
         
-    </Grid>
+    </Border>
 </Window>

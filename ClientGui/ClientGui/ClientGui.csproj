@@ -26,9 +26,6 @@
     <Folder Include="MenuWindow\Fonts\" />
     <Folder Include="MenuWindow\Images\" />
     <Folder Include="MenuWindow\MVVM\Model\" />
-    <Folder Include="MenuWindow\MVVM\ViewModel\" />
-    <Folder Include="MenuWindow\MVVM\View\" />
-    <Folder Include="MenuWindow\Theme\" />
   </ItemGroup>
 
 </Project>
