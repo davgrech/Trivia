@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ClientGui"
-             
              xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
              xmlns:view="clr-namespace:ClientGui.MenuWindow.MVVM.View"
              StartupUri="MainWindow.xaml">
@@ -17,14 +16,24 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView/>
 
             </DataTemplate>
-            
-            
-            
+
+            <DataTemplate DataType="{x:Type viewModel:UserStatisticsViewModel}">
+
+                <view:PersonalStatistics/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:HighScoresViewModel}">
+
+                <view:HighScores/>
+            </DataTemplate>
+
+
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
