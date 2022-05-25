@@ -9,12 +9,15 @@ LoginManager::LoginManager(IDatabase* db)
 bool LoginManager::signup(std::string name, std::string password, std::string email, std::string phone, std::string birthDate)
 {
 	//fix order of arguments.
+	
 	return this->database->addNewUser(name, password, email, phone, birthDate);
+	
 }
 
 bool LoginManager::login(std::string name, std::string password)
 {
 	LoggedUser user(name);
+	
 	if (!notloggedAlready(name))
 	{
 		throw std::exception("Logged already in other client");
@@ -23,6 +26,7 @@ bool LoginManager::login(std::string name, std::string password)
 		this->m_loggedUsers.push_back(user);
 		return true;
 	}
+
 	return false;
 	
 }

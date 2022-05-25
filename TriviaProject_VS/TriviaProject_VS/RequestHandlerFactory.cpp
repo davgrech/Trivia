@@ -49,3 +49,8 @@ StatisticsManager& RequestHandleFactory::getStatisticManager()
     return this->m_StatisticManager;
 }
 
+void RequestHandleFactory::deleteUser(std::string username)
+{
+    this->m_LoginManager.logout(username);
+}
+

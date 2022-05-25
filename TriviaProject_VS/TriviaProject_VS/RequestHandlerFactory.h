@@ -6,7 +6,7 @@
 #include "RoomManager.h"
 #include "StatisticsManager.h"
 
-
+#include <string>
 class MenuRequestHanlder;
 
 class LoginRequestHandler;
@@ -21,6 +21,7 @@ class RequestHandleFactory
 		RoomManager& getRoomManager();
 		LoginManager& getLoginManager();
 		StatisticsManager& getStatisticManager();
+		void deleteUser(std::string username);
 	private:
 		IDatabase* m_database;
 		LoginManager m_LoginManager;

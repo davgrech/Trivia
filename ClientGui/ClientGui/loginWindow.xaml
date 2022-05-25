@@ -98,11 +98,18 @@
                              BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource
                     MaterialDesignOutlinedPasswordBox}"/>
 
+
+
+                <CheckBox x:Name ="Remember" IsChecked="False" HorizontalAlignment="Center" Margin="0 30 0 0" FontSize="20" Click="toggle_remember">Remember me</CheckBox>
+
+
+
+
                 <Button  x:Name="loginBtn" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                         materialDesign:ShadowAssist.ShadowDepth="Depth0"
                         Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                         materialDesign:ButtonAssist.CornerRadius="20"
-                         Margin="0 20 0 0"
+                         Margin="0 60 0 0"
                         Height="53" Width="300" 
                         FontSize="25" Content="Login" Click="toggle_login" />
                 <Button Margin="0 20 0 0" x:Name="signupBtn" Style="{StaticResource
