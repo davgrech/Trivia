@@ -55,7 +55,7 @@ namespace ClientGui
             ConnectToServer();
 
             //login handler
-            if (new FileInfo("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt").Length == 0)
+            if (new FileInfo("rememberme.txt").Length == 0)
             {
                 loginWindow hi = new loginWindow(_clientSocket);
 
@@ -64,7 +64,8 @@ namespace ClientGui
             }
             else
             {
-                string path="C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt";
+                //C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\
+                string path ="rememberme.txt";
                 string _name, _password;
                 string[] lines = File.ReadAllLines(path);
                 _name = lines[0];

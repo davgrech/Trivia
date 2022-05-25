@@ -197,9 +197,9 @@ namespace ClientGui
                 {
                     if (isRemember == true)
                     {
-                        File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                        File.WriteAllText("rememberme.txt", String.Empty);
                         string linetowrite = txtUsername.Text + "\n" + txtPassowrd.Password;
-                        await File.WriteAllTextAsync("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", linetowrite);
+                        await File.WriteAllTextAsync("rememberme.txt", linetowrite);
 
                     }
                     else
