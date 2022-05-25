@@ -38,6 +38,7 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
         {
             HomeVm = new HomeViewModel();
             userStatsVM = new UserStatisticsViewModel();
+            HighScoresVM = new HighScoresViewModel();
             CurrentView = HomeVm;
 
             HomeViewCommand = new RelayCommand(o => 
@@ -52,7 +53,7 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
 
             HighScoresViewCommand = new RelayCommand(o =>
             {
-                HighScoresVM = new HighScoresViewModel();
+                CurrentView = HighScoresVM;
             });
         }
     }

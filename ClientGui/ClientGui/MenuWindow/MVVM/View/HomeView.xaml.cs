@@ -24,5 +24,11 @@ namespace ClientGui.MenuWindow.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //move to room creation
+            //Console.WriteLine("HEYYYYY");
+        }
     }
 }

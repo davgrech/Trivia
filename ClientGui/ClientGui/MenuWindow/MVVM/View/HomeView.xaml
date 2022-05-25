@@ -32,7 +32,10 @@
                 </Border.Clip>
 
                 <Grid>
-                    <StackPanel>
+                    
+                    <StackPanel
+                     MouseLeftButtonDown="StackPanel_MouseLeftButtonDown"
+>
                         <TextBlock Text="Quick&#x0a;Room Creation"
                                    Foreground="White"
                                    Margin="20,10,10,0"
@@ -47,6 +50,7 @@
                                    
                                    />
                     </StackPanel>
+                    
 
                     <Image Width="204" Height="208"
                            Source="/Resources/woman.png"
