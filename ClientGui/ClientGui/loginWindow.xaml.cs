@@ -18,6 +18,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace ClientGui
 {
@@ -29,7 +30,7 @@ namespace ClientGui
 
         private static Socket mySock = null;
         private bool isLoggedIn = false;
-       
+        private bool isRemember = false;
         public event PropertyChangedEventHandler? PropertyChanged;
         
         public bool IsLoggedIn 
@@ -133,6 +134,8 @@ namespace ClientGui
             SendInfrmaionToServer(to_send);
 
 
+           
+
         }
 
 
@@ -192,6 +195,18 @@ namespace ClientGui
                 string recieved = ReciveInformationFromServer();
                 if(recieved[10] == '1')
                 {
+                    if (isRemember == true)
+                    {
+                        File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                        string linetowrite = txtUsername.Text + "\n" + txtPassowrd.Password;
+                        await File.WriteAllTextAsync("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", linetowrite);
+
+                    }
+                    else
+                    {
+                        //var fileStream = File.Open("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", FileMode.Open);
+                        //File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                    }
                     isLoggedIn = true;
                     eventArgs.Session.Close(true);
                     MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler();
@@ -226,6 +241,11 @@ namespace ClientGui
 
                     loginStatus.Text = "Login Succeed";
                     loginStatus.Visibility = Visibility.Visible;
+                    this.Visibility = Visibility.Hidden;
+                    MenuWindow.MenuHandler menuWindow = new MenuWindow.MenuHandler(mySock);
+                    menuWindow.Show();
+
+
                 }
                 else if (((bool)eventArgs.Parameter) == false)
                 {
@@ -246,6 +266,11 @@ namespace ClientGui
             SignUp newSignup = new SignUp(mySock);
             newSignup.Show();
             this.Close();
+        }
+
+        private void toggle_remember(object sender, RoutedEventArgs e)
+        {
+            isRemember = (bool)Remember.IsChecked;
         }
     }
 }

@@ -5,7 +5,7 @@
 #include "LoggedUser.h"
 #include "IDatabase.h"
 #include "SqliteDatabase.h"
-
+#include <mutex>
 
 
 
@@ -20,4 +20,5 @@ public:
 private:
 	IDatabase* database;
 	std::vector<LoggedUser> m_loggedUsers;
+	std::mutex _mtx1;
 };

@@ -9,7 +9,7 @@ serveTool& serveTool::operator=(const serveTool& other)
 {
 	this->m_handlerFactory = other.m_handlerFactory;
 	this->_socket = other._socket;
-	
+
 	return *this;
 }
 
@@ -77,6 +77,11 @@ void serveTool::addToClients(SOCKET client, IRequestHandler* request)
 	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, request));
 }
 
+void serveTool::addToSockToClient(SOCKET client, std::string x)
+{
+	this->sock_to_user.insert(std::pair< SOCKET,std::string>(client, x));
+}
+
 
 
 void serveTool::cHandler(SOCKET client)
@@ -92,14 +97,22 @@ void serveTool::cHandler(SOCKET client)
 	RequestResult reqResult;
 
 	IRequestHandler* handler = this->m_handlerFactory->createLoginRequestHandler();
-	while (true ) {
+	while (true) {
 		try
 		{
 			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
+				
+				if (this->_clients.count(client) > 0)
+				{
+					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
+				}
+				sock_to_user.erase(client);
 				_clients.erase(client);
+				
+				
 				return;
 			}
 
@@ -138,7 +151,19 @@ void serveTool::cHandler(SOCKET client)
 					//succee to login
 					if (reqResult.newHandler != nullptr)
 					{
+						
 						this->_mtx1.lock();
+						if (id == CLIENT_SIGNUP)
+						{
+							SignupRequest req = JRPD::deserializeSignupRequest(msgInfo.buffer);
+							addToSockToClient(client, req.username);
+						}
+						else
+						{
+							LoginRequest req = JRPD::deserializeLoginRequest(msgInfo.buffer);
+							addToSockToClient(client, req.username);
+						}
+						
 						addToClients(client, reqResult.newHandler);
 						handler = reqResult.newHandler;
 						this->_mtx1.unlock();
@@ -250,9 +275,16 @@ void serveTool::cHandler(SOCKET client)
 			std::string responseString(reqResult.buffer.begin(), reqResult.buffer.end());
 			std::cout << "Response sent: " << responseString << std::endl;
 			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
+
+				if (this->_clients.count(client) > 0)
+				{
+					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
+
+				}
+				sock_to_user.erase(client);
 				this->_clients.erase(client);
 				return;
-				throw ClientError();
+				
 			}
 
 		}
@@ -268,7 +300,14 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					throw std::exception("Error: while sending message to client.");
+					if (this->_clients.count(client) > 0)
+					{
+						this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
+
+					}
+					sock_to_user.erase(client);
+					this->_clients.erase(client);
+					return;
 				}
 				std::cout << "Response sent: " << responseString;
 			}
@@ -313,7 +352,7 @@ RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value)
 
 bool checkByteReceived(int ByteReceived)
 {
-	return ByteReceived == SOCKET_ERROR;
+	return ByteReceived == 0 || ByteReceived == -1;
 }
 
 

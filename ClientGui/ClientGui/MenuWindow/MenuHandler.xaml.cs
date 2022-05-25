@@ -11,17 +11,31 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Net.Sockets;
 namespace ClientGui.MenuWindow
 {
     /// <summary>
     /// Interaction logic for MenuHandler.xaml
     /// </summary>
+    /// 
+   
     public partial class MenuHandler : Window
     {
-        public MenuHandler()
+
+        private static Socket mySock = null;
+
+        public MenuHandler(Socket _clientSocket)
         {
             InitializeComponent();
+            mySock = _clientSocket; 
+
+
+            
+        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

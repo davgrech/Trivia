@@ -19,7 +19,7 @@
 
 
 
-
+#include "LoggedUser.h"
 
 
 
@@ -54,7 +54,7 @@ public:
 	
 	void addToClients(SOCKET client, IRequestHandler* request);
 	
-
+	void addToSockToClient(SOCKET client, std::string x);
 	
 
 private:
@@ -66,6 +66,6 @@ private:
 	std::mutex _mtx1;
 
 	std::map<SOCKET, IRequestHandler*> _clients;
-	
+	std::map <SOCKET, std::string> sock_to_user;
 	RequestHandleFactory* m_handlerFactory;
 };
