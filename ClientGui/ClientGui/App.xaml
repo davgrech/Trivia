@@ -16,13 +16,24 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-                <view:MenuView/>
+                <view:HomeView/>
+
             </DataTemplate>
-            
-            
-            
+
+            <DataTemplate DataType="{x:Type viewModel:UserStatisticsViewModel}">
+
+                <view:PersonalStatistics/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:HighScoresViewModel}">
+
+                <view:HighScores/>
+            </DataTemplate>
+
+
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

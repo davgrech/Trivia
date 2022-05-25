@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="MenuWindow\Images\woman.png" />
     <None Remove="Resources\tankLoginLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\woman.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\tankLoginLogo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -23,9 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MenuWindow\Fonts\" />
     <Folder Include="MenuWindow\Images\" />
     <Folder Include="MenuWindow\MVVM\Model\" />
+    <Folder Include="MenuWindow\Fonts\" />
   </ItemGroup>
 
 </Project>

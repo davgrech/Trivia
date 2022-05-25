@@ -209,6 +209,9 @@ namespace ClientGui
                     }
                     isLoggedIn = true;
                     eventArgs.Session.Close(true);
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler();
+                    this.Close();
+                    moveToMenu.Show();
                 }
                 else
                 {

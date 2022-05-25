@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ClientGui.MenuWindow.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MenuView.xaml
+    /// Interaction logic for PersonalStatistics.xaml
     /// </summary>
-    public partial class MenuView : UserControl
+    public partial class PersonalStatistics : UserControl
     {
-        public MenuView()
+        public PersonalStatistics()
         {
             InitializeComponent();
         }
