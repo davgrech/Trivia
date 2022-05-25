@@ -241,11 +241,7 @@ namespace ClientGui
 
                     loginStatus.Text = "Login Succeed";
                     loginStatus.Visibility = Visibility.Visible;
-                    this.Visibility = Visibility.Hidden;
-                    MenuWindow.MenuHandler menuWindow = new MenuWindow.MenuHandler(mySock);
-                    menuWindow.Show();
-
-
+                    
                 }
                 else if (((bool)eventArgs.Parameter) == false)
                 {
