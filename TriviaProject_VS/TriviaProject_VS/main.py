@@ -31,9 +31,9 @@ def CreateSignup():
     password = input("enter password: ")
     email = input("enter email: ")
     phoneNum = input("enter phone number: ")
-    address = input("enter address: ")
+    
     birthday = input("enter date of birth: ")
-    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '","phoneNumber":"' + phoneNum + '","address":"' + address + '","date":"' + birthday + '"}'
+    signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '","phoneNumber":"' + phoneNum +'","date":"' + birthday + '"}'
     # print(signupInfo)
     msgLen = padMsg(str(len(signupInfo)), 4)
     send_str = '0' + msgLen + signupInfo

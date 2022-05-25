@@ -64,12 +64,12 @@ namespace ClientGui
             }
             else
             {
-                string text = System.IO.File.ReadAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt");
+                string path="C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt";
                 string _name, _password;
-                string[] words = text.Split("$$$$$$$$");
-                _name = words[0];
-                _password = words[1];
-
+                string[] lines = File.ReadAllLines(path);
+                _name = lines[0];
+                _password = lines[1];
+                
 
                 var login_info = new loginRequest
                 {
