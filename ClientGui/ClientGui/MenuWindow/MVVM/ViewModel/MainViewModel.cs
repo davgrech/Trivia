@@ -20,14 +20,17 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
 
         public UserStatisticsViewModel userStatsVM { get; set; } // userstats model
         public HighScoresViewModel HighScoresVM { get; set; } // high scores view model
+
         private object _currentView;
 
         public object CurrentView
         {
             get { return _currentView; }
-            set { _currentView = value;
+            set 
+            { 
+                _currentView = value;
                 OnPropertyChanged();
-                    }
+            }
         }
 
 

@@ -5,12 +5,12 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 namespace ClientGui.MenuWindow.Core
 {
-    class ObservableObject : INotifypropertyChanged
+    class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));  
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -24,15 +24,16 @@ namespace ClientGui.Core
             _execute = execute;
             _canExecute = canExecute;
         }
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null || _canExecute(parameter);
+        }
 
         public void Execute(object parameter)
         {
             _execute(parameter);
         }
 
-        public bool CanExecute(object? parameter)
-        {
-            return _canExecute == null || _canExecute(parameter);
-        }
+
     }
 }

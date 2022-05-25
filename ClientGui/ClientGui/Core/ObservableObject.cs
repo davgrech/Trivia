@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ClientGui.Core
 {
-    class ObservableObject : INotifypropertyChanged
+    class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
