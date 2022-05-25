@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ClientGui.MenuWindow"
         xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
         mc:Ignorable="d"
@@ -17,6 +18,7 @@
     </Window.DataContext>
     <Border Background="#272537"
             CornerRadius="20">
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -26,14 +28,42 @@
                 <RowDefinition Height=" 75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <TextBlock Text="Main Menu"
-                      
+                       x:Name="userTxt"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
-                       Foreground="White"
+                       Foreground="RoyalBlue"
+                       FontWeight="Bold"
                        FontSize="22"
                        Margin="20,0,0,0"/>
+
+            <Button Content ="LOGOUT"
+                         x:Name="btnLogout"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Height="70"
+                         Margin="0,0,120,0"
+                         FontWeight="Bold"
+                         
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="logout_toggle"
+                         />
+
+            <Button Content ="EXIT" 
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Width="120"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
+                         />
             <StackPanel Grid.Row="1">
                 <RadioButton Content="Home"
                              Height="70"
@@ -69,6 +99,6 @@
                             Content="{Binding CurrentView}"/>
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
         </Grid>
-        
+
     </Border>
 </Window>

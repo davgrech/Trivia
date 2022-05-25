@@ -105,7 +105,7 @@ void serveTool::cHandler(SOCKET client)
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
 				
-				if (this->_clients.count(client) > 0)
+				if (this->sock_to_user.count(client) > 0)
 				{
 					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
 				}
@@ -136,8 +136,8 @@ void serveTool::cHandler(SOCKET client)
 			RequestInfo msgInfo = createNewRequestInfo(id, buffer);
 
 
-
-			if (!(this->_clients.count(client) > 0)) //  client has to login first
+			//if doesnt connected or doesnt logged ->true
+			if (!(this->sock_to_user.count(client) > 0)) //  client has to login first
 			{
 
 
@@ -196,6 +196,8 @@ void serveTool::cHandler(SOCKET client)
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
 						reqResult = handler->handleRequest(msgInfo);
+						this->sock_to_user.erase(client);
+						
 					}
 
 					break;

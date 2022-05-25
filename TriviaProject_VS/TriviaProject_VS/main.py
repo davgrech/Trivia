@@ -66,6 +66,7 @@ def sendMsgByid(msgid):
     msg = ""
     msgLen = padMsg(str(len(msg)), 4)
     send_str = msgTypeDict[str(msgid)] + msgLen + msg
+    print(send_str)
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 

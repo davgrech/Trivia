@@ -29,7 +29,7 @@ namespace ClientGui
 
         private static Socket mySock = null;
         private bool isSignedUp = false;
-
+        private string GlobaluserName;
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public bool IsSigned
@@ -157,6 +157,8 @@ namespace ClientGui
                 date = SignUpDate.Text, 
                 //address = "aa, 11, bb" // this is just for checking
             };
+            GlobaluserName = signUp_info.username;
+
 
             string jsonString = JsonSerializer.Serialize(signUp_info);
             string len = padMsg(jsonString.Length.ToString(), 4);
@@ -188,7 +190,7 @@ namespace ClientGui
                 {
                     isSignedUp = true;
                     eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock);
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
                     this.Close();
                     moveToMenu.Show();  // when sign up is complete go to menu
                 }

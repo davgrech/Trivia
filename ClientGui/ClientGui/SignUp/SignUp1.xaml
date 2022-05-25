@@ -48,7 +48,7 @@
                                           Click="toggleTheme"/>
 
                         </StackPanel>
-                        <Button ToolTip="can't log in?" Margin="0 8 0 0" Content="Help me"/>
+                        <Button ToolTip="can't sign in?" Margin="0 8 0 0" Content="Help me"/>
                         <Button x:Name="btn_exit" ToolTip="Close Application" Content="Exit Application" Click="exitApp"/>
 
                     </StackPanel>

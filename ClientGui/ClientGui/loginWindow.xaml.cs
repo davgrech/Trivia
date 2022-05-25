@@ -32,7 +32,7 @@ namespace ClientGui
         private bool isLoggedIn = false;
         private bool isRemember = false;
         public event PropertyChangedEventHandler? PropertyChanged;
-        
+        private string GlobaluserName;
         public bool IsLoggedIn 
         {
             get { return isLoggedIn; } 
@@ -125,7 +125,7 @@ namespace ClientGui
                 username = txtUsername.Text,
                 password = txtPassowrd.Password
             };
-
+            GlobaluserName = txtUsername.Text;
             string jsonString = JsonSerializer.Serialize(login_info);
             string len = padMsg(jsonString.Length.ToString(), 4);
 
@@ -209,7 +209,7 @@ namespace ClientGui
                     }
                     isLoggedIn = true;
                     eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock);
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
                     this.Close();
                     moveToMenu.Show();
                 }

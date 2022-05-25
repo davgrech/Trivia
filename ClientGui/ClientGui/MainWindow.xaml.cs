@@ -64,44 +64,47 @@ namespace ClientGui
             }
             else
             {
-                //C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\
-                string path ="rememberme.txt";
-                string _name, _password;
-                string[] lines = File.ReadAllLines(path);
-                _name = lines[0];
-                _password = lines[1];
-                
-
-                var login_info = new loginRequest
-                {
-                    username = _name,
-                    password = _password
-                };
-
-                string jsonString = JsonSerializer.Serialize(login_info);
-                string len = padMsg(jsonString.Length.ToString(), 4);
-
-                string to_send = "1" + len + jsonString;
-
-                SendInfrmaionToServer(to_send);
-
-                string recieved = ReciveInformationFromServer();
-                if (recieved[10] == '1')
-                {
-                    MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(_clientSocket);
-
-                    //show login handler
-                    window.Show();
-                }
-                else
-                {
-                    loginWindow hi = new loginWindow(_clientSocket);
-                    hi.Show();
-                    hi.loginStatus.Text = "account already inside failed";
-                }
+                rememberMeCheck();
+               
             }
         }
-        
+        public void rememberMeCheck()
+        {
+            string path = "rememberme.txt";
+            string _name, _password;
+            string[] lines = File.ReadAllLines(path);
+            _name = lines[0];
+            _password = lines[1];
+
+
+            var login_info = new loginRequest
+            {
+                username = _name,
+                password = _password
+            };
+
+            string jsonString = JsonSerializer.Serialize(login_info);
+            string len = padMsg(jsonString.Length.ToString(), 4);
+
+            string to_send = "1" + len + jsonString;
+
+            SendInfrmaionToServer(to_send);
+
+            string recieved = ReciveInformationFromServer();
+            if (recieved[10] == '1')
+            {
+                MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(_clientSocket, _name);
+
+                //show login handler
+                window.Show();
+            }
+            else
+            {
+                loginWindow hi = new loginWindow(_clientSocket);
+                hi.Show();
+                hi.loginStatus.Text = "account already inside failed";
+            }
+        }
 
         public string padMsg(string msg, int len)
         {
