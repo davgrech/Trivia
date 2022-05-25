@@ -188,7 +188,7 @@ namespace ClientGui
                 {
                     isSignedUp = true;
                     eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler();
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock);
                     this.Close();
                     moveToMenu.Show();  // when sign up is complete go to menu
                 }
@@ -218,9 +218,6 @@ namespace ClientGui
 
                     SignUpStatus.Text = "Signed up successfully";
                     SignUpStatus.Visibility = Visibility.Visible;
-                    this.Visibility = Visibility.Hidden;
-                    MenuWindow.MenuHandler menuWindow = new MenuWindow.MenuHandler(mySock);
-                    menuWindow.Show();
 
                 }
                 else if (((bool)eventArgs.Parameter) == false)

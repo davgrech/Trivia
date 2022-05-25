@@ -209,7 +209,7 @@ namespace ClientGui
                     }
                     isLoggedIn = true;
                     eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler();
+                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock);
                     this.Close();
                     moveToMenu.Show();
                 }
