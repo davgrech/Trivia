@@ -116,7 +116,10 @@ std::vector<unsigned char> JRPS::serializeResponse(GetPlayersInRoomResponse valu
     
     for (auto it = value.players.begin(); it != value.players.end(); it++)
     {
-        Players += *it + ", ";
+        
+       
+       Players += *it + ", ";
+     
     }
     j["Players"] = Players;
 

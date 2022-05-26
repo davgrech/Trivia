@@ -105,10 +105,13 @@ void serveTool::cHandler(SOCKET client)
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
 				
+				// if logged in
 				if (this->sock_to_user.count(client) > 0)
 				{
 					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
+					this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
 				}
+				
 				sock_to_user.erase(client);
 				_clients.erase(client);
 				
@@ -196,7 +199,11 @@ void serveTool::cHandler(SOCKET client)
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
 						reqResult = handler->handleRequest(msgInfo);
+
+						//leave the room if he is in one  & leave logs
+						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
 						this->sock_to_user.erase(client);
+						
 						
 					}
 
@@ -206,6 +213,9 @@ void serveTool::cHandler(SOCKET client)
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
 						reqResult = handler->handleRequest(msgInfo);
+						//leave the room if he is in one  & leave logs
+						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
+						this->sock_to_user.erase(client);
 					}
 
 					break;
@@ -305,7 +315,7 @@ void serveTool::cHandler(SOCKET client)
 					if (this->_clients.count(client) > 0)
 					{
 						this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
-
+						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
 					}
 					sock_to_user.erase(client);
 					this->_clients.erase(client);

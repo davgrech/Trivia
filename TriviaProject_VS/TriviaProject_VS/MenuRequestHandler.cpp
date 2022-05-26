@@ -86,7 +86,7 @@ RequestResult MenuRequestHanlder::getRooms(RequestInfo info)
     GetRoomResponse getRoomRes;
     std::vector<Room> rooms = this->m_roomManager.getRooms();
     for (auto it = rooms.begin(); it != rooms.end(); it++) {
-        if (it->isActive()) {
+        if (!it->isActive()) {
             getRoomRes.rooms.push_back(it->getRoomData());
         }
     }

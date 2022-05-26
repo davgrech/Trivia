@@ -1,16 +1,28 @@
 #include "RoomManager.h"
 RoomManager::RoomManager()
 {
-	m_rooms.insert({ 0,Room() });
+	
 }
 
 void RoomManager::createRoom(LoggedUser user, RoomData var)
 {
+	std::vector<Room> roomLst = this->getRooms();
+	for (int i = 0; i < roomLst.size(); i++)
+	{
+		if (roomLst[i].isInRoomAlready(user.getUsername()))
+		{
+			throw std::exception("user in a room already");
+		}
+	}
+
 	this->m_rooms.insert(std::pair<unsigned int, Room>(var.id, Room(var)));
 	this->m_rooms.at(var.id).addUser(user);
 	
 	
 }
+
+
+
 
 void RoomManager::deleteRoom(unsigned int ID)
 {
@@ -42,4 +54,17 @@ Room& RoomManager::getRoom(unsigned int ID)
 	else {
 		return this->m_rooms.at(0);
 	}
+}
+
+bool RoomManager::deleteUserInRoom(std::string userName)
+{
+	
+	for (int i = 0; i < this->m_rooms.size(); i++)
+	{
+		if (m_rooms[i].isInRoomAlready(userName))
+		{
+			return this->m_rooms[i].removeUser(userName);
+		}
+	}
+	return false;
 }

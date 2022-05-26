@@ -54,10 +54,11 @@ bool Room::removeUser(LoggedUser user)
     if (std::find(this->m_users.begin(), this->m_users.end(), user.getUsername()) != this->m_users.end())
     {
         this->m_users.erase(std::find(this->m_users.begin(), this->m_users.end(), user.getUsername()));
+        return true;
     }
     else
     {
-        throw std::runtime_error("User is not at the room");
+        return false;
     }
     
 
@@ -72,3 +73,18 @@ RoomData Room::getRoomData()
 {
     return this->m_metadata;
 }
+
+bool Room::isInRoomAlready(std::string userName)
+{
+    std::vector<std::string> userLst = this->getAllUsers();
+    for (int i = 0; i < userLst.size(); i++)
+    {
+        if (userLst[i] == userName)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
