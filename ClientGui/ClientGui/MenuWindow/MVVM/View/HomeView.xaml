@@ -32,7 +32,7 @@
                 </Border.Clip>
 
                 <Grid>
-                    
+
                     <StackPanel
                      MouseLeftButtonDown="StackPanel_MouseLeftButtonDown"
 >
@@ -50,7 +50,7 @@
                                    
                                    />
                     </StackPanel>
-                    
+
 
                     <Image Width="204" Height="208"
                            Source="/Resources/woman.png"
@@ -90,7 +90,7 @@
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="Margin" Value="15,0,0,0"/>
                 </Style>
-                
+
             </StackPanel.Resources>
             <TextBlock Text="Learn more about our developers"
                        Foreground="White"
@@ -103,22 +103,58 @@
                         Height="150" 
                         Background="#844eff"
                         CornerRadius="10"
-                        Margin="0"/>
+                        Margin="0">
+                    <TextBlock Text="Dolev Brami&#x0a;Senior Developer"
+                       Foreground="White"
+                       FontSize="15"
+                       HorizontalAlignment="Left"
+                       Margin="5,10,0,10"/>
+                </Border>
 
                 <Border Width="150" 
                         Height="150" 
                         Background="#4e99ff"
-                        CornerRadius="10"/>
+                        CornerRadius="10">
+                    <Image Width="340" Height="322"
+                           Source="/Resources/dolev.jpeg"
+                           HorizontalAlignment="Center"
+                           
+                           VerticalAlignment="Center"
+                           />
+
+
+
+                </Border>
 
                 <Border Width="150" 
                         Height="150" 
-                        Background="#4eff90"
-                        CornerRadius="10"/>
+                        Background="BurlyWood"
+                        CornerRadius="10">
+                    <TextBlock Text="David Grechkin&#x0a;Looks at the code&#x0a;(sometimes)"
+                       Foreground="White"
+                       FontSize="15"
+                       HorizontalAlignment="Left"
+                       Margin="5,10,0,10"/>
+
+
+
+
+                </Border>
 
                 <Border Width="150" 
                         Height="150" 
                         Background="#ecff90"
-                        CornerRadius="10"/>
+                        CornerRadius="10">
+                    <Image Width="274" Height="232"
+                           Source="/Resources/david.jpeg"
+                           HorizontalAlignment="Left"
+                           
+                           VerticalAlignment="Top"
+                           />
+
+
+
+                </Border>
 
             </StackPanel>
 

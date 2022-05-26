@@ -9,10 +9,18 @@
 
   <ItemGroup>
     <None Remove="MenuWindow\Images\woman.png" />
+    <None Remove="Resources\david.jpeg" />
+    <None Remove="Resources\dolev.jpeg" />
     <None Remove="Resources\tankLoginLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\david.jpeg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\dolev.jpeg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\woman.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
