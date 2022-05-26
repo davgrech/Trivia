@@ -76,6 +76,7 @@
                              Height="70"
                              Foreground="White"
                              FontSize="14"
+                             Command="{Binding CreateRoomViewCommand}"
                              Style="{StaticResource CreateRoomButtonTheme}"/>
                 <RadioButton Content="Join Room"
                              Height="70"

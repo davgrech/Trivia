@@ -13,14 +13,14 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
         public RelayCommand UserStatisticsViewCommand { get; set; } //move to user statistics page
         public RelayCommand HighScoresViewCommand { get; set; } //move to highscores page
 
-
+        public RelayCommand CreateRoomViewCommand { get; set; }
 
 
         public HomeViewModel HomeVm { get; set; } // homepage model
 
         public UserStatisticsViewModel userStatsVM { get; set; } // userstats model
         public HighScoresViewModel HighScoresVM { get; set; } // high scores view model
-
+        public CreateRoomViewModel CreateRoomVM { get; set; }
         private object _currentView;
 
         public object CurrentView
@@ -39,6 +39,7 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
             HomeVm = new HomeViewModel();
             userStatsVM = new UserStatisticsViewModel();
             HighScoresVM = new HighScoresViewModel();
+            CreateRoomVM= new CreateRoomViewModel();
             CurrentView = HomeVm;
 
             HomeViewCommand = new RelayCommand(o => 
@@ -55,6 +56,11 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
             {
                 CurrentView = HighScoresVM;
             });
+            CreateRoomViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = CreateRoomVM;
+            }
+            );
         }
     }
 }

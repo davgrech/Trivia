@@ -30,7 +30,11 @@
 
                 <view:HighScores/>
             </DataTemplate>
-
+            
+            
+            <DataTemplate DataType="{x:Type viewModel:CreateRoomViewModel}">
+                <view:CreateRoom/>
+            </DataTemplate>
 
 
 
