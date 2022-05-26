@@ -4,6 +4,14 @@ static const unsigned short PORT = 2022;
 static const unsigned int IFACE = 0;
 
 
+#include <mutex>
+
+std::mutex login_manager;
+std::mutex statistic_manager;
+std::mutex room_manager;
+std::mutex game_manager;
+std::mutex user_map;
+std::mutex connect_map;
 
 serveTool& serveTool::operator=(const serveTool& other)
 {
@@ -73,13 +81,39 @@ void serveTool::startHandleRequests()
 
 void serveTool::addToClients(SOCKET client, IRequestHandler* request)
 {
-
+	connect_map.lock();
 	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, request));
+	connect_map.unlock();
 }
 
 void serveTool::addToSockToClient(SOCKET client, std::string x)
 {
+	user_map.lock();
 	this->sock_to_user.insert(std::pair< SOCKET,std::string>(client, x));
+	user_map.unlock();
+}
+
+void serveTool::Disconnected(SOCKET socket, std::string userName)
+{
+	// if logged in
+	if (this->sock_to_user.count(socket) > 0)
+	{
+		login_manager.lock();
+		this->m_handlerFactory->deleteUser(this->sock_to_user.at(socket));
+		login_manager.unlock();
+
+		room_manager.lock();
+		this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(socket));
+		room_manager.unlock();
+	}
+
+	user_map.lock();
+	sock_to_user.erase(socket);
+	user_map.unlock();
+
+	connect_map.lock();
+	_clients.erase(socket);
+	connect_map.unlock();
 }
 
 
@@ -104,16 +138,8 @@ void serveTool::cHandler(SOCKET client)
 			byteReceived = recv(client, recMsg, 2048, 0);
 
 			if (checkByteReceived(byteReceived)) { // if client disconnected check.
+				Disconnected(client, sock_to_user.at(client));
 				
-				// if logged in
-				if (this->sock_to_user.count(client) > 0)
-				{
-					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
-					this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-				}
-				
-				sock_to_user.erase(client);
-				_clients.erase(client);
 				
 				
 				return;
@@ -147,29 +173,30 @@ void serveTool::cHandler(SOCKET client)
 				if (handler->isRequestRelevant(msgInfo)) { // check if relevent
 
 
-
+					login_manager.lock();
 					reqResult = handler->handleRequest(msgInfo);
-
+					login_manager.unlock();
 
 					//succee to login
 					if (reqResult.newHandler != nullptr)
 					{
 						
-						this->_mtx1.lock();
 						if (id == CLIENT_SIGNUP)
 						{
+							
 							SignupRequest req = JRPD::deserializeSignupRequest(msgInfo.buffer);
 							addToSockToClient(client, req.username);
 						}
 						else
 						{
+							
 							LoginRequest req = JRPD::deserializeLoginRequest(msgInfo.buffer);
 							addToSockToClient(client, req.username);
 						}
 						
 						addToClients(client, reqResult.newHandler);
 						handler = reqResult.newHandler;
-						this->_mtx1.unlock();
+						
 					}
 
 
@@ -197,13 +224,21 @@ void serveTool::cHandler(SOCKET client)
 				}
 				case CLIENT_LOGOUT:
 				{
+					
+					
 					if (handler->isRequestRelevant(msgInfo)) {
+						login_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
-
+						login_manager.unlock();
 						//leave the room if he is in one  & leave logs
-						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-						this->sock_to_user.erase(client);
 						
+						room_manager.lock();
+						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
+						room_manager.unlock();
+						
+						user_map.lock();
+						this->sock_to_user.erase(client);
+						user_map.unlock();
 						
 					}
 
@@ -211,11 +246,19 @@ void serveTool::cHandler(SOCKET client)
 				}
 				case CLIENT_SIGNOUT:
 				{
+					
 					if (handler->isRequestRelevant(msgInfo)) {
+						login_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						login_manager.unlock();
 						//leave the room if he is in one  & leave logs
+						room_manager.lock();
 						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
+						room_manager.unlock();
+
+						user_map.lock();
 						this->sock_to_user.erase(client);
+						user_map.unlock();
 					}
 
 					break;
@@ -223,7 +266,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_CREATE_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						room_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						room_manager.unlock();
 					}
 
 					break;
@@ -231,7 +276,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_JOIN_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						room_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						room_manager.unlock();
 					}
 
 					break;
@@ -239,7 +286,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_PLAYERS_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						room_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						room_manager.unlock();
 					}
 
 					break;
@@ -247,7 +296,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_ROOMS:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						room_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						room_manager.unlock();
 					}
 
 					break;
@@ -255,7 +306,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_STATS_USER:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						statistic_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						statistic_manager.unlock();
 					}
 
 					break;
@@ -263,7 +316,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_HIGH_SCORE:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
+						statistic_manager.lock();
 						reqResult = handler->handleRequest(msgInfo);
+						statistic_manager.unlock();
 					}
 
 					break;
@@ -276,9 +331,9 @@ void serveTool::cHandler(SOCKET client)
 				}
 				handler = reqResult.newHandler;
 
-				this->_mtx1.lock();
+				
 				this->_clients.at(client) = handler;
-				this->_mtx1.unlock();
+				
 
 			}
 
@@ -288,13 +343,7 @@ void serveTool::cHandler(SOCKET client)
 			std::cout << "Response sent: " << responseString << std::endl;
 			if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
 
-				if (this->_clients.count(client) > 0)
-				{
-					this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
-
-				}
-				sock_to_user.erase(client);
-				this->_clients.erase(client);
+				Disconnected(client, sock_to_user.at(client));
 				return;
 				
 			}

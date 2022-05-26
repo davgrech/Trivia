@@ -43,7 +43,7 @@ std::vector<Room> RoomManager::getRooms()
 	return vec;
 }
 
-Room& RoomManager::getRoom(unsigned int ID)
+Room RoomManager::getRoom(unsigned int ID)
 {
 	
 	
@@ -52,7 +52,8 @@ Room& RoomManager::getRoom(unsigned int ID)
 		return this->m_rooms.at(ID);
 	}
 	else {
-		return this->m_rooms.at(0);
+		
+		return Room();
 	}
 }
 

@@ -129,7 +129,7 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     JoinRoomResponse roomRes;
 
     roomReq = JRPD::deserializeJoinRoomRequest(info.buffer);
-    Room& room = this->m_roomManager.getRoom(roomReq.roomId);
+    Room room = this->m_roomManager.getRoom(roomReq.roomId);
     if (room.getRoomData().name == "") {
         throw std::exception("the rom doesnt exist");
     }
@@ -146,6 +146,12 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     CreateRoomResponse createRoomRes;
 
     //int id = random_a_valid_RoomId()
+
+    int newID = rand();
+    while (this->m_roomManager.getRoom(newID).getRoomData().name != "")
+    {
+        newID = rand();
+    }
 
 
     createRoomReq = JRPD::deserializeCreateRoomRequest(info.buffer);
@@ -175,7 +181,7 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     */
     RoomData RoomInfo
     {
-        1, // to check !!!!!! will be changed
+        newID, // to check !!!!!! will be changed
         createRoomReq.roomName,
         createRoomReq.maxUsers,
         createRoomReq.questionCount,

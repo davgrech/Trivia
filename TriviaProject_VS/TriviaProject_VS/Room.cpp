@@ -2,7 +2,10 @@
 
 Room::Room()
 {
-    this->m_metadata = RoomData();
+    RoomData x;
+    x.name = "";
+    this->m_metadata = x;
+    
 }
 
 Room::Room(RoomData dataOfroom, std::vector<LoggedUser> users) : m_metadata(dataOfroom), m_users(users)

@@ -14,7 +14,7 @@ public:
 	void deleteRoom(unsigned int ID);
 	unsigned int getRoomState(unsigned int ID);
 	std::vector<Room> getRooms();
-	Room& getRoom(unsigned int ID);
+	Room getRoom(unsigned int ID);
 	bool deleteUserInRoom(std::string userName);
 
 	//getters

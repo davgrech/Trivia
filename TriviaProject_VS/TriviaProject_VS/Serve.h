@@ -55,7 +55,7 @@ public:
 	void addToClients(SOCKET client, IRequestHandler* request);
 	
 	void addToSockToClient(SOCKET client, std::string x);
-	
+	void Disconnected(SOCKET socket, std::string userName);
 
 private:
 	
