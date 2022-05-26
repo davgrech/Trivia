@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Net.Sockets;
 using MaterialDesignThemes.Wpf;
 using System.IO;
+using System.Media;
 
 namespace ClientGui.MenuWindow
 {
@@ -33,9 +34,19 @@ namespace ClientGui.MenuWindow
             InitializeComponent();
             mySock = _clientSocket;
             userTxt.Text = "Welcome "+user+"!";
-            
-        }
+            //playSound();
 
+
+
+        }
+        private void playSound()
+        {
+            SoundPlayer soundPlayer = new SoundPlayer("\\Resources\\menuMusic.wav"); 
+            soundPlayer.Play();
+            soundPlayer.PlayLooping();
+
+
+        }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);

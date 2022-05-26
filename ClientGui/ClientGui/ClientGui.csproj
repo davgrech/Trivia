@@ -11,6 +11,7 @@
     <None Remove="MenuWindow\Images\woman.png" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
+    <None Remove="Resources\menuMusic.wav" />
     <None Remove="Resources\tankLoginLogo.png" />
   </ItemGroup>
 
@@ -21,6 +22,9 @@
     <Resource Include="Resources\dolev.jpeg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Resources\menuMusic.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\woman.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
