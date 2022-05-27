@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="MenuWindow\Images\woman.png" />
+    <None Remove="Resources\bg1.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
     <None Remove="Resources\menuMusic.wav" />
@@ -16,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\bg1.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\david.jpeg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
