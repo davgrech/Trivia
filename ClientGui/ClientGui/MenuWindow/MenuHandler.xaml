@@ -65,36 +65,37 @@
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          />
             <StackPanel Grid.Row="1">
-                <RadioButton Content="Home"
+                <Button Content="Home"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             IsChecked="True"
-                             Command="{Binding HomeViewCommand}"
-                             Style="{StaticResource CreateRoomButtonTheme}"/>
-                <RadioButton Content="Create Room"
+                             Click="Button_Click"
+                             Background="Transparent"
+                                BorderBrush="Transparent"/>
+                <Button Content="Create Room"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Command="{Binding CreateRoomViewCommand}"
-                             Style="{StaticResource CreateRoomButtonTheme}"/>
-                <RadioButton Content="Join Room"
+                             Click="Button_Click"
+                             Background="Transparent"/>
+                <Button Content="Join Room"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource CreateRoomButtonTheme}"/>
-                <RadioButton Content="Personal Statistics"
+                             Click="Button_Click"
+                             Background="Transparent"/>
+                <Button Content="Personal Statistics"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Command="{Binding UserStatisticsViewCommand}"
-                             Style="{StaticResource CreateRoomButtonTheme}"/>
-                <RadioButton Content="High Scores"
+                             Click="Button_Click"
+                             Background="Transparent"/>
+                <Button Content="High Scores"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Command="{Binding HighScoresViewCommand}"
-                             Style="{StaticResource CreateRoomButtonTheme}"/>
+                             Click="Button_Click"
+                             Background="Transparent"/>
             </StackPanel>
             <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
                             Content="{Binding CurrentView}"/>
