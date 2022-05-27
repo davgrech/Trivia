@@ -149,7 +149,9 @@ void serveTool::cHandler(SOCKET client)
 			msg = recMsg; // convert to srting.
 
 			//data processing
-			int id = (int)recMsg[0];
+			
+			int id = recMsg[0] - 48;
+			
 			int len = std::stoi(msg.substr(1, 4));
 			std::string data = msg.substr(5, len);
 

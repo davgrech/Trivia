@@ -6,7 +6,7 @@
 enum msgType : byte
 {
 	//login related
-	CLIENT_SIGNUP = 99,
+	CLIENT_SIGNUP = 0,
 	CLIENT_LOGIN =1,
 	CLIENT_LOGOUT = 2,
 	CLIENT_SIGNOUT = 3,

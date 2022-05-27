@@ -85,13 +85,11 @@ def createRoom():
 
 
 def sendWithRoomId(id):
-    msgTypeDict = {"0": 0, "1": 1, "2": 2, "3": 3,
-                   "4": 4, "5": 5, "6": 6, "7": 7,
-                   "8": 8, "9": 9}
+   
     roomid = input("enter room id to join: ")
     joinInfo = '{"roomId":"' + roomid + '"}'
-    msgLen = padMsg(str(len(joinInfo)), 4)
-    send_str = chr(msgTypeDict[id]) + msgLen + joinInfo
+    
+    send_str = chr(7) + 0000
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 
