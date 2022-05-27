@@ -86,7 +86,7 @@ namespace ClientGui
             string jsonString = JsonSerializer.Serialize(login_info);
             string len = padMsg(jsonString.Length.ToString(), 4);
 
-            string to_send = "1" + len + jsonString;
+            string to_send = (char)1+ len + jsonString;
 
             SendInfrmaionToServer(to_send);
 

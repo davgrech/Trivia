@@ -149,7 +149,7 @@ void serveTool::cHandler(SOCKET client)
 			msg = recMsg; // convert to srting.
 
 			//data processing
-			int id = recMsg[0] - 48;
+			int id = (int)recMsg[0];
 			int len = std::stoi(msg.substr(1, 4));
 			std::string data = msg.substr(5, len);
 
@@ -331,9 +331,9 @@ void serveTool::cHandler(SOCKET client)
 				}
 				handler = reqResult.newHandler;
 
-				
+				connect_map.lock();
 				this->_clients.at(client) = handler;
-				
+				connect_map.unlock();
 
 			}
 
@@ -361,13 +361,7 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					if (this->_clients.count(client) > 0)
-					{
-						this->m_handlerFactory->deleteUser(this->sock_to_user.at(client));
-						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-					}
-					sock_to_user.erase(client);
-					this->_clients.erase(client);
+					Disconnected(client, sock_to_user.at(client));
 					return;
 				}
 				std::cout << "Response sent: " << responseString;

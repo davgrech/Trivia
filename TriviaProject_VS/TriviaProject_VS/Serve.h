@@ -32,6 +32,7 @@
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
+std::string getDataPart(int len, char data[]);
 bool checkByteReceived(int ByteReceived);
 RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 

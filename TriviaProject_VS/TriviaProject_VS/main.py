@@ -21,7 +21,7 @@ def CreateLogin():
     password = input("enter password: ")
     loginInfo = '{"username":"' + username + '","password":"' + password + '"}'
     msgLen = padMsg(str(len(loginInfo)), 4)
-    send_str = '1' + msgLen + loginInfo
+    send_str = chr(1) + msgLen + loginInfo
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 
@@ -34,9 +34,10 @@ def CreateSignup():
     
     birthday = input("enter date of birth: ")
     signupInfo = '{"username":"' + username + '","password":"' + password + '","email":"' + email + '","phoneNumber":"' + phoneNum +'","date":"' + birthday + '"}'
-    # print(signupInfo)
+    #print(signupInfo)
     msgLen = padMsg(str(len(signupInfo)), 4)
-    send_str = '0' + msgLen + signupInfo
+    send_str = chr(99) + msgLen + signupInfo
+    print(send_str)
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 
@@ -78,19 +79,19 @@ def createRoom():
     answertimeout = input("Enter answer timeout: ")
     createInfo = '{"roomName":"' + roomname + '","maxUsers":"' + maxusers + '","questionCount":"' + questioncount + '","answerTimeout":"' + answertimeout + '"} '
     msgLen = padMsg(str(len(createInfo)), 4)
-    send_str = '4' + msgLen + createInfo
+    send_str = chr(4)+ msgLen + createInfo
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 
 
 def sendWithRoomId(id):
-    msgTypeDict = {"0": '0', "1": '1', "2": '2', "3": '3',
-                   "4": '4', "5": '5', "6": '6', "7": '7',
-                   "8": '8', "9": '9'}
+    msgTypeDict = {"0": 0, "1": 1, "2": 2, "3": 3,
+                   "4": 4, "5": 5, "6": 6, "7": 7,
+                   "8": 8, "9": 9}
     roomid = input("enter room id to join: ")
     joinInfo = '{"roomId":"' + roomid + '"}'
     msgLen = padMsg(str(len(joinInfo)), 4)
-    send_str = msgTypeDict[str(id)] + msgLen + joinInfo
+    send_str = chr(msgTypeDict[id]) + msgLen + joinInfo
     byteStream = bytearray(send_str, 'utf-8')
     return byteStream
 
