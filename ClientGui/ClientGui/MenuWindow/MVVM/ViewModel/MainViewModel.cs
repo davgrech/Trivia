@@ -25,6 +25,7 @@ namespace ClientGui.MenuWindow.MVVM.ViewModel
 
         public object CurrentView
         {
+           
             get { return _currentView; }
             set 
             { 

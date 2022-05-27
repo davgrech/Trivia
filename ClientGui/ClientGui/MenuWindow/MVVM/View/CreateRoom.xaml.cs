@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using MaterialDesignThemes.Wpf;
+using System.Net.Sockets;
 namespace ClientGui.MenuWindow.MVVM.View
 {
     /// <summary>
@@ -20,9 +21,17 @@ namespace ClientGui.MenuWindow.MVVM.View
     /// </summary>
     public partial class CreateRoom : UserControl
     {
+
+       
         public CreateRoom()
         {
+           
             InitializeComponent();
+        }
+
+        private void createRoom_toggle(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

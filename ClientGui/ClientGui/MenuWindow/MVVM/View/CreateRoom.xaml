@@ -4,14 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClientGui.MenuWindow.MVVM.View"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" 
-             Background="Transparent"
+            Background="#272537"
      >
-    
-    <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="/Resources/bg1.jpg"></ImageBrush>
-        </Grid.Background>
-    </Grid>
+    <StackPanel>
+        <TextBlock Text="CREATE ROOM" Margin="0,20,20,0" Foreground="RoyalBlue" Height="53" Width="245" FontWeight="Bold" FontSize="35"/>
+        <TextBox Height="53" Width="200" FontSize="18" Margin="0,10,0,0" Foreground="White" materialDesign:HintAssist.Hint="Enter room name"/>
+        <TextBox Height="53" Width="200" FontSize="18"  Margin="0,10,0,0" Foreground="White" materialDesign:HintAssist.Hint="Max users"/>
+        <TextBox Height="53" Width="200" Margin="0,10,0,0" FontSize="18" Foreground="White" materialDesign:HintAssist.Hint="question count"/>
+        <TextBox Height="53" Width="200" Margin="0,10,0,0" FontSize="18" Foreground="White" materialDesign:HintAssist.Hint="question timeout"/>
+        
+        <Button  x:Name="createRoom_btn" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        materialDesign:ButtonAssist.CornerRadius="20"
+                         Margin="0 30 0 0"
+                        Height="53" Width="300" 
+                        FontSize="25" Content="Create" Click="createRoom_toggle" />
+    </StackPanel>
+
+
 </UserControl>
