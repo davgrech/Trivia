@@ -11,7 +11,7 @@ LoginRequestHandler::LoginRequestHandler(RequestHandleFactory& _RequestHandleFac
 }
 bool LoginRequestHandler::isRequestRelevant(RequestInfo request)
 {
-    return request.id == 1 || request.id == 0;
+    return request.id == CLIENT_LOGIN || request.id == CLIENT_SIGNUP;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo value)

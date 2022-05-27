@@ -102,6 +102,7 @@ RequestResult MenuRequestHanlder::getPlayersInRoom(RequestInfo info)
 
     getPlayersInRoomReq  = JRPD::deserializeGetPlayersRequest(info.buffer);
     std::vector<std::string> myUsers = this->m_roomManager.getRoom(getPlayersInRoomReq.roomId).getAllUsers();
+    
     PlayersInRoomRes.players = myUsers;
    
     return RequestResult{JRPS::serializeResponse(PlayersInRoomRes), this};
@@ -133,7 +134,7 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     if (room.getRoomData().name == "") {
         throw std::exception("the rom doesnt exist");
     }
-    room.addUser(this->m_user);
+    this->m_roomManager.getRoom(roomReq.roomId).addUser(this->m_user);
     roomRes.status = SUCCESS;
 
     // will be changed

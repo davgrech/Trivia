@@ -17,6 +17,7 @@ enum msgType : byte
 	CLIENT_GET_PLAYERS_ROOM = 6,
 	CLIENT_GET_ROOMS = 7,
 
+
 	//statistic related
 	CLIENT_GET_STATS_USER = 8,
 	CLIENT_HIGH_SCORE = 9, 

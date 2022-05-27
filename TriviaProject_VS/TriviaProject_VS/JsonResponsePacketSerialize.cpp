@@ -94,36 +94,44 @@ std::vector<unsigned char> JRPS::serializeResponse(LogoutResponse value)
 }
 
 
-std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse value)
+std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse response)
 {
-    json j;
-    std::vector<unsigned char> response;
-    std::string msg, sizeOfmsg, rooms;
-    j["status"] = value.status;
-    for (auto RoomIt = value.rooms.begin(); RoomIt != value.rooms.end(); RoomIt++) // itrate through all rooms
-    {
-        rooms += RoomIt->name + ", ";
+    std::string json = "{\"Rooms\": [";
+    for (RoomData room : response.rooms) {
+        
+        json += "{\"id\":" + std::to_string(room.id);
+        json += ",\"name\":\"" + room.name + "\"";
+        json += ",\"numberOfQuestions\":" + std::to_string(room.numOfQuestionsInGame);
+        json += ",\"timePerQuestion\":" + std::to_string(room.timePerQuestion);
+        json += ",\"maxPlayers\":" + std::to_string(room.maxPlayers) + "},";
     }
-    j["Rooms"] = rooms;
-    return ConvertMsg(j.dump());
+    if (response.rooms.size() != 0) // if not empty
+        json = json.substr(0, json.size() - 1);
+    
+    json += "]}";
+
+    std::vector<unsigned char> v_response(json.begin(), json.end());
+    return v_response;
+
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(GetPlayersInRoomResponse value)
 {
-    json j;
-    std::vector<unsigned char> response;
-    std::string msg, sizeOfmsg, Players;
-    
-    for (auto it = value.players.begin(); it != value.players.end(); it++)
+    bool isFirstLoop = true;
+    std::string str = "{\"Players\": [";
+    for (std::vector<std::string>::iterator it = value.players.begin(); it != value.players.end(); ++it)
     {
-        
-       
-       Players += *it + ", ";
-     
-    }
-    j["Players"] = Players;
+        if (isFirstLoop)
+            isFirstLoop = false;
+        else
+            str += ", ";
 
-    return ConvertMsg(j.dump());
+        str += "\"" + *it + "\"";
+    }
+    str += "]}";
+    std::vector<unsigned char> v_response(str.begin(), str.end());
+    return v_response;
+
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(JoinRoomResponse value)
@@ -158,13 +166,14 @@ std::vector<unsigned char> JRPS::serializeResponse(getHighScoreResponse value)
     std::vector<unsigned char> response;
     
     std::string scores;
-    
+    std::string myScores;
     
     for (auto it = value.statistics.begin(); it != value.statistics.end(); it++) {
         
         scores += std::to_string(i)+"#"+ *it + ", ";
         i++;
     }
+    
     j["HighScores"] = scores;
 
     return ConvertMsg(j.dump());
@@ -181,11 +190,16 @@ std::vector<unsigned char> JRPS::serializeResponse(getPersonalStatsResponse valu
     json j;
     std::vector<unsigned char> response;
     std::string scores;
-
+    std::string myScores;
     for (auto it = value.statistics.begin(); it != value.statistics.end(); it++) {
-        scores += *it + ", ";
+        scores += *it + ",";
     }
-    j["PersonalScore"] = scores;
+    if (scores.size() != 0)
+    {
+        myScores = scores.substr(0, scores.size() - 1);
+    }
+    
+    j["PersonalScore"] = myScores;
 
     return ConvertMsg(j.dump());
 }

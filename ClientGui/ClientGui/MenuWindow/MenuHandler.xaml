@@ -36,7 +36,7 @@
                        Foreground="RoyalBlue"
                        FontWeight="Bold"
                        FontSize="22"
-                       Margin="20,0,0,0"/>
+                       Margin="10,0,0,0" Width="190"/>
 
             <Button Content ="LOGOUT"
                          x:Name="btnLogout"

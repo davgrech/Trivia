@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClientGui.MenuWindow.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Green">
+             d:DesignHeight="450" d:DesignWidth="800" 
+             Background="Transparent"
+     >
+    
     <Grid>
-            
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/bg1.jpg"></ImageBrush>
+        </Grid.Background>
     </Grid>
 </UserControl>

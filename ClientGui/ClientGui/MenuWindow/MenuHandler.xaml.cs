@@ -33,7 +33,7 @@ namespace ClientGui.MenuWindow
         {
             InitializeComponent();
             mySock = _clientSocket;
-            userTxt.Text = "Welcome "+user+"!";
+            userTxt.Text = "hi "+user+"!";
             //playSound();
 
 
