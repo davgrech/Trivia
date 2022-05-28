@@ -1,0 +1,131 @@
+﻿<Window x:Class="ClientGui.MenuPages.HighScores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ClientGui.MenuWindow"
+        xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Title="HighScores" Height="600" Width="920"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Border Background="#272537"
+            CornerRadius="20">
+
+
+        <Grid>
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition  Height=" 75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock 
+                       Text="Leaderboard"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="RoyalBlue"
+                       FontWeight="Bold"
+                       FontSize="22"
+                       Margin="95,0,0,0" Width="250"/>
+            <Image Source="/Resources/mario1.png" Margin="10,124,768,-71" Grid.Row="1"/>
+
+            <Image Source="/Resources/luigi.png" Margin="748,118,0,-69" Grid.Row="1"/>
+            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                        Click="Button_Click">
+                <Image Source="/Resources/back.png"/>
+            </Button>
+
+
+
+
+
+
+            <Button 
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="12"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Width="75"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
+                         >
+                <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                       >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.777"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+
+
+            </Button>
+
+            <StackPanel Grid.Row="1">
+                <Border Width="350" 
+                        Height="150" 
+                        Background="MediumSlateBlue"
+                        CornerRadius="20"
+                        Margin="0,35,0,10"
+                        >
+                    <TextBlock x:Name="firstDisplay"
+                       Foreground="White"
+                       FontSize="20"
+
+                       HorizontalAlignment="Center"
+                               VerticalAlignment="Center" Width="258" Height="130"/>
+                </Border>
+                <Border Width="450" 
+                    Height="150" 
+                    Background="MediumSlateBlue"
+                    CornerRadius="20"
+                        Margin="0,5,0,10"
+                        >
+                    <TextBlock x:Name="secondDisplay"
+                
+                        Foreground="White"
+                        FontSize="20"
+                        HorizontalAlignment="Center"
+                               Margin="0,15,0,0"
+                               VerticalAlignment="Top" Width="286" Height="130"/>
+                </Border>
+                <Border Width="550" 
+                    Height="150" 
+                    Background="MediumSlateBlue"
+                    CornerRadius="20"
+                        Margin="0,5,0,10"
+                        >
+                    <TextBlock x:Name="ThirdDisplay"
+                       Margin="0,15,0,0"
+
+                        Foreground="White"
+                        FontSize="20"
+                        HorizontalAlignment="Center"
+                               VerticalAlignment="Top" Width="354" Height="130"/>
+                </Border>
+
+            </StackPanel>
+
+
+            <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
+        </Grid>
+
+    </Border>
+</Window>

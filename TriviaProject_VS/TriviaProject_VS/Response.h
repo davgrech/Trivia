@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include "Room.h"
 
 
 
@@ -19,21 +19,28 @@ struct SignupResponse {
 	unsigned int status;
 };
 
+struct SignoutResponse {
+	unsigned int status;
+};
+
 struct LogoutResponse {
 	unsigned int status;
 };
 
-struct GetRoomsResponse {
+struct GetRoomResponse {
 	unsigned int status;
+	std::vector<RoomData> rooms;
 };
 
 struct GetPlayersInRoomResponse {
-	unsigned int status;
+	std::vector<std::string> players;
+};
+
+struct getHighScoreResponse {
 	std::vector<std::string> statistics;
 };
 
 struct getPersonalStatsResponse {
-	unsigned int status;
 	std::vector<std::string> statistics;
 };
 
@@ -44,5 +51,9 @@ struct JoinRoomResponse {
 struct CreateRoomResponse {
 	unsigned int status;
 };
+
+
+
+
 //Json requestPacketserialize
 //Json responsePacketserialize

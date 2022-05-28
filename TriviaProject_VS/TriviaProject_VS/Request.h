@@ -3,14 +3,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <nlohmann/json_fwd.hpp>
+#include <nlohmann/json.hpp>
 
 using nlohmann::json;
 
 struct GetPlayersInRoomRequest
 {
 	unsigned int roomId;
-
+	
 }typedef GetPlayersInRoomRequest;
 
 struct JoinRoomRequest

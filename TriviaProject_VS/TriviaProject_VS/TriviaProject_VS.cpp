@@ -9,6 +9,7 @@
 
 int main()
 {
+    
     try {
         TRACE("Starting...");
         WSAInitializer as_told_us;
@@ -20,7 +21,16 @@ int main()
     }
     catch (const std::exception& e) {
         std::cout << "somthing went wrong with the server" << std::endl;
-    }
-    
+    }    
 }
+
+
+
+
+
+
+
+
+
+
 

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
@@ -8,10 +9,17 @@
 class RoomManager
 {
 public:
+	RoomManager();
 	void createRoom(LoggedUser user, RoomData var);
-	void deleteRoom(int ID);
-	unsigned int getRoomState(int ID);
-	std::vector<RoomData> getRooms();
+	void deleteRoom(unsigned int ID);
+	unsigned int getRoomState(unsigned int ID);
+	std::string getName(unsigned int ID);
+	std::vector<Room> getRooms();
+	Room& getRoom(unsigned int ID);
+	bool deleteUserInRoom(int id);
+
+	//getters
+	
 private:
 	std::map<unsigned int, Room> m_rooms;
 };

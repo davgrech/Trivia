@@ -29,9 +29,45 @@ SignupRequest JRPD::deserializeSignupRequest(std::vector<unsigned char> buffer)
     signupReq.password = j["password"];
     signupReq.email = j["email"];
     signupReq.phonNumber = j["phoneNumber"];
-    signupReq.address = j["address"];
     signupReq.dateOfBirth = j["date"];
 
 
     return signupReq;
+}
+
+GetPlayersInRoomRequest JRPD::deserializeGetPlayersRequest(std::vector<unsigned char> buffer)
+{
+    auto j = json::parse(buffer.begin(), buffer.end());
+    GetPlayersInRoomRequest getPlayersReq;
+    std::string strRoomId = j["roomId"];
+    getPlayersReq.roomId = std::stoi(strRoomId);
+    return getPlayersReq;
+}
+
+JoinRoomRequest JRPD::deserializeJoinRoomRequest(std::vector<unsigned char> buffer)
+{
+    auto j = json::parse(buffer.begin(), buffer.end());
+    std::string strRoomId;
+    JoinRoomRequest joinRoomReq;
+    strRoomId = j["roomId"];
+    joinRoomReq.roomId = std::stoi(strRoomId);
+    return joinRoomReq;
+}
+
+CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> buffer)
+{
+    
+    auto j = json::parse(buffer.begin(), buffer.end());
+    CreateRoomRequest createRoomReq;
+    std::string cock;
+    cock = j["answerTimeout"];
+    createRoomReq.answerTimeout = std::stoi(cock);
+    cock = j["questionCount"];
+    createRoomReq.questionCount = std::stoi(cock);
+    createRoomReq.roomName = j["roomName"];
+    cock = j["maxUsers"];
+    createRoomReq.maxUsers = std::stoi(cock);
+
+
+    return createRoomReq;
 }

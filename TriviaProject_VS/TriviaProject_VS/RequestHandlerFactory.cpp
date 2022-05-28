@@ -6,15 +6,9 @@
 
 
 
-RequestHandleFactory& RequestHandleFactory::operator=(const RequestHandleFactory& other)
-{
-    this->m_database = other.m_database;
-    this->m_LoginManager = other.m_LoginManager;
-    
-    return *this;
-}
 
-RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db) {}
+
+RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db), m_StatisticManager(db) {}
 
 
 LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
@@ -28,13 +22,17 @@ LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
     
    
 }
-
-MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler()
+MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler(LoggedUser logUser)
 {
-    MenuRequestHanlder* value = new MenuRequestHanlder();
+    while (true) {
+        try {
+            return new MenuRequestHanlder((*this), logUser);
+        }
+        catch (...) {}
+    }
 
-    return value;
 }
+
 
 RoomManager& RequestHandleFactory::getRoomManager()
 {
@@ -44,5 +42,15 @@ RoomManager& RequestHandleFactory::getRoomManager()
 LoginManager& RequestHandleFactory::getLoginManager()
 {
     return this->m_LoginManager;
+}
+
+StatisticsManager& RequestHandleFactory::getStatisticManager()
+{
+    return this->m_StatisticManager;
+}
+
+void RequestHandleFactory::deleteUser(std::string username)
+{
+    this->m_LoginManager.logout(username);
 }
 

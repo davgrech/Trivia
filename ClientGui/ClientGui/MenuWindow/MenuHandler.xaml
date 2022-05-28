@@ -1,0 +1,119 @@
+﻿<Window x:Class="ClientGui.MenuWindow.MenuHandler"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ClientGui.MenuWindow"
+        xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
+        mc:Ignorable="d"
+        Title="MenuHandler" Height="600" Width="920"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        >
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    <Border Background="#272537"
+            CornerRadius="20">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=" 75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Main Menu"
+                       x:Name="userTxt"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Foreground="RoyalBlue"
+                       FontWeight="Bold"
+                       FontSize="22"
+                       Margin="10,0,0,0" Width="190"/>
+
+            <Button Content ="LOGOUT"
+                         x:Name="btnLogout"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Height="70"
+                         Margin="0,0,70,0"
+                         FontWeight="Bold"
+                         
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="logout_toggle"
+                         />
+
+            <Button  
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         Grid.Column="1"
+                         HorizontalAlignment="Right"
+                         Width="75"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
+                         >
+                <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                       >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.777"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+
+            </Button>
+            <StackPanel Grid.Row="1">
+
+                <Button Content="Create Room"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Click="Button_Click_1"
+                             Background="Transparent"
+                        BorderBrush="Transparent"
+                        />
+                <Button Content="Join Room"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Click="Button_Click_2"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
+                <Button Content="Personal Statistics"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Click="Button_Click_3"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
+                <Button Content="Leaderboard"
+                             Height="70"
+                             Foreground="White"
+                             FontSize="14"
+                             Click="Button_Click_4"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
+            </StackPanel>
+            <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
+                            Content="{Binding CurrentView}"/>
+            <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
+        </Grid>
+
+    </Border>
+</Window>

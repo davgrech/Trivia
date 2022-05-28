@@ -1,5 +1,7 @@
 #pragma once
 #include "IRequestHandler.h"
+#include <vector>
+
 #include "LoginManager.h"
 #include "RequestHandlerFactory.h"
 

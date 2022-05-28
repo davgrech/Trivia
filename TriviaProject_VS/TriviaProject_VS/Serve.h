@@ -13,13 +13,13 @@
 #include <mutex>
 #include <map>
 #include <queue>
-
+#include <vector>
 
 #include "SignUpRequestHandler.h"
 
-#include <atomic>
 
 
+#include "LoggedUser.h"
 
 
 
@@ -32,6 +32,7 @@
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
 
+std::string getDataPart(int len, char data[]);
 bool checkByteReceived(int ByteReceived);
 RequestInfo createNewRequestInfo(int id, std::vector<unsigned char> value);
 
@@ -49,13 +50,13 @@ public:
 
 
 	void startHandleRequests();
-	
+	void checkMyUpdate();
 
 	
 	void addToClients(SOCKET client, IRequestHandler* request);
 	
-
-	
+	void addToSockToClient(SOCKET client, std::string x);
+	void Disconnected(SOCKET socket, std::string userName);
 
 private:
 	
@@ -66,6 +67,6 @@ private:
 	std::mutex _mtx1;
 
 	std::map<SOCKET, IRequestHandler*> _clients;
-	
+	std::map <SOCKET, std::string> sock_to_user;
 	RequestHandleFactory* m_handlerFactory;
 };

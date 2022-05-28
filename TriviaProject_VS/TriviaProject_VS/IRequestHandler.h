@@ -5,6 +5,9 @@
 
 class IRequestHandler;
 
+
+
+
 struct RequestResult {
 
 	std::vector<unsigned char> buffer;
@@ -21,6 +24,7 @@ struct RequestInfo {
 
 
 
+
 class IRequestHandler
 {
 public:
@@ -28,7 +32,5 @@ public:
 	virtual RequestResult handleRequest(RequestInfo value) = 0;
 
 };
-
-
 
 
