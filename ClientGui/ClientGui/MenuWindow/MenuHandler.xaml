@@ -46,13 +46,13 @@
                          Grid.Column="1"
                          HorizontalAlignment="Right"
                          Height="70"
-                         Margin="0,0,120,0"
+                         Margin="0,0,70,0"
                          FontWeight="Bold"
                          
                          Style="{StaticResource MaterialDesignFlatButton}" Click="logout_toggle"
                          />
 
-            <Button Content ="EXIT" 
+            <Button  
                          x:Name="btnExit"
                          Height="70"
                          Foreground="RoyalBlue"
@@ -60,10 +60,24 @@
                          Grid.Row="0"
                          Grid.Column="1"
                          HorizontalAlignment="Right"
-                         Width="120"
+                         Width="75"
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
-                         />
+                         >
+                <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                       >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0.777"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+
+            </Button>
             <StackPanel Grid.Row="1">
 
                 <Button Content="Create Room"
