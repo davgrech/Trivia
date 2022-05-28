@@ -1,11 +1,10 @@
 #include "Room.h"
 
+
+
 Room::Room()
 {
-    RoomData x;
-    x.name = "";
-    this->m_metadata = x;
-    
+    this->m_metadata = RoomData();
 }
 
 Room::Room(RoomData dataOfroom, std::vector<LoggedUser> users) : m_metadata(dataOfroom), m_users(users)
@@ -75,6 +74,11 @@ bool Room::isActive()
 RoomData Room::getRoomData()
 {
     return this->m_metadata;
+}
+
+std::string Room::getName()
+{
+    return this->m_metadata.name;
 }
 
 bool Room::isInRoomAlready(std::string userName)

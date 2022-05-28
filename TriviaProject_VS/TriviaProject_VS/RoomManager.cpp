@@ -34,6 +34,11 @@ unsigned int RoomManager::getRoomState(unsigned int ID)
 	return this->m_rooms.at(ID).isActive();
 }
 
+std::string RoomManager::getName(unsigned int ID)
+{
+	return this->m_rooms.at(ID).getRoomData().name;
+}
+
 std::vector<Room> RoomManager::getRooms()
 {
 	std::vector<Room> vec;
@@ -57,15 +62,15 @@ Room& RoomManager::getRoom(unsigned int ID)
 	}
 }
 
-bool RoomManager::deleteUserInRoom(std::string userName)
+bool RoomManager::deleteUserInRoom(int id)
 {
-	
-	for (int i = 0; i < this->m_rooms.size(); i++)
+	std::string roomName = m_rooms.at(id).getName();
+	for (LoggedUser user : m_rooms.at(id).getAllUsers())
 	{
-		if (m_rooms[i].isInRoomAlready(userName))
-		{
-			return this->m_rooms[i].removeUser(userName);
-		}
+		std::cout << user.getUsername() << " has kicked out of room " << roomName << std::endl;
 	}
+	m_rooms.erase(id);
+
+	
 	return false;
 }

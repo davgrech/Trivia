@@ -26,6 +26,7 @@ public:
 	bool removeUser(LoggedUser user);
 	bool isActive();
 	RoomData getRoomData();
+	std::string getName();
 	bool isInRoomAlready(std::string  userName);
 	
 	//includes

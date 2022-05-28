@@ -101,8 +101,7 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 		std::lock_guard<std::mutex> mtx1(login_manager);
 		this->m_handlerFactory->deleteUser(this->sock_to_user.at(socket));
 
-		std::lock_guard<std::mutex> mtx2(room_manager);
-		this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(socket));
+		
 	}
 
 	std::lock_guard<std::mutex> mtx1(user_map);
@@ -246,9 +245,6 @@ void serveTool::cHandler(SOCKET client)
 						
 						//leave the room if he is in one  & leave logs
 						
-						std::lock_guard<std::mutex> mtx2(room_manager);
-						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-						
 						
 						std::lock_guard<std::mutex> mtx3(user_map);
 						this->sock_to_user.erase(client);
@@ -265,9 +261,6 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(login_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
-						//leave the room if he is in one  & leave logs
-						std::lock_guard<std::mutex> mtx2(room_manager);
-						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
 						
 
 						std::lock_guard<std::mutex> mtx3(user_map);

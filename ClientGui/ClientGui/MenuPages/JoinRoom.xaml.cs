@@ -14,8 +14,10 @@ using System.Windows.Shapes;
 using System.Net.Sockets;
 using System.Net;
 using ClientGui.MenuWindow;
-using System.Text.Json;
+//using System.Text.Json;
 using Newtonsoft.Json;
+
+
 namespace ClientGui.MenuPages
 {
     /// <summary>
@@ -25,11 +27,24 @@ namespace ClientGui.MenuPages
     {
         Socket mysock;
         string name;
-
-
+        private List<string> roomNames = new List<string>();
+        private List<RoomData> roomList = new List<RoomData>();
         public class joinRoomRequest
         {
             int roomId;
+        }
+        public class RoomData
+        {
+            public int id;
+            public string name;
+            public int maxPlayers;
+            public int numberOfQuestions;
+            public int timePerQuestion;
+            public int isActive;
+        }
+        public class getRoomsResponse
+        {
+            public List<RoomData> rooms { get; set;}
         }
         public JoinRoom(Socket client, string userName)
         {
@@ -39,23 +54,32 @@ namespace ClientGui.MenuPages
             name = userName;
 
 
-            string[] x = { "hi", "my", "name", "is", "david" };
-            string getStringToParse = getRooms();
+            
+            putNamesInListBox();
             
             
             
-            myListBox.ItemsSource = x;
+          
 
         }
        
-       private string getRooms()
+       private void putNamesInListBox()
         {
             string msg = "70000";
             SendInfrmaionToServer(msg);
             string response = ReciveInformationFromServer();
-            dynamic magic = JsonConvert.DeserializeObject(response);
-            string stringOfRooms = magic["Rooms"];
-            return stringOfRooms; 
+            getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
+
+            //set the rooms
+            roomList = getRoomsResponse.rooms;
+
+            //add to roomNames
+            for(var i = 0; i < getRoomsResponse.rooms.Count; i++)
+            {
+                roomNames.Add(getRoomsResponse.rooms[i].name);
+            }
+            myListBox.ItemsSource = roomNames;
+            
         }
         private void button_toggle(object sender, RoutedEventArgs e)
         {
