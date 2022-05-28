@@ -26,40 +26,28 @@
                 <RowDefinition Height=" 75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
 
             <TextBlock 
-                Text="Davisd personal sats"
                        x:Name="userTxt"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Left"
                        Foreground="RoyalBlue"
                        FontWeight="Bold"
                        FontSize="22"
-                       Margin="0,0,0,0" Width="250" Grid.Column="1"/>
+                       Margin="29,0,0,0" Width="250"/>
+            <StackPanel>
+                <Button Width="185">
 
-            <Button 
-                             Height="70"
-                Width="60"
-                             Foreground="White"
-                             FontSize="16"
-                             Click="Button_Click"
-                             Background="Transparent"
-                Margin="15,0,0,0"
-                HorizontalAlignment="Left"
-                        BorderBrush="Transparent"
-                
-                        >
-                <Image Width="60" Height="60"
-                           Source="/Resources/back.png"
-                           HorizontalAlignment="Left"
-                           Margin="0,0,820,0"
-                           VerticalAlignment="Center"
-                           />
 
-            </Button>
-            
-            
+
+
+
+                </Button>
+            </StackPanel>
+
+
+
 
             <Button Content ="EXIT" 
                          x:Name="btnExit"
@@ -73,8 +61,8 @@
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          />
-            
-            
+
+
 
             <StackPanel Grid.Row="1">
 

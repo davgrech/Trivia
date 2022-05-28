@@ -43,12 +43,13 @@ namespace ClientGui.MenuPages
         private string user;
         public PersonalStats(Socket _sock, string username)
         {
+            InitializeComponent();
             mysock = _sock;
             user = username;
             recvInfo infoRecv = getUserStats(username);
             Statistics userStats = parseJibbrish(infoRecv.PersonalScore);
-            //userTxt.Text = userStats.NAME + "'s Personal Stats";
-            InitializeComponent();
+            userTxt.Text = userStats.NAME + "'s Personal Stats";
+            
             
 
 
