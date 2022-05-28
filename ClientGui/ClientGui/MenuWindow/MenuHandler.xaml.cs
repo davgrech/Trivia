@@ -15,6 +15,7 @@ using System.Net.Sockets;
 using MaterialDesignThemes.Wpf;
 using System.IO;
 using System.Media;
+using ClientGui.MenuPages;
 
 namespace ClientGui.MenuWindow
 {
@@ -33,6 +34,7 @@ namespace ClientGui.MenuWindow
         {
             InitializeComponent();
             mySock = _clientSocket;
+            userName = user;
             userTxt.Text = "hi "+user+"!";
             //playSound();
 
@@ -119,6 +121,35 @@ namespace ClientGui.MenuWindow
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+        /*
+         * personal stats
+         */
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            
+            PersonalStats moveToStats = new PersonalStats(mySock, userName);
+            moveToStats.Show();
+            this.Close();
+            
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            HighScores moveToLeader = new HighScores(mySock, userName);
+            moveToLeader.Show();
+            this.Close();
+            
         }
     }
 

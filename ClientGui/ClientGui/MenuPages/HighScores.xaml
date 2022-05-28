@@ -1,4 +1,4 @@
-﻿<Window x:Class="ClientGui.MenuPages.PersonalStats"
+﻿<Window x:Class="ClientGui.MenuPages.HighScores"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ClientGui.MenuWindow"
         xmlns:viewModel="clr-namespace:ClientGui.MenuWindow.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="PersonalStats" Height="600" Width="920"
+        Title="HighScores" Height="600" Width="920"
         WindowStyle = "None"
         ResizeMode="NoResize"
         Background="Transparent"
@@ -26,40 +26,33 @@
                 <RowDefinition Height=" 75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
 
-            <TextBlock 
-                Text="Davisd personal sats"
+            <TextBlock Text="Leaderboard"
                        x:Name="userTxt"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Foreground="RoyalBlue"
                        FontWeight="Bold"
                        FontSize="22"
-                       Margin="0,0,0,0" Width="250" Grid.Column="1"/>
+                       Margin="0,0,0,0" Width="190" Grid.Column="1"/>
 
             <Button 
                              Height="70"
-                Width="60"
                              Foreground="White"
                              FontSize="16"
-                             Click="Button_Click"
+                             Click="Button_Click_1"
                              Background="Transparent"
-                Margin="15,0,0,0"
-                HorizontalAlignment="Left"
                         BorderBrush="Transparent"
+                HorizontalAlignment="Left"
                 
                         >
                 <Image Width="60" Height="60"
                            Source="/Resources/back.png"
                            HorizontalAlignment="Left"
-                           Margin="0,0,820,0"
                            VerticalAlignment="Center"
                            />
 
             </Button>
-            
-            
 
             <Button Content ="EXIT" 
                          x:Name="btnExit"
@@ -73,14 +66,10 @@
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          />
-            
-            
-
-            <StackPanel Grid.Row="1">
+            <DataGrid Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"
+                      Background="Transparent" Foreground="White" HorizontalAlignment="Center" SelectionChanged="DataGrid_SelectionChanged"/>
 
 
-
-            </StackPanel>
 
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
         </Grid>

@@ -65,37 +65,36 @@
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          />
             <StackPanel Grid.Row="1">
-                <Button Content="Home"
-                             Height="70"
-                             Foreground="White"
-                             FontSize="14"
-                             Click="Button_Click"
-                             Background="Transparent"
-                                BorderBrush="Transparent"/>
+
                 <Button Content="Create Room"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Click="Button_Click"
-                             Background="Transparent"/>
+                             Click="Button_Click_1"
+                             Background="Transparent"
+                        BorderBrush="Transparent"
+                        />
                 <Button Content="Join Room"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Click="Button_Click"
-                             Background="Transparent"/>
+                             Click="Button_Click_2"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
                 <Button Content="Personal Statistics"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Click="Button_Click"
-                             Background="Transparent"/>
-                <Button Content="High Scores"
+                             Click="Button_Click_3"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
+                <Button Content="Leaderboard"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
-                             Click="Button_Click"
-                             Background="Transparent"/>
+                             Click="Button_Click_4"
+                             Background="Transparent"
+                        BorderBrush="Transparent"/>
             </StackPanel>
             <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
                             Content="{Binding CurrentView}"/>
