@@ -52,5 +52,8 @@ struct CreateRoomResponse {
 	unsigned int status;
 };
 
+
+
+
 //Json requestPacketserialize
 //Json responsePacketserialize

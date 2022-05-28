@@ -175,17 +175,27 @@ namespace ClientGui.MenuPages
                     string to_send = "5" + len + jsonString;
                     SendInfrmaionToServer(to_send);
                     string rec = ReciveInformationFromServer();
-                    if(rec[10] != '1')
+                    if(rec.Length > 10)
+                    {
+                        if (rec[10] != '1')
+                        {
+                            dynamic magic = JsonConvert.DeserializeObject(rec);
+                            txtSelectedRoom.Text = magic["message"];
+                            txtSelectedRoom.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            txtSelectedRoom.Text = "succeed to join";
+                            txtSelectedRoom.Visibility = Visibility.Visible;
+                        }
+                    }
+                    else
                     {
                         dynamic magic = JsonConvert.DeserializeObject(rec);
                         txtSelectedRoom.Text = magic["message"];
                         txtSelectedRoom.Visibility = Visibility.Visible;
                     }
-                    else
-                    {
-                        txtSelectedRoom.Text = "succeed to join";
-                        txtSelectedRoom.Visibility = Visibility.Visible;
-                    }
+                    
                     
 
 

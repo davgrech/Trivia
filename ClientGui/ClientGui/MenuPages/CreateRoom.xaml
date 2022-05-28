@@ -18,7 +18,7 @@
             UniformCornerRadius="20">
         <Border CornerRadius="20">
             <Border.Background>
-                <ImageBrush ImageSource="\Resources\bg1.jpg"  Stretch="Fill"/>
+                <ImageBrush ImageSource="\Resources\bg4.jpg"  Stretch="Fill"/>
             </Border.Background>
             <Grid x:Name="inner_grid">
                 <Grid.RowDefinitions>
