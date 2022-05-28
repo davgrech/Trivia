@@ -24,7 +24,7 @@ std::vector<std::string> StatisticsManager::getUserStatustics(std::string userna
 	temp += std::to_string(this->m_database->getNumOfCorrectAnswers(username));
 	myResult.push_back(temp);
 
-	temp = "TOTAL ANSWERS: ";
+	temp = "TOTAL_ANSWERS: ";
 	temp += std::to_string(this->m_database->getNumOfTotalAnswers(username));
 	myResult.push_back(temp);
 
