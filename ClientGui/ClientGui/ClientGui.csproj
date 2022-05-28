@@ -12,6 +12,7 @@
     <None Remove="Resources\back.png" />
     <None Remove="Resources\bg1.jpg" />
     <None Remove="Resources\bg4.jpg" />
+    <None Remove="Resources\camoBg.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
     <None Remove="Resources\luigi.png" />
@@ -20,6 +21,7 @@
     <None Remove="Resources\menuMusic.wav" />
     <None Remove="Resources\return.png" />
     <None Remove="Resources\tankLoginLogo.png" />
+    <None Remove="Resources\Xbtn1.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\bg1.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\camoBg.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\david.jpeg">
@@ -51,6 +56,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\tankLoginLogo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\xBtn1.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
