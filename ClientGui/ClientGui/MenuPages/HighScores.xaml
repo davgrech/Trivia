@@ -19,40 +19,36 @@
     <Border Background="#272537"
             CornerRadius="20">
 
+
         <Grid>
 
 
             <Grid.RowDefinitions>
-                <RowDefinition Height=" 75"/>
+                <RowDefinition  Height=" 75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Leaderboard"
-                       x:Name="userTxt"
+
+            <TextBlock 
+                       Text="Leaderboard"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Foreground="RoyalBlue"
                        FontWeight="Bold"
                        FontSize="22"
-                       Margin="0,0,0,0" Width="190" Grid.Column="1"/>
+                       Margin="95,0,0,0" Width="250"/>
+            <Image Source="/Resources/mario1.png" Margin="10,124,768,-71" Grid.Row="1"/>
 
-            <Button 
-                             Height="70"
-                             Foreground="White"
-                             FontSize="16"
-                             Click="Button_Click_1"
-                             Background="Transparent"
-                        BorderBrush="Transparent"
-                HorizontalAlignment="Left"
-                
-                        >
-                <Image Width="60" Height="60"
-                           Source="/Resources/back.png"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           />
-
+            <Image Source="/Resources/luigi.png" Margin="748,118,0,-69" Grid.Row="1"/>
+            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                        Click="Button_Click">
+                <Image Source="/Resources/back.png"/>
             </Button>
+
+
+
+
+
 
             <Button Content ="EXIT" 
                          x:Name="btnExit"
@@ -66,9 +62,53 @@
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          />
-            <DataGrid Grid.Column="1" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"
-                      Background="Transparent" Foreground="White" HorizontalAlignment="Center" SelectionChanged="DataGrid_SelectionChanged"/>
 
+            <StackPanel Grid.Row="1">
+                <Border Width="350" 
+                        Height="150" 
+                        Background="MediumSlateBlue"
+                        CornerRadius="20"
+                        Margin="0,35,0,10"
+                        >
+                    <TextBlock x:Name="firstDisplay"
+                       Foreground="White"
+                       FontSize="28"
+                               
+                       HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                       
+                       Margin="20,0,0,10" Width="430"/>
+                </Border>
+                <Border Width="450" 
+                    Height="150" 
+                    Background="MediumSlateBlue"
+                    CornerRadius="20"
+                        Margin="0,5,0,10"
+                        >
+                    <TextBlock x:Name="secondDisplay"
+                        Foreground="White"
+                        FontSize="28"
+                        HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                       
+                        Margin="10,15,0,10"/>
+                </Border>
+                <Border Width="550" 
+                    Height="150" 
+                    Background="MediumSlateBlue"
+                    CornerRadius="20"
+                        Margin="0,5,0,10"
+                        >
+                    <TextBlock x:Name="ThirdDisplay"
+                        Foreground="White"
+                        FontSize="28"
+                        HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                       
+                        Margin="10,15,0,10"/>
+                </Border>
+
+            </StackPanel>
 
 
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->

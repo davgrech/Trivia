@@ -41,6 +41,7 @@ namespace ClientGui.MenuPages
     {
         private static Socket mysock = null;
         private string user;
+       //init func
         public PersonalStats(Socket _sock, string username)
         {
             InitializeComponent();
@@ -48,17 +49,23 @@ namespace ClientGui.MenuPages
             user = username;
             recvInfo infoRecv = getUserStats(username);
             Statistics userStats = parseJibbrish(infoRecv.PersonalScore);
+            loadTextToWindow(userStats);
+
+
+
+
+        }
+        //load stats to window 
+        void loadTextToWindow(Statistics userStats)
+        {
             userTxt.Text = userStats.NAME + "'s Personal Stats";
             firstDisplay.Text = "Users's name is " + userStats.NAME + "\n" + userStats.NAME + "'s total games: " + userStats.GAMES;
             secondDisplay.Text = userStats.NAME + " Has Answerd " + userStats.TOTAL_ANSWERS + " Questions\n Of Which He Got " +
                 userStats.CORRECT_ANSWERS + " Answers Correct";
             ThirdDisplay.Text = userStats.NAME + "'s Avrage Playtime is: " + userStats.AVG_TIME + " Hours\n" +
                 userStats.NAME + " Has Scored A Total Of: " + userStats.WINNER_POINTS + " Winner Points";
-
-
-
-
         }
+        //parse the unsorted data sent by server using spilts and return a statistics object with all of it
         public Statistics parseJibbrish(string str)
         {
             string[] words = str.Split(",");
@@ -80,6 +87,7 @@ namespace ClientGui.MenuPages
             };
             return UserStats;
         }
+        //ask server for user stats - func gets it and Deserializes it
         private recvInfo getUserStats(string uname)
         {
             string jsonString = JsonSerializer.Serialize(uname);
@@ -155,6 +163,11 @@ namespace ClientGui.MenuPages
         {
             this.Visibility = Visibility.Hidden;
             Environment.Exit(0);
+        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
         }
 
     }

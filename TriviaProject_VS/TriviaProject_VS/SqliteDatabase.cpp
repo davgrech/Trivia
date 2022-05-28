@@ -189,7 +189,7 @@ std::vector<std::string> SqliteDatabase::getTopFive()
     std::vector<std::string> myResults;
     char* pError = NULL;
 
-    std::string statement = "SELECT NAME, WINNER_POINTS FROM STATISTICS ORDER BY WINNER_POINTS DESC LIMIT 5;";
+    std::string statement = "SELECT NAME, WINNER_POINTS FROM STATISTICS ORDER BY WINNER_POINTS DESC LIMIT 3;";
   
     int res = sqlite3_exec(this->db, statement.c_str(), getPointsCallBack, &myResults, &pError);
     if (res != SQLITE_OK) {
