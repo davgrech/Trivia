@@ -33,6 +33,11 @@
                          Margin="10,10,0,520" Click="button_toggle">
                     <Image Source="/Resources/back.png"/>
                 </Button>
+                <ListBox x:Name="myListBox" HorizontalAlignment="Left" Margin="79,149,0,36" Width="228" SelectionChanged="myListBox_SelectionChanged" BorderThickness="1" BorderBrush="Black" Foreground="LawnGreen" FontStyle="Normal" 
+                         materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
+                <TextBlock Text="Rooms: " FontWeight="Bold" FontSize="40" Foreground="White" Margin="79,80,677,465" />
+                <TextBlock Text="The picked room:" FontWeight="Bold" FontSize="40" Foreground="White" Margin="460,81,120,465" RenderTransformOrigin="0.465,0.463" />
+                <TextBlock x:Name="txtSelectedRoom" Text="Selected Room" FontSize="30" Foreground="White"  FontWeight="SemiBold" Visibility="Hidden" Margin="460,166,120,374"/>
             </Grid>
 
         </Border>
