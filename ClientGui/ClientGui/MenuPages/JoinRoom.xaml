@@ -17,18 +17,32 @@
             UniformCornerRadius="20">
         <Border CornerRadius="20">
             <Grid>
-                <Button Content ="EXIT" 
+                <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
                          x:Name="btnExit"
                          Height="70"
                          Foreground="RoyalBlue"
                          FontSize="20"
                          Grid.Row="0"
-                         HorizontalAlignment="Left"
-                         Width="120"
+                         HorizontalAlignment="Right"
+                         Width="75"
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Margin="790,10,0,520" Click="exit_toggle" 
-                         />
+                         >
+                    <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                       >
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="0.777"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+
+
+                </Button>
                 <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
                          Margin="10,10,0,520" Click="button_toggle">
                     <Image Source="/Resources/back.png"/>

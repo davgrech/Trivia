@@ -32,18 +32,35 @@
                     <Image Source="/Resources/back.png"/>
                     
                 </Button>
-                <Button Content ="EXIT" 
+                <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
                          x:Name="btnExit"
                          Height="70"
                          Foreground="RoyalBlue"
                          FontSize="20"
                          Grid.Row="0"
-                         HorizontalAlignment="Left"
-                         Width="120"
+                         HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                         Width="75"
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle" Margin="790,8,0,7" 
-                         />
+                    
+                         >
+                    <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                       >
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="0.777"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+
+
+
+                </Button>
                 <TextBlock Text="Room Name" Foreground="White" FontSize="25" FontWeight="Bold" Margin="120,51,639,432" Grid.Row="1"></TextBlock>
                 <TextBlock Text="Max Players" Foreground="White" FontSize="25" FontWeight="Bold" Margin="120,221,639,262" Grid.Row="1"></TextBlock>
                 <TextBlock Text="Max Questions" Foreground="White" FontSize="25" FontWeight="Bold" Margin="546,221,185,262" Grid.Row="1"></TextBlock>
