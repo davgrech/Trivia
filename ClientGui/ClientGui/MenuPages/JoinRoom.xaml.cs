@@ -54,7 +54,8 @@ namespace ClientGui.MenuPages
             SendInfrmaionToServer(msg);
             string response = ReciveInformationFromServer();
             dynamic magic = JsonConvert.DeserializeObject(response);
-            return magic["Rooms"];
+            string stringOfRooms = magic["Rooms"];
+            return stringOfRooms; 
         }
         private void button_toggle(object sender, RoutedEventArgs e)
         {
