@@ -37,7 +37,7 @@
                        FontWeight="Bold"
                        FontSize="22"
                        Margin="00,0,0,0" Width="250"/>
-            <Image Source="/Resources/mario1.png" Margin="0,124,774,-71" Grid.Row="1"/>
+            <Image Source="/Resources/mario1.png" Margin="10,124,768,-71" Grid.Row="1"/>
 
             <Image Source="/Resources/luigi.png" Margin="748,118,0,-69" Grid.Row="1"/>
             <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
