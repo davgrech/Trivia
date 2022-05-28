@@ -23,30 +23,44 @@ namespace ClientGui.MenuPages
     /// 
     class recvInfoLeaderboard
     {
+        public string HighScores { get; set; }
+    }
+    public class topThree
+    {
+        public string firstName { get; set; }
+        public string firstPoints { get; set; }
+        public string SecondName { get; set; }
+        public string SecondPoints { get; set; }
+        public string ThirdName { get; set; }
+        public string thirdPoints { get; set; }
 
     }
     public partial class HighScores : Window
     {
         private static Socket mysock = null;
         string user;
-        class recvLeaderboard
-        {
 
-        }
         public HighScores(Socket _sock, string _uname)
         {
             InitializeComponent();
 
             mysock = _sock;
             user= _uname;
-            getUserStats();
+            recvInfoLeaderboard data = getUserStats();
+            topThree leaders = ParseToTop(data.HighScores);
+            setText(leaders);
         }
-        
+        void setText(topThree leaders)
+        {
+            firstDisplay.Text = "First Place\n" + leaders.firstName + "\n With " + leaders.firstPoints + " Winner Points";
+            secondDisplay.Text = "Second Place\n" + leaders.SecondName + "\n With " + leaders.SecondPoints + " Winner Points";
+            ThirdDisplay.Text = "Third Place\n" + leaders.ThirdName + "\n With " + leaders.thirdPoints + " Winner Points";
+        }
 
 
 
         //ask server for user stats - func gets it and Deserializes it
-        private recvInfo getUserStats()
+        private recvInfoLeaderboard getUserStats()
         {
 
             string to_send = "90000";
@@ -54,8 +68,8 @@ namespace ClientGui.MenuPages
             string received = ReciveInformationFromServer();
             try
             {
-                recvInfo? getstats = JsonSerializer.Deserialize<recvInfo>(received);
-                return getstats;
+                recvInfoLeaderboard? getLeader = JsonSerializer.Deserialize<recvInfoLeaderboard>(received);
+                return getLeader;
             }
             catch (Exception ex)
             {
@@ -63,6 +77,22 @@ namespace ClientGui.MenuPages
             }
         }
 
+
+        public topThree ParseToTop(string str)
+        {
+            string[] words = str.Split(",");
+            var newThree = new topThree()
+            {
+                firstName = words[0].Split(":")[0],
+                firstPoints = words[0].Split(":")[1],
+                SecondName = words[1].Split(":")[0],
+                SecondPoints = words[1].Split(":")[1],
+                ThirdName = words[2].Split(":")[0],
+                thirdPoints = words[2].Split(":")[1]
+            };
+            return newThree;
+
+        }
         private void SendInfrmaionToServer(string userInfo)
         {
             if (mysock.Connected)

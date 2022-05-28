@@ -59,10 +59,10 @@ namespace ClientGui.MenuPages
         void loadTextToWindow(Statistics userStats)
         {
             userTxt.Text = userStats.NAME + "'s Personal Stats";
-            firstDisplay.Text = "Users's name is " + userStats.NAME + "\n" + userStats.NAME + "'s total games: " + userStats.GAMES;
+            firstDisplay.Text = userStats.NAME + " Has A Total Of " + userStats.GAMES + " Games ";
             secondDisplay.Text = userStats.NAME + " Has Answerd " + userStats.TOTAL_ANSWERS + " Questions\n Of Which He Got " +
                 userStats.CORRECT_ANSWERS + " Answers Correct";
-            ThirdDisplay.Text = userStats.NAME + "'s Avrage Playtime is: " + userStats.AVG_TIME + " Hours\n" +
+            ThirdDisplay.Text = userStats.NAME + "'s Avarage Playtime is: " + userStats.AVG_TIME + " Hours\n" +
                 userStats.NAME + " Has Scored A Total Of: " + userStats.WINNER_POINTS + " Winner Points";
         }
         //parse the unsorted data sent by server using spilts and return a statistics object with all of it

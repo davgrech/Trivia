@@ -170,8 +170,7 @@ std::vector<unsigned char> JRPS::serializeResponse(getHighScoreResponse value)
     
     for (auto it = value.statistics.begin(); it != value.statistics.end(); it++) {
         
-        scores += std::to_string(i)+"#"+ *it + ", ";
-        i++;
+        scores +=  *it + ", ";
     }
     
     j["HighScores"] = scores;
