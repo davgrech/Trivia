@@ -29,9 +29,15 @@ namespace ClientGui.MenuPages
         string name;
         private List<string> roomNames = new List<string>();
         private List<RoomData> roomList = new List<RoomData>();
+
+
+        public class ErrorMessage
+        {
+            public string message;
+        }
         public class joinRoomRequest
         {
-            int roomId;
+           public string roomId;
         }
         public class RoomData
         {
@@ -62,7 +68,6 @@ namespace ClientGui.MenuPages
           
 
         }
-       
        private void putNamesInListBox()
         {
             string msg = "70000";
@@ -87,7 +92,14 @@ namespace ClientGui.MenuPages
             this.Close();
             returnToMenu.Show();
         }
-
+        public string padMsg(string msg, int len)
+        {
+            while (msg.Length < len)
+            {
+                msg = "0" + msg;
+            }
+            return msg;
+        }
         private void exit_toggle(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
@@ -103,6 +115,7 @@ namespace ClientGui.MenuPages
         {
             txtSelectedRoom.Text = myListBox.SelectedItem.ToString();
             txtSelectedRoom.Visibility = Visibility.Visible;
+
         }
 
 
@@ -146,7 +159,39 @@ namespace ClientGui.MenuPages
             return "";
         }
 
+        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        {
+            for(var i = 0; i < roomList.Count;i++)
+            {
+                if(roomList[i].name == txtSelectedRoom.Text)
+                {
+                    var join_info = new joinRoomRequest
+                    {
+                        roomId = roomList[i].id.ToString()
+                    };
+                    string jsonString = JsonConvert.SerializeObject(join_info);
+                    string len = padMsg(jsonString.Length.ToString(), 4);
+
+                    string to_send = "5" + len + jsonString;
+                    SendInfrmaionToServer(to_send);
+                    string rec = ReciveInformationFromServer();
+                    if(rec[10] != '1')
+                    {
+                        dynamic magic = JsonConvert.DeserializeObject(rec);
+                        txtSelectedRoom.Text = magic["message"];
+                        txtSelectedRoom.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        txtSelectedRoom.Text = "succeed to join";
+                        txtSelectedRoom.Visibility = Visibility.Visible;
+                    }
+                    
 
 
+
+                }
+            }
+        }
     }
 }
