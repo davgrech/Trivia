@@ -5,10 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientGui.MenuPages"
         mc:Ignorable="d"
-        Title="JoinRoom" Height="450" Width="800"
+        Title="JoinRoom" Height="600" Width="920"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         >
-    <Grid>
-        
-    </Grid>
+    <materialDesign:Card Background="#272537"
+            UniformCornerRadius="20">
+        <Border CornerRadius="20">
+            <Grid>
+                <Button Content ="EXIT" 
+                         materialDesign:ButtonAssist.CornerRadius="20"
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         HorizontalAlignment="Left"
+                         Width="120"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Margin="790,10,0,520" Click="exit_toggle" 
+                         />
+                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                         Margin="10,10,0,520" Click="button_toggle">
+                    <Image Source="/Resources/back.png"/>
+                </Button>
+            </Grid>
+
+        </Border>
+    </materialDesign:Card>
+
 </Window>

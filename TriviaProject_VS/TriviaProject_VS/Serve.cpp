@@ -136,8 +136,21 @@ void serveTool::cHandler(SOCKET client)
 			ZeroMemory(recMsg, 2048);
 			byteReceived = recv(client, recMsg, 2048, 0);
 
-			if (checkByteReceived(byteReceived)) { // if client disconnected check.
-				Disconnected(client, sock_to_user.at(client));
+			if (checkByteReceived(byteReceived)) {
+				
+				
+				
+				// if client connected check.
+				if (this->sock_to_user.count(client) > 0)
+				{
+					Disconnected(client, sock_to_user.at(client));
+
+				}
+				else
+				{
+					std::lock_guard<std::mutex> mtx2(connect_map);
+					this->_clients.erase(client);
+				}
 				
 				
 				
@@ -362,7 +375,16 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					Disconnected(client, sock_to_user.at(client));
+					if (this->sock_to_user.count(client) > 0)
+					{
+						Disconnected(client, sock_to_user.at(client));
+
+					}
+					else
+					{
+						std::lock_guard<std::mutex> mtx2(connect_map);
+						this->_clients.erase(client);
+					}
 					return;
 				}
 				std::cout << "Response sent: " << responseString;

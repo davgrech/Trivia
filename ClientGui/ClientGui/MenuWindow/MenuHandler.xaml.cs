@@ -117,6 +117,9 @@ namespace ClientGui.MenuWindow
             }
             return "";
         }
+
+
+        //create room
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             CreateRoom moveToCreateRoom = new CreateRoom(mySock, userName);
@@ -124,9 +127,14 @@ namespace ClientGui.MenuWindow
             this.Close();
         }
 
+
+        //join room 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             JoinRoom moveToJoinRoom = new JoinRoom(mySock, userName);
+            moveToJoinRoom.Show();
+            this.Close();
+
         }
         /*
          * personal stats

@@ -128,7 +128,7 @@ namespace ClientGui
             GlobaluserName = txtUsername.Text;
             string jsonString = JsonSerializer.Serialize(login_info);
             string len = padMsg(jsonString.Length.ToString(), 4);
-
+            
             string to_send = "1" + len + jsonString;
 
             SendInfrmaionToServer(to_send);
@@ -191,7 +191,7 @@ namespace ClientGui
                 await Task.Delay(2000);
 
                 
-               
+                
                 string recieved = ReciveInformationFromServer();
                 if(recieved.Length > 10)
                 {

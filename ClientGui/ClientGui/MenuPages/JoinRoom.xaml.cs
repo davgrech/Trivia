@@ -33,5 +33,24 @@ namespace ClientGui.MenuPages
             name = userName;
 
         }
+
+       
+        private void button_toggle(object sender, RoutedEventArgs e)
+        {
+            MenuHandler returnToMenu = new MenuHandler(mysock, name);
+            this.Close();
+            returnToMenu.Show();
+        }
+
+        private void exit_toggle(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            Environment.Exit(0);
+        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
+        }
     }
 }
