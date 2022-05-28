@@ -11,6 +11,7 @@
     <None Remove="MenuWindow\Images\woman.png" />
     <None Remove="Resources\back.png" />
     <None Remove="Resources\bg1.jpg" />
+    <None Remove="Resources\bg4.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
     <None Remove="Resources\luigi.png" />
@@ -32,6 +33,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\dolev.jpeg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\bg4.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Content Include="Resources\menuMusic.wav">

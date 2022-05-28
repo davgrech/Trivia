@@ -193,25 +193,34 @@ namespace ClientGui
                 
                
                 string recieved = ReciveInformationFromServer();
-                if(recieved[10] == '1')
+                if(recieved.Length > 10)
                 {
-                    if (isRemember == true)
+                    if (recieved[10] == '1')
                     {
-                        File.WriteAllText("rememberme.txt", String.Empty);
-                        string linetowrite = txtUsername.Text + "\n" + txtPassowrd.Password;
-                        await File.WriteAllTextAsync("rememberme.txt", linetowrite);
+                        if (isRemember == true)
+                        {
+                            File.WriteAllText("rememberme.txt", String.Empty);
+                            string linetowrite = txtUsername.Text + "\n" + txtPassowrd.Password;
+                            await File.WriteAllTextAsync("rememberme.txt", linetowrite);
 
+                        }
+                        else
+                        {
+                            //var fileStream = File.Open("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", FileMode.Open);
+                            //File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                        }
+                        isLoggedIn = true;
+                        eventArgs.Session.Close(true);
+                        MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
+                        this.Close();
+                        moveToMenu.Show();
                     }
                     else
                     {
-                        //var fileStream = File.Open("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", FileMode.Open);
-                        //File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                        isLoggedIn = false;
+                        eventArgs.Session.Close(false);
+
                     }
-                    isLoggedIn = true;
-                    eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
-                    this.Close();
-                    moveToMenu.Show();
                 }
                 else
                 {
@@ -219,7 +228,8 @@ namespace ClientGui
                     eventArgs.Session.Close(false);
 
                 }
-                
+
+
             }
             catch
             {

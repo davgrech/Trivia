@@ -53,7 +53,7 @@
                         <Button x:Name="btn_exit" ToolTip="Close Application" Content="Exit Application" Click="exitApp"/>
 
                     </StackPanel>
-                </materialDesign:PopupBox>
+                </materialDesign:PopupBox> 
                 <Image Margin ="0 20 0 5" Source="/Resources/TankLoginLogo.png" Height="107" Width="377"/>
 
                 <TextBlock Margin="0 25 0 5" HorizontalAlignment="Center" FontSize="28"

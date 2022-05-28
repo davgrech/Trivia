@@ -91,12 +91,21 @@ namespace ClientGui
             SendInfrmaionToServer(to_send);
 
             string recieved = ReciveInformationFromServer();
-            if (recieved[10] == '1')
+            if(recieved.Length > 10)
             {
-                MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(_clientSocket, _name);
+                if (recieved[10] == '1')
+                {
+                    MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(_clientSocket, _name);
 
-                //show login handler
-                window.Show();
+                    //show login handler
+                    window.Show();
+                }
+                else
+                {
+                    loginWindow hi = new loginWindow(_clientSocket);
+                    hi.Show();
+                    hi.loginStatus.Text = "account already inside failed";
+                }
             }
             else
             {
@@ -104,6 +113,7 @@ namespace ClientGui
                 hi.Show();
                 hi.loginStatus.Text = "account already inside failed";
             }
+            
         }
 
         public string padMsg(string msg, int len)

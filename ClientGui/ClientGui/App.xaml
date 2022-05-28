@@ -8,6 +8,7 @@
     <Application.Resources>
         
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source = "MenuWindow/Theme/CreateRoomButtonTheme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -35,7 +36,8 @@
             <DataTemplate DataType="{x:Type viewModel:CreateRoomViewModel}">
                 <view:CreateRoom/>
             </DataTemplate>
-
+            
+            
 
 
         </ResourceDictionary>

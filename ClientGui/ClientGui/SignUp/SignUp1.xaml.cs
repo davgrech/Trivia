@@ -186,20 +186,29 @@ namespace ClientGui
 
 
                 string recieved = ReciveInformationFromServer();
-                if (recieved[10] == '1')
+                if(recieved.Length > 10)
                 {
-                    isSignedUp = true;
-                    eventArgs.Session.Close(true);
-                    MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
-                    this.Close();
-                    moveToMenu.Show();  // when sign up is complete go to menu
+                    if (recieved[10] == '1')
+                    {
+                        isSignedUp = true;
+                        eventArgs.Session.Close(true);
+                        MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);
+                        this.Close();
+                        moveToMenu.Show();  // when sign up is complete go to menu
+                    }
+                    else
+                    {
+                        isSignedUp = false;
+                        eventArgs.Session.Close(false);
+
+                    }
                 }
                 else
                 {
                     isSignedUp = false;
                     eventArgs.Session.Close(false);
-
                 }
+               
 
             }
             catch

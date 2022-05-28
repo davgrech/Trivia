@@ -81,16 +81,16 @@ void serveTool::startHandleRequests()
 
 void serveTool::addToClients(SOCKET client, IRequestHandler* request)
 {
-	connect_map.lock();
+	std::lock_guard<std::mutex> mtx1(connect_map);
 	this->_clients.insert(std::pair< SOCKET, IRequestHandler*>(client, request));
-	connect_map.unlock();
+	
 }
 
 void serveTool::addToSockToClient(SOCKET client, std::string x)
 {
-	user_map.lock();
+	std::lock_guard<std::mutex> mtx1(user_map);
 	this->sock_to_user.insert(std::pair< SOCKET,std::string>(client, x));
-	user_map.unlock();
+	
 }
 
 void serveTool::Disconnected(SOCKET socket, std::string userName)
@@ -98,22 +98,21 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 	// if logged in
 	if (this->sock_to_user.count(socket) > 0)
 	{
-		login_manager.lock();
+		std::lock_guard<std::mutex> mtx1(login_manager);
 		this->m_handlerFactory->deleteUser(this->sock_to_user.at(socket));
-		login_manager.unlock();
 
-		room_manager.lock();
+		std::lock_guard<std::mutex> mtx2(room_manager);
 		this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(socket));
-		room_manager.unlock();
 	}
 
-	user_map.lock();
+	std::lock_guard<std::mutex> mtx1(user_map);
+	
 	sock_to_user.erase(socket);
-	user_map.unlock();
+	
 
-	connect_map.lock();
+	std::lock_guard<std::mutex> mtx2(connect_map);
 	_clients.erase(socket);
-	connect_map.unlock();
+	
 }
 
 
@@ -175,9 +174,9 @@ void serveTool::cHandler(SOCKET client)
 				if (handler->isRequestRelevant(msgInfo)) { // check if relevent
 
 
-					login_manager.lock();
+					std::lock_guard<std::mutex> mtx1(login_manager);
 					reqResult = handler->handleRequest(msgInfo);
-					login_manager.unlock();
+					
 
 					//succee to login
 					if (reqResult.newHandler != nullptr)
@@ -229,18 +228,18 @@ void serveTool::cHandler(SOCKET client)
 					
 					
 					if (handler->isRequestRelevant(msgInfo)) {
-						login_manager.lock();
+						std::lock_guard<std::mutex> mtx1(login_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						login_manager.unlock();
+						
 						//leave the room if he is in one  & leave logs
 						
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx2(room_manager);
 						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-						room_manager.unlock();
 						
-						user_map.lock();
+						
+						std::lock_guard<std::mutex> mtx3(user_map);
 						this->sock_to_user.erase(client);
-						user_map.unlock();
+						
 						
 					}
 
@@ -250,17 +249,17 @@ void serveTool::cHandler(SOCKET client)
 				{
 					
 					if (handler->isRequestRelevant(msgInfo)) {
-						login_manager.lock();
+						std::lock_guard<std::mutex> mtx1(login_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						login_manager.unlock();
+						
 						//leave the room if he is in one  & leave logs
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx2(room_manager);
 						this->m_handlerFactory->getRoomManager().deleteUserInRoom(sock_to_user.at(client));
-						room_manager.unlock();
+						
 
-						user_map.lock();
+						std::lock_guard<std::mutex> mtx3(user_map);
 						this->sock_to_user.erase(client);
-						user_map.unlock();
+						
 					}
 
 					break;
@@ -268,9 +267,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_CREATE_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						room_manager.unlock();
+						
 					}
 
 					break;
@@ -278,9 +277,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_JOIN_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						room_manager.unlock();
+					
 					}
 
 					break;
@@ -288,9 +287,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_PLAYERS_ROOM:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						room_manager.unlock();
+						
 					}
 
 					break;
@@ -298,9 +297,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_ROOMS:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						room_manager.lock();
+						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						room_manager.unlock();
+						
 					}
 
 					break;
@@ -308,9 +307,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_GET_STATS_USER:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						statistic_manager.lock();
+						std::lock_guard<std::mutex> mtx1(statistic_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						statistic_manager.unlock();
+						
 					}
 
 					break;
@@ -318,9 +317,9 @@ void serveTool::cHandler(SOCKET client)
 				case CLIENT_HIGH_SCORE:
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
-						statistic_manager.lock();
+						std::lock_guard<std::mutex> mtx1(statistic_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						statistic_manager.unlock();
+						
 					}
 
 					break;
@@ -333,9 +332,9 @@ void serveTool::cHandler(SOCKET client)
 				}
 				handler = reqResult.newHandler;
 
-				connect_map.lock();
+				std::lock_guard<std::mutex> mtx1(connect_map);
 				this->_clients.at(client) = handler;
-				connect_map.unlock();
+				
 
 			}
 

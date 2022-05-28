@@ -117,20 +117,16 @@ namespace ClientGui.MenuWindow
             }
             return "";
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            CreateRoom moveToCreateRoom = new CreateRoom(mySock, userName);
+            moveToCreateRoom.Show();
+            this.Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
+            JoinRoom moveToJoinRoom = new JoinRoom(mySock, userName);
         }
         /*
          * personal stats

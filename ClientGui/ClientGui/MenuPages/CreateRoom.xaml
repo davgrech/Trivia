@@ -1,0 +1,74 @@
+﻿<Window x:Class="ClientGui.MenuPages.CreateRoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientGui.MenuPages"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Height="600" Width="920"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        >
+
+    <materialDesign:Card Background="#272537"
+            UniformCornerRadius="20">
+        <Border CornerRadius="20">
+            <Border.Background>
+                <ImageBrush ImageSource="\Resources\bg1.jpg"  Stretch="Fill"/>
+            </Border.Background>
+            <Grid x:Name="inner_grid">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="85"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text ="Resposnse" x:Name="txtResponse" HorizontalAlignment="Left" FontSize="40" Width="838" Margin="80,78,0,467" Grid.RowSpan="2" Foreground="Gray" Visibility="hidden"></TextBlock>
+                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                        Click="button_toggle"
+                >
+                    <Image Source="/Resources/back.png"/>
+                </Button>
+                <Button Content ="EXIT" 
+                         materialDesign:ButtonAssist.CornerRadius="20"
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         Grid.Row="0"
+                         HorizontalAlignment="Left"
+                         Width="120"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle" Margin="790,8,0,7" 
+                         />
+                <TextBlock Text="Room Name" Foreground="White" FontSize="25" FontWeight="Bold" Margin="120,51,639,432" Grid.Row="1"></TextBlock>
+                <TextBlock Text="Max Players" Foreground="White" FontSize="25" FontWeight="Bold" Margin="120,221,639,262" Grid.Row="1"></TextBlock>
+                <TextBlock Text="Max Questions" Foreground="White" FontSize="25" FontWeight="Bold" Margin="546,221,185,262" Grid.Row="1"></TextBlock>
+                <TextBlock Text="Question Timout" Foreground="White" FontSize="25" FontWeight="Bold" Margin="546,51,171,432" Grid.Row="1"></TextBlock>
+
+
+                <TextBox  x:Name="txtRoomName" FontSize="30" Margin="120,101,0,350" HorizontalAlignment="Left" Foreground="PaleGoldenrod" materialDesign:HintAssist.Hint="Room Name" Grid.Row="1" Width="245"/>
+                <TextBox  x:Name="txtQuestionTimeout" FontSize="30" Margin="546,100,0,350" HorizontalAlignment="Left" Foreground="PaleGoldenrod" materialDesign:HintAssist.Hint="Question Timeout" Grid.Row="1" Width="244"/>
+                <TextBox  x:Name="txtMaxPlayers" FontSize="30" Margin="120,263,0,182" HorizontalAlignment="Left" Foreground="PaleGoldenrod" materialDesign:HintAssist.Hint="Max Players" Grid.Row="1" Width="245"/>
+                <TextBox  x:Name="txtMaxQuestions" FontSize="30" Margin="546,268,0,182" HorizontalAlignment="Left" Foreground="PaleGoldenrod" materialDesign:HintAssist.Hint="Max Quesitons" Grid.Row="1" Width="244"/>
+
+                <Button  Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                        materialDesign:ButtonAssist.CornerRadius="20"
+                         Margin="310,386,310,76"
+                        Height="53" Width="300" 
+                        Foreground="White"
+                        Background="Gray"
+                        FontSize="25" Content="Create Room" Grid.Row="1" Click="createRoom_btn"/>
+
+            </Grid>
+        </Border>
+
+
+    </materialDesign:Card>
+
+
+</Window>
