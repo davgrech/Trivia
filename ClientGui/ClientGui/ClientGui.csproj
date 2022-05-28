@@ -13,6 +13,9 @@
     <None Remove="Resources\bg1.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
+    <None Remove="Resources\luigi.png" />
+    <None Remove="Resources\mario.png" />
+    <None Remove="Resources\mario1.png" />
     <None Remove="Resources\menuMusic.wav" />
     <None Remove="Resources\return.png" />
     <None Remove="Resources\tankLoginLogo.png" />
@@ -34,6 +37,12 @@
     <Content Include="Resources\menuMusic.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\luigi.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\mario1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\woman.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

@@ -49,8 +49,13 @@ namespace ClientGui.MenuPages
             recvInfo infoRecv = getUserStats(username);
             Statistics userStats = parseJibbrish(infoRecv.PersonalScore);
             userTxt.Text = userStats.NAME + "'s Personal Stats";
-            
-            
+            firstDisplay.Text = "Users's name is " + userStats.NAME + "\n" + userStats.NAME + "'s total games: " + userStats.GAMES;
+            secondDisplay.Text = userStats.NAME + " Has Answerd " + userStats.TOTAL_ANSWERS + " Questions\n Of Which He Got " +
+                userStats.CORRECT_ANSWERS + " Answers Correct";
+            ThirdDisplay.Text = userStats.NAME + "'s Avrage Playtime is: " + userStats.AVG_TIME + " Hours\n" +
+                userStats.NAME + " Has Scored A Total Of: " + userStats.WINNER_POINTS + " Winner Points";
+
+
 
 
         }
