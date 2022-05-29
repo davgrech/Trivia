@@ -33,6 +33,27 @@ MenuRequestHanlder* RequestHandleFactory::createMenuRequestHandler(LoggedUser lo
 
 }
 
+RoomMemberRequestHandler* RequestHandleFactory::createRoomMemberRequest(std::string userName, int id)
+{
+    while (true) {
+        try {
+            
+            return new RoomMemberRequestHandler(m_RoomManager.getRoom(id),LoggedUser(userName), (*this));
+        }
+        catch (...) {}
+    }
+}
+
+RoomAdminRequestHandler* RequestHandleFactory::createRoomAdminRequest(std::string userName, Room& room)
+{
+    while (true) {
+        try {
+            return new RoomAdminRequestHandler(room, LoggedUser(userName), (*this));
+        }
+        catch (...) {}
+    }
+}
+
 
 RoomManager& RequestHandleFactory::getRoomManager()
 {
