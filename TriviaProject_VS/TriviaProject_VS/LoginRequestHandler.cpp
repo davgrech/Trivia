@@ -81,3 +81,8 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo value)
     
 }
 
+std::string LoginRequestHandler::getType()
+{
+    return typeid(this).name();
+}
+

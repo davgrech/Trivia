@@ -81,6 +81,11 @@ RequestResult MenuRequestHanlder::logout()
     return RequestResult{JRPS::serializeResponse(logoutRes), this->m_handlerFactory.createLoginRequestHandler()};
 }
 
+std::string MenuRequestHanlder::getType()
+{
+    return typeid(this).name();
+}
+
 RequestResult MenuRequestHanlder::getRooms(RequestInfo info)
 {
     GetRoomResponse getRoomRes;
@@ -138,7 +143,7 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     roomRes.status = SUCCESS;
 
     // will be changed
-    return RequestResult{ JRPS::serializeResponse(roomRes), this };
+    return RequestResult{ JRPS::serializeResponse(roomRes), m_handlerFactory.createRoomMemberRequest(this->m_user.getUsername(), roomReq.roomId)};
 }
 
 RequestResult MenuRequestHanlder::createRoom(RequestInfo info)

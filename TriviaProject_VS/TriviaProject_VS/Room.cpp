@@ -71,7 +71,7 @@ int Room::isActive()
     return this->m_metadata.isActive;
 }
 
-RoomData Room::getRoomData()
+RoomData& Room::getRoomData()
 {
     return this->m_metadata;
 }

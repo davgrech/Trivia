@@ -23,7 +23,7 @@ public:
 	RoomMemberRequestHandler(Room& room, LoggedUser user, RequestHandleFactory& handlerFactory);
 	virtual bool isRequestRelevant(RequestInfo value);
 	virtual RequestResult handleRequest(RequestInfo value);
-	std::string getType();
+	virtual std::string getType();
 	int GetID();
 	std::string getUserName();
 };
