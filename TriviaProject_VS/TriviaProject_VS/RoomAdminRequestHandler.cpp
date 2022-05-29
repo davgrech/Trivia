@@ -45,17 +45,55 @@ std::string RoomAdminRequestHandler::getType()
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo value)
 {
-    return RequestResult();
+    this->m_handlerFactory.getRoomManager().deleteRoom(m_room.getRoomData().id);
+    CloseRoomResponse res;
+    res.status = ROOM_CLOSE;
+
+    return RequestResult{JRPS::serializeResponse(res), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo value)
 {
-    return RequestResult();
+    GetRoomStateResponse res;
+    res.answerTimeout = this->m_room.getRoomData().timePerQuestion;
+
+    this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
+
+    res.players = this->m_room.getAllUsers();
+    res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
+    res.status = this->m_room.getRoomData().isActive;
+
+    switch (res.status)
+    {
+        case ROOM_CLOSE:
+        {
+            return RequestResult{ JRPS::serializeResponse(res), m_handlerFactory.createMenuRequestHandler(this->m_user) };
+            break;
+        }
+        case ROOM_OPEN:
+        {
+            return RequestResult{ JRPS::serializeResponse(res), this };
+            break;
+        }
+        case ROOM_ACTIVE:
+        {
+
+            //will be changed to game handler
+            return RequestResult{ JRPS::serializeResponse(res), this };
+            break;
+        }
+        default:
+        {
+            throw std::exception("getRoomState - not in switch");
+        }
+    }
 }
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo value)
 {
+    StartGameResponse res;
+    res.status = ROOM_ACTIVE;
     m_roomManager.getRoom(this->m_room.getRoomData().id).getRoomData().isActive = ROOM_ACTIVE;
    
-    return RequestResult();
+    return RequestResult{JRPS::serializeResponse(res), this};
 }

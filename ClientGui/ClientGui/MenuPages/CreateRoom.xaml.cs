@@ -56,30 +56,28 @@ namespace ClientGui.MenuPages
             SendInfrmaionToServer(to_send);
 
             string response = ReciveInformationFromServer();
-            if(response.Length > 10)
-            {
-                if (response[10] == '1')
+            
+                if (!(response.Contains("message"))) 
                 {
-                    txtResponse.Text = "Response: "+"Created room successfully";
-                    txtResponse.Visibility = Visibility.Visible;
-                    
+                   
+
+                    this.Close();
+                    dynamic magic = JsonConvert.DeserializeObject(response);
+                    string stringID = magic["Id"];
+                    int id = int.Parse(stringID);
+                    AdminWaitingRoom waitingWindow = new AdminWaitingRoom(id, user);
+                    waitingWindow.Show();
+
                 }
                 else
                 {
                     dynamic magic = JsonConvert.DeserializeObject(response);
-                    txtResponse.Text = "Response: "+magic["message"];
-                    txtResponse.Visibility = Visibility.Visible;
+                    string msg = magic["message"];
+                    MessageBox.Show(msg, "Alert", MessageBoxButton.OK , MessageBoxImage.Information);
                 }
-            }
-            else
-            {
-                dynamic magic = JsonConvert.DeserializeObject(response);
-                txtResponse.Text = "Response: "+magic["message"];
-                txtResponse.Visibility = Visibility.Visible;
-            }
+            
+            
            
-
-
         }
 
 

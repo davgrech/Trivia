@@ -5,7 +5,7 @@
 #include <map>
 #include "Room.h"
 #include "LoggedUser.h"
-
+#include <unordered_map>
 class RoomManager
 {
 public:
@@ -21,5 +21,5 @@ public:
 	//getters
 	
 private:
-	std::map<unsigned int, Room> m_rooms;
+	std::unordered_map<unsigned int, Room> m_rooms;
 };

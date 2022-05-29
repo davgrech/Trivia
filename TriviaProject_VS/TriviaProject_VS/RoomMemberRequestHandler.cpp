@@ -49,7 +49,8 @@ std::string RoomMemberRequestHandler::getUserName()
 
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo value)
 {
-    bool isLeft = m_room.removeUser(m_user);
+    bool isLeft = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).removeUser(m_user);
+ 
     LeaveRoomResponse res;
     isLeft ? res.status = 1 : res.status = 0;
     return RequestResult{ JRPS::serializeResponse(res ), m_handlerFactory.createMenuRequestHandler(m_user)};
@@ -63,8 +64,14 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
     this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
 
     res.players = this->m_room.getAllUsers();
-    res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
     res.status = this->m_room.getRoomData().isActive;
+    if (res.players.empty())
+    {
+        res.status = ROOM_CLOSE;
+    }
+
+    res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
+    
 
     switch (res.status)
     {
