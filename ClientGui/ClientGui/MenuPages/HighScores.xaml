@@ -20,7 +20,7 @@
     <Border 
             CornerRadius="20">
         <Border.Background>
-            <ImageBrush ImageSource="\Resources\bg4.jpg"  Stretch="Fill"/>
+            <ImageBrush ImageSource="\Resources\darkThemeBg.jpg"  Stretch="Fill"/>
         </Border.Background>
 
         <Grid>
@@ -36,13 +36,22 @@
                        Text="Leaderboard"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Foreground="RoyalBlue"
+                       Foreground="DarkOliveGreen"
                        FontWeight="Bold"
                        FontSize="22"
                        Margin="95,0,0,0" Width="250"/>
-            <Image Source="/Resources/mario1.png" Margin="10,124,768,-71" Grid.Row="1"/>
+            <Image Source="\Resources\turtle2.png" Margin="-2,15,628,-146" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="-0.319" AngleX="0.229"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-0.748" X="0.792"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
 
-            <Image Source="/Resources/luigi.png" Margin="748,118,0,-69" Grid.Row="1"/>
+            <Image Source="/Resources/turtleThumbsUp.png" Margin="709,153,-91,-6" Grid.Row="1"/>
             <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
                         Click="Button_Click">
                 <Image Source="/Resources/back.png"/>
@@ -81,12 +90,14 @@
 
             </Button>
 
+
             <StackPanel Grid.Row="1">
                 <Border Width="350" 
                         Height="150" 
-                        Background="MediumSlateBlue"
+                        Background="DarkOliveGreen"
                         CornerRadius="20"
                         Margin="0,35,0,10"
+                        
                         >
                     <TextBlock x:Name="firstDisplay"
                        Foreground="White"
@@ -97,7 +108,7 @@
                 </Border>
                 <Border Width="450" 
                     Height="150" 
-                    Background="MediumSlateBlue"
+                    Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
@@ -111,7 +122,7 @@
                 </Border>
                 <Border Width="550" 
                     Height="150" 
-                    Background="MediumSlateBlue"
+                    Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
