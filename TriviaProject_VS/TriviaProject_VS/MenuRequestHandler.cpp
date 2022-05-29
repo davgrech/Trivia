@@ -197,7 +197,7 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     };
     this->m_roomManager.createRoom(m_user, RoomInfo);
 
-    createRoomRes.status = SUCCESS;
+    createRoomRes.Id = newID;
     
 
 
