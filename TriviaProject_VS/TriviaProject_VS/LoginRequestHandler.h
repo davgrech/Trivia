@@ -21,6 +21,6 @@ public:
 	//father function 
 	virtual bool isRequestRelevant(RequestInfo request);
 	virtual RequestResult handleRequest(RequestInfo value);
-
+	virtual std::string getType();
 	
 };

@@ -8,7 +8,7 @@ RoomMemberRequestHandler::RoomMemberRequestHandler(Room& room, LoggedUser user, 
 
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo value)
 {
-    return CLIENT_LEAVE_ROOM || CLIENT_GET_STATE;
+    return value.id == CLIENT_LEAVE_ROOM || value.id == CLIENT_GET_STATE;
 }
 
 
@@ -29,6 +29,11 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo value)
         }
     }
     return result;
+}
+
+std::string RoomMemberRequestHandler::getType()
+{
+    return typeid(this).name();
 }
 
 

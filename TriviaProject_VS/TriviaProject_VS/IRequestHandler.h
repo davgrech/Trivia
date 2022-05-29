@@ -30,7 +30,7 @@ class IRequestHandler
 public:
 	virtual bool isRequestRelevant(RequestInfo request) = 0;
 	virtual RequestResult handleRequest(RequestInfo value) = 0;
-
+	virtual std::string getType() = 0;
 };
 
 

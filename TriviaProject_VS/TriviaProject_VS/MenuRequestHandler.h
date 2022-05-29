@@ -41,6 +41,6 @@ private:
 	RequestResult createRoom(RequestInfo info);
 	RequestResult signout();
 	RequestResult logout();
-
+	virtual std::string getType();
 
 };

@@ -35,7 +35,7 @@ enum msgType : byte
 
 
 
-enum roomState
+enum roomState : byte
 {
 	ROOM_CLOSE,
 	ROOM_OPEN,
