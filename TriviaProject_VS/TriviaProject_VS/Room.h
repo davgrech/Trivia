@@ -24,7 +24,7 @@ public:
 	std::vector<std::string> getAllUsers();
 	void addUser(LoggedUser user);
 	bool removeUser(LoggedUser user);
-	bool isActive();
+	int isActive();
 	RoomData getRoomData();
 	std::string getName();
 	bool isInRoomAlready(std::string  userName);

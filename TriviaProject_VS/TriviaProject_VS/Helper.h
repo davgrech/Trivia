@@ -31,5 +31,17 @@ enum msgType : byte
 	
 
 };
+
+
+
+
+enum roomState
+{
+	ROOM_CLOSE,
+	ROOM_OPEN,
+	ROOM_ACTIVE
+};
+
+
 #define FAILED 0
 #define SUCCESS 1

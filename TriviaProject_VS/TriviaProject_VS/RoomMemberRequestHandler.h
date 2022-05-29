@@ -9,7 +9,7 @@
 
 class RequestHandleFactory;
 
-class RoomMemberRequestHandler : IRequestHandler
+class RoomMemberRequestHandler : public IRequestHandler
 {
 private:
 	Room m_room;

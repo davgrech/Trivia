@@ -92,7 +92,7 @@ namespace ClientGui.MenuPages
         {
             string jsonString = JsonSerializer.Serialize(uname);
             string len = padMsg(jsonString.Length.ToString(), 4);
-            string to_send = "8" + len + jsonString;
+            string to_send = "<" + len + jsonString;
             SendInfrmaionToServer(to_send);
             string received = ReciveInformationFromServer();
             try

@@ -66,7 +66,7 @@ bool Room::removeUser(LoggedUser user)
 
 }
 
-bool Room::isActive()
+int Room::isActive()
 {
     return this->m_metadata.isActive;
 }

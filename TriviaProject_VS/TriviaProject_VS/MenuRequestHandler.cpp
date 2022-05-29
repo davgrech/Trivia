@@ -86,7 +86,7 @@ RequestResult MenuRequestHanlder::getRooms(RequestInfo info)
     GetRoomResponse getRoomRes;
     std::vector<Room> rooms = this->m_roomManager.getRooms();
     for (auto it = rooms.begin(); it != rooms.end(); it++) {
-        if (!it->isActive()) {
+        if (it->isActive() == ROOM_OPEN) {
             getRoomRes.rooms.push_back(it->getRoomData());
         }
     }
@@ -187,7 +187,7 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
         createRoomReq.maxUsers,
         createRoomReq.questionCount,
         createRoomReq.answerTimeout,
-        false
+        ROOM_OPEN
 
     };
     this->m_roomManager.createRoom(m_user, RoomInfo);
@@ -197,5 +197,5 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
 
 
     //will be changed
-    return RequestResult{JRPS::serializeResponse(createRoomRes), this};
+    return RequestResult{JRPS::serializeResponse(createRoomRes), m_handlerFactory.createRoomAdminRequest(this->m_user.getUsername(), this->m_roomManager.getRoom(newID))};
 }

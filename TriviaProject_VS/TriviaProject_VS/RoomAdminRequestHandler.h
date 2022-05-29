@@ -10,7 +10,7 @@
 
 class RequestHandleFactory;
 
-class RoomAdminRequestHandler : IRequestHandler
+class RoomAdminRequestHandler : public IRequestHandler
 {
 private:
 	Room m_room;
