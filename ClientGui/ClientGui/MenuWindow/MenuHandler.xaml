@@ -66,13 +66,13 @@
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          >
-                <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                <Image Source="/Resources/xBtn2.png" RenderTransformOrigin="0.5,0.5"
                        >
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="0.777"/>
+                            <RotateTransform Angle="0"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
