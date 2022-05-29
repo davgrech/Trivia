@@ -10,15 +10,21 @@
   <ItemGroup>
     <None Remove="MenuWindow\Images\woman.png" />
     <None Remove="Resources\back.png" />
+    <None Remove="Resources\badge.png" />
     <None Remove="Resources\bg1.jpg" />
     <None Remove="Resources\bg4.jpg" />
     <None Remove="Resources\camoBg.jpg" />
+    <None Remove="Resources\control.png" />
+    <None Remove="Resources\control1.png" />
+    <None Remove="Resources\darkThemeBg.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
+    <None Remove="Resources\lightThemeBg.jpg" />
     <None Remove="Resources\luigi.png" />
     <None Remove="Resources\mario.png" />
     <None Remove="Resources\mario1.png" />
     <None Remove="Resources\menuMusic.wav" />
+    <None Remove="Resources\olivebg.jpg" />
     <None Remove="Resources\return.png" />
     <None Remove="Resources\tankLoginLogo.png" />
     <None Remove="Resources\Xbtn1.png" />
@@ -28,10 +34,22 @@
     <Resource Include="Resources\back.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\badge.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\bg1.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\camoBg.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\control.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\control1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\darkThemeBg.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\david.jpeg">
@@ -46,10 +64,16 @@
     <Content Include="Resources\menuMusic.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\lightThemeBg.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\luigi.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\mario1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\olivebg.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\woman.png">

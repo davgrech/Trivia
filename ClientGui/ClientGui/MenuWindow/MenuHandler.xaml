@@ -12,7 +12,9 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        >
+        WindowStartupLocation="CenterScreen">
+
+    
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>

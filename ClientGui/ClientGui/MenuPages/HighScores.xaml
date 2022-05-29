@@ -12,13 +12,16 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        >
+                WindowStartupLocation="CenterScreen">
+
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
-    <Border Background="#272537"
+    <Border 
             CornerRadius="20">
-
+        <Border.Background>
+            <ImageBrush ImageSource="\Resources\bg4.jpg"  Stretch="Fill"/>
+        </Border.Background>
 
         <Grid>
 
