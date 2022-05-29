@@ -202,3 +202,43 @@ std::vector<unsigned char> JRPS::serializeResponse(getPersonalStatsResponse valu
 
     return ConvertMsg(j.dump());
 }
+
+std::vector<unsigned char> JRPS::serializeResponse(CloseRoomResponse value)
+{
+    json j;
+    std::vector<unsigned char> response;
+
+    j["status"] = value.status;
+    return ConvertMsg(j.dump());
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(StartGameResponse value)
+{
+    json j;
+    std::vector<unsigned char> response;
+
+    j["status"] = value.status;
+    return ConvertMsg(j.dump());
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(GetRoomStateResponse value)
+{
+    json j;
+    j["status"] = value.status;
+    j["questionCount"] = value.questionCount;
+    j["answerTimeout"] = value.answerTimeout;
+    j["hasGameBegun"] = value.hasGameBegun;
+    j["players"] = value.players;
+    
+    std::cout << j;
+    return ConvertMsg(j.dump());
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(LeaveRoomResponse value)
+{
+    json j;
+    std::vector<unsigned char> response;
+
+    j["status"] = value.status;
+    return ConvertMsg(j.dump());
+}
