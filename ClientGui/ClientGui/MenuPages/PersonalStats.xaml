@@ -17,9 +17,12 @@
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
-    <Border Background="#272537"
-            CornerRadius="20"
-            >
+    <Border 
+            CornerRadius="20">
+        <Border.Background>
+
+            <ImageBrush ImageSource="\Resources\darkThemeBg.jpg"/>
+        </Border.Background>
 
 
         <Grid>
@@ -35,13 +38,22 @@
                        x:Name="userTxt"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Foreground="RoyalBlue"
+                       Foreground="PaleGoldenrod"
                        FontWeight="Bold"
                        FontSize="22"
                        Margin="00,0,0,0" Width="250"/>
-            <Image Source="/Resources/mario1.png" Margin="10,124,768,-71" Grid.Row="1"/>
+            <Image Source="/Resources/badge.png" Margin="10,58,755,-40" Grid.Row="1"/>
 
-            <Image Source="/Resources/luigi.png" Margin="748,118,0,-69" Grid.Row="1"/>
+            <Image Source="/Resources/badge1.png" Margin="730,205,-11,104" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.031"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
             <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
                         Click="Button_Click">
                 <Image Source="/Resources/back.png"/>
@@ -77,52 +89,58 @@
                     </Image.RenderTransform>
                 </Image>
             </Button>
-
-            <StackPanel Grid.Row="1">
-                <Border Width="450" 
+            <Border Grid.Row="2"
+                    BorderBrush="DarkKhaki" BorderThickness="0,1,0,0">
+                <StackPanel Grid.Row="1">
+                    <Border Width="450" 
                         Height="150" 
-                        Background="MediumSlateBlue"
+                        Background="DarkOliveGreen"
                         CornerRadius="20"
                         Margin="0,35,0,10"
                         >
-                    <TextBlock x:Name="firstDisplay"
+                        <TextBlock x:Name="firstDisplay"
+                                   FontWeight="Bold"
                        Foreground="White"
                        FontSize="28"
                        HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                        
                        Margin="20,0,0,10" Width="430"/>
-                </Border>
-                <Border Width="550" 
+                    </Border>
+                    <Border Width="550" 
                     Height="150" 
-                    Background="MediumSlateBlue"
+                    Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
-                    <TextBlock x:Name="secondDisplay"
+                        <TextBlock x:Name="secondDisplay"
                         Foreground="White"
+                                   FontWeight="Bold"
                         FontSize="28"
                         HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                        
                         Margin="10,15,0,10"/>
-                </Border>
-                <Border Width="600" 
+                    </Border>
+                    <Border Width="600" 
                     Height="150" 
-                    Background="MediumSlateBlue"
+                    Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
-                    <TextBlock x:Name="ThirdDisplay"
+                        <TextBlock x:Name="ThirdDisplay"
                         Foreground="White"
+                                   FontWeight="Bold"
                         FontSize="28"
                         HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                        
                         Margin="10,15,0,10"/>
-                </Border>
+                    </Border>
 
-            </StackPanel>
+                </StackPanel>
+
+            </Border>
 
 
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->

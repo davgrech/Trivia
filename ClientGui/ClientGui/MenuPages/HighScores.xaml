@@ -36,22 +36,22 @@
                        Text="Leaderboard"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Foreground="DarkOliveGreen"
+                       Foreground="PaleGoldenrod"
                        FontWeight="Bold"
-                       FontSize="22"
-                       Margin="95,0,0,0" Width="250"/>
-            <Image Source="\Resources\turtle2.png" Margin="-2,15,628,-146" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+                       FontSize="30"
+                       Margin="30,0,0,0" Width="250"/>
+            <Image Source="\Resources\turtle2.png" Margin="1,99,632,-46" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform AngleY="-0.319" AngleX="0.229"/>
-                        <RotateTransform/>
+                        <RotateTransform Angle="-0.244"/>
                         <TranslateTransform Y="-0.748" X="0.792"/>
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
 
-            <Image Source="/Resources/turtleThumbsUp.png" Margin="709,153,-91,-6" Grid.Row="1"/>
+            <Image Source="/Resources/turtleThumbsUp.png" Margin="705,167,-73,12" Grid.Row="1"/>
             <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
                         Click="Button_Click">
                 <Image Source="/Resources/back.png"/>
@@ -90,52 +90,60 @@
 
             </Button>
 
-
-            <StackPanel Grid.Row="1">
-                <Border Width="350" 
+            <Border
+                VerticalAlignment="Top"
+                Grid.Row="2"
+                BorderBrush="DarkKhaki"
+                BorderThickness="0,1,0,0"
+                >
+                <StackPanel Grid.Row="1">
+                    <Border Width="350" 
                         Height="150" 
                         Background="DarkOliveGreen"
                         CornerRadius="20"
                         Margin="0,35,0,10"
                         
                         >
-                    <TextBlock x:Name="firstDisplay"
+                        <TextBlock x:Name="firstDisplay"
                        Foreground="White"
                        FontSize="20"
-
+                        FontWeight="Bold"
                        HorizontalAlignment="Center"
                                VerticalAlignment="Center" Width="258" Height="130"/>
-                </Border>
-                <Border Width="450" 
+                    </Border>
+                    <Border Width="450" 
                     Height="150" 
                     Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
-                    <TextBlock x:Name="secondDisplay"
-                
+                        <TextBlock x:Name="secondDisplay"
+                FontWeight="Bold"
                         Foreground="White"
                         FontSize="20"
                         HorizontalAlignment="Center"
                                Margin="0,15,0,0"
                                VerticalAlignment="Top" Width="286" Height="130"/>
-                </Border>
-                <Border Width="550" 
+                    </Border>
+                    <Border Width="550" 
                     Height="150" 
                     Background="DarkOliveGreen"
                     CornerRadius="20"
                         Margin="0,5,0,10"
                         >
-                    <TextBlock x:Name="ThirdDisplay"
+                        <TextBlock x:Name="ThirdDisplay"
+                                   FontWeight="Bold"
                        Margin="0,15,0,0"
 
                         Foreground="White"
                         FontSize="20"
                         HorizontalAlignment="Center"
                                VerticalAlignment="Top" Width="354" Height="130"/>
-                </Border>
+                    </Border>
 
-            </StackPanel>
+                </StackPanel>
+            </Border>
+
 
 
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->

@@ -15,9 +15,16 @@
         >
     <materialDesign:Card Background="#272537"
             UniformCornerRadius="20">
+
         <Border CornerRadius="20">
+            <Border.Background>
+                <ImageBrush ImageSource="\Resources\darkThemeBg.jpg"/>
+            </Border.Background>
+
             <Grid>
-                <Button 
+                <Border
+                    BorderBrush="DarkKhaki" BorderThickness="0,0,0,1" Margin="0,0,0,525">
+                    <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
                          x:Name="btnExit"
                          Height="70"
@@ -27,26 +34,31 @@
                          HorizontalAlignment="Right"
                          Width="75"
                          FontWeight="Bold"
-                         Style="{StaticResource MaterialDesignFlatButton}" Margin="790,10,0,520" Click="exit_toggle" 
+                         Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,0,0" Click="exit_toggle" 
                          >
-                    <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
+                        <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5"
                        >
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="0.777"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="0"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
 
 
-                </Button>
-                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                    </Button>
+                </Border>
+
+                <Button Width="75" Height="70" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent"
                          Margin="10,10,0,520" Click="button_toggle">
                     <Image Source="/Resources/back.png"/>
                 </Button>
+            
+                
                 <ListBox x:Name="myListBox" HorizontalAlignment="Left" Margin="79,149,0,36" Width="228" SelectionChanged="myListBox_SelectionChanged" BorderThickness="1" BorderBrush="Black" Foreground="LawnGreen" FontStyle="Normal" 
                          materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
                 <TextBlock Text="Rooms: " FontWeight="Bold" FontSize="40" Foreground="White" Margin="79,80,677,465" />
