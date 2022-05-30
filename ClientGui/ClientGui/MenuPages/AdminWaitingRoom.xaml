@@ -16,9 +16,16 @@
     <materialDesign:Card Background="#272537"
             UniformCornerRadius="20">
         <Border CornerRadius="20">
+            <Border.Background>
 
-            <Grid x:Name="inner_grid">
-                <Button 
+                <ImageBrush ImageSource="\Resources\darkThemeBg.jpg"/>
+            </Border.Background>
+
+            <Grid>
+                <Border
+                        BorderBrush="PaleGoldenrod" BorderThickness="0,0,0,1" Margin="0,0,0,520">
+                    <Grid>
+                        <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
                          x:Name="btnExit"
                          Height="70"
@@ -28,35 +35,36 @@
                          VerticalAlignment="Top"
                          Width="75"
                          FontWeight="Bold"
-                         Style="{StaticResource MaterialDesignFlatButton}" Margin="0,10,10,0" Click="exit_toggle" 
-                    
-                         >
-                    <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5" Height="36" Width="39"
+                         Style="{StaticResource MaterialDesignFlatButton}" Margin="0,10,10,0" Click="exit_toggle" >
+                            <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5" Height="36" Width="39"
                        >
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="0.777"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </Button>
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Button>
 
-                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
-                        Margin="10,10,0,520" Click="return_toggle">
-                    <Image Source="/Resources/back.png"/>
+                        <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                        Margin="10,10,0,0" Click="return_toggle">
+                            <Image Source="/Resources/back.png"/>
 
-                </Button>
+                        </Button>
+                    </Grid>
+                </Border>
 
 
-                <TextBlock Text="Waiting for players" FontSize="40" Foreground="DarkGreen" HorizontalAlignment="Center" Margin="0,12,0,520" FontWeight="Bold" Width="368"/>
+
+                <TextBlock Text="Waiting for players" FontSize="40" Foreground="PaleGoldenrod" HorizontalAlignment="Center" Margin="0,12,0,520" FontWeight="Bold" Width="368"/>
 
                 <ListBox x:Name="myListBox" HorizontalAlignment="Center" Margin="0,108,0,108" Width="228" BorderThickness="2" BorderBrush="Black" Foreground="DarkGreen" FontStyle="Normal" 
                          materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
 
-                <Button Margin="375,529,375,39" Background="DarkGreen" BorderBrush="DarkGreen" Content="Start Game" FontSize="16"  Style="{StaticResource MaterialDesignPaperButton}" Click="start_game"/>
+                <Button Margin="375,529,375,39" Background="PaleGoldenrod" BorderBrush="DarkGreen" Content="Start Game" FontSize="16"  Style="{StaticResource MaterialDesignPaperButton}" Click="start_game"/>
             </Grid>
         </Border>
     </materialDesign:Card>

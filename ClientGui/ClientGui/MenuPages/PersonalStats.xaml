@@ -83,14 +83,14 @@
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="0.777"/>
+                            <RotateTransform Angle="0"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
             </Button>
             <Border Grid.Row="2"
-                    BorderBrush="DarkKhaki" BorderThickness="0,1,0,0">
+                    BorderBrush="PaleGoldenrod" BorderThickness="0,1,0,0">
                 <StackPanel Grid.Row="1">
                     <Border Width="450" 
                         Height="150" 
