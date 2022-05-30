@@ -168,7 +168,7 @@ namespace ClientGui.MenuWindow
         {
             
             JoinRoom joinRoom = new JoinRoom(mySock, userName);
-            joinRoom.joinRoom(0, true); // join room indexed at 0
+            joinRoom.joinRoomFunc(0, true); // join room indexed at 0
             this.Close();
         }
         //quick room creation
@@ -177,7 +177,7 @@ namespace ClientGui.MenuWindow
         {
             CreateRoom quickCreate = new CreateRoom(mySock, userName);
             System.Random random = new System.Random();
-            string createInfo = "{\"roomName\":\"" + "Room " + (random.Next(1, 50)).ToString() + "\",\"maxUsers\":\"" + ((5).ToString()) + "\",\"questionCount\":\"" + ((12).ToString()) + "\",\"answerTimeout\":\"" + ((10).ToString()) + "\"}";
+            string createInfo = "{\"roomName\":\"" + "Room " + (random.Next(1, 50)).ToString() + "\",\"maxUsers\":\"" + ((4).ToString()) + "\",\"questionCount\":\"" + ((10).ToString()) + "\",\"answerTimeout\":\"" + ((10).ToString()) + "\"}";
             quickCreate.CreateNewRoom(createInfo, true);
             this.Close();
         }

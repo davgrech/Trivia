@@ -191,14 +191,49 @@ namespace ClientGui.MenuPages
             }
             return "";
         }
-        public void joinRoom(int index, bool IsQuickCreate)
+        string ParseToID(string str)
         {
+            if (!(System.Text.RegularExpressions.Regex.IsMatch(str, @"^[a-zA-Z]+$"))) // if str doesnt contain any letter
+            {
+                return "";
+            }
+            str = (str.Split("\\"))[4];
+            str = str.Remove(0, 2);
+            return str.Remove(str.Length - 1);
+
+        }
+        //func that returns the room id (a "non gui" way to get the room id)
+        string GetRoomID(int index)
+        {
+            string msgToSend = "70000";
+            SendInfrmaionToServer(msgToSend);
+            string received = ReciveInformationFromServer();
+            return ParseToID(received);
+        }
+        public void joinRoomFunc(int index, bool IsQuickCreate)
+        {
+            string _roomId;
             if (index != -1)
             {
                 var join_info = new joinRoomRequest
                 {
                     roomId = txtSelectedRoom.Text.Substring(index + 1)
                 };
+                if (IsQuickCreate)
+                {
+                    _roomId = GetRoomID(index);
+                    if(String.IsNullOrEmpty(_roomId))
+                    {
+                        MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+
+                    }
+                    join_info.roomId = _roomId;
+                }
+
+
+                
+
                 string jsonString = JsonConvert.SerializeObject(join_info);
                 string len = padMsg(jsonString.Length.ToString(), 4);
 
@@ -231,7 +266,7 @@ namespace ClientGui.MenuPages
         public void joinRoom_toggle(object sender, RoutedEventArgs e)
         {
             int index = txtSelectedRoom.Text.LastIndexOf('#');
-            joinRoom(index, false);
+            joinRoomFunc(index, false);
 
 
         }
