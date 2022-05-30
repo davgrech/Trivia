@@ -97,7 +97,7 @@ namespace ClientGui.MenuPages
                         //set the rooms
                         
                         //add to roomNames
-                        if(getRoomsResponse != null)
+                        if(getRoomsResponse.rooms != null)
                         {
                             roomList = getRoomsResponse.rooms;
                             roomNames.Clear();
@@ -167,9 +167,12 @@ namespace ClientGui.MenuPages
 
         private void myListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtSelectedRoom.Text = myListBox.SelectedItem.ToString();
-            txtSelectedRoom.Visibility = Visibility.Visible;
-
+            if(myListBox.SelectedItem != null)
+            {
+                txtSelectedRoom.Text = myListBox.SelectedItem.ToString();
+                txtSelectedRoom.Visibility = Visibility.Visible;
+            }    
+            
         }
 
 

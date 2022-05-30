@@ -49,6 +49,8 @@ std::string RoomMemberRequestHandler::getUserName()
 
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo value)
 {
+    
+    
     bool isLeft = this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).removeUser(m_user);
  
     LeaveRoomResponse res;

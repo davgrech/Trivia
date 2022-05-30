@@ -111,7 +111,7 @@ void Room::setAllUsers(std::vector<LoggedUser> value)
 
 void Room::setState(int value)
 {
-    this->m_metadata.id = value;
+    this->m_metadata.isActive= value;
 }
 
 
