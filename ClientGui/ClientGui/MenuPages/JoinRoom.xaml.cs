@@ -203,6 +203,13 @@ namespace ClientGui.MenuPages
             return str;
 
         }
+        //in case shit goes down - we can always abort to menu :)
+        void abortToMenu()
+        {
+            MenuHandler returnToMenu = new MenuHandler(mysock, userName);
+            this.Close();
+            returnToMenu.Show();
+        }
         //func that returns the room id (a "non gui" way to get the room id)
         string GetRoomID(int index)
         {
@@ -213,7 +220,7 @@ namespace ClientGui.MenuPages
         }
         public void joinRoomFunc(int index, bool IsQuickCreate)
         {
-            string _roomId;
+            string _roomId="";
             if (index != -1)
             {
                 var join_info = new joinRoomRequest
@@ -226,6 +233,7 @@ namespace ClientGui.MenuPages
                     if(String.IsNullOrEmpty(_roomId))
                     {
                         MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        abortToMenu();
                         return;
 
                     }
@@ -252,7 +260,7 @@ namespace ClientGui.MenuPages
                 else
                 {
 
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(_roomId), userName);
                     if(!IsQuickCreate) // if not quick create theres nothig to close
                     {
                        this.Close();
