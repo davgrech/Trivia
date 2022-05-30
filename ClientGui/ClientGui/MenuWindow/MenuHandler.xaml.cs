@@ -168,8 +168,8 @@ namespace ClientGui.MenuWindow
         {
             
             JoinRoom joinRoom = new JoinRoom(mySock, userName);
-            joinRoom.joinRoom(0); // join room indexed at 0
-
+            joinRoom.joinRoom(0, true); // join room indexed at 0
+            this.Close();
         }
         //quick room creation
         // makes a room with stats i gave it yolo

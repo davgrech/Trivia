@@ -191,7 +191,7 @@ namespace ClientGui.MenuPages
             }
             return "";
         }
-        public void joinRoom(int index)
+        public void joinRoom(int index, bool IsQuickCreate)
         {
             if (index != -1)
             {
@@ -217,7 +217,11 @@ namespace ClientGui.MenuPages
                 {
 
                     WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
-                    this.Close();
+                    if(!IsQuickCreate) // if not quick create theres nothig to close
+                    {
+                       this.Close();
+                    }
+                   
                     WaitingWindow.Show();
 
 
@@ -227,7 +231,7 @@ namespace ClientGui.MenuPages
         public void joinRoom_toggle(object sender, RoutedEventArgs e)
         {
             int index = txtSelectedRoom.Text.LastIndexOf('#');
-            joinRoom(index);
+            joinRoom(index, false);
 
 
         }
