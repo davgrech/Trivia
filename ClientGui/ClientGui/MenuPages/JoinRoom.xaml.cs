@@ -193,13 +193,14 @@ namespace ClientGui.MenuPages
         }
         string ParseToID(string str)
         {
-            if (!(System.Text.RegularExpressions.Regex.IsMatch(str, @"^[a-zA-Z]+$"))) // if str doesnt contain any letter
+            if (!(str.Any(char.IsDigit))) // if str doesnt contain any letter
             {
                 return "";
             }
-            str = (str.Split("\\"))[4];
-            str = str.Remove(0, 2);
-            return str.Remove(str.Length - 1);
+            str = (str.Split('"'))[4];
+            str = str.Remove(0, 1);
+            str = str.Split(",")[0];
+            return str;
 
         }
         //func that returns the room id (a "non gui" way to get the room id)
