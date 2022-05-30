@@ -138,6 +138,11 @@ namespace ClientGui.MenuPages
         {
             //return to menu // leave room
             sendLeaveCommandToServer(mysock);
+            background_worker.CancelAsync();
+            this.Close();
+            MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
+            window.Show();
+
 
         }
 

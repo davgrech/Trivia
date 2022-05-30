@@ -95,14 +95,19 @@ namespace ClientGui.MenuPages
                         getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
 
                         //set the rooms
-                        roomList = getRoomsResponse.rooms;
-                        roomNames.Clear();
+                        
                         //add to roomNames
-                        for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                        if(getRoomsResponse != null)
                         {
+                            roomList = getRoomsResponse.rooms;
+                            roomNames.Clear();
+                            for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                            {
 
-                            roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
-                        }
+                                roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
+                            }
+                        }    
+                        
                         background_worker.ReportProgress(1);
 
 
