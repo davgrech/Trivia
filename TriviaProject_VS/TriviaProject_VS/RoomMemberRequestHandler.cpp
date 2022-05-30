@@ -59,12 +59,31 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo value)
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
 {
     GetRoomStateResponse res;
-    refreshcurrentroom();
+
+
+   
+    std::vector<Room> lol = this->m_roomManager.getRooms();
+
+    for (auto it = lol.begin(); it != lol.end(); it++)
+    {
+        if (it->getRoomData().id == this->m_room.getRoomData().id)
+        {
+            this->m_room.setAllUsers(it->getAllUsers());
+            this->m_room.setState(it->getRoomData().isActive);
+            break;
+        }
+    }
+    std::vector<LoggedUser> users = this->m_roomManager.getRoom(m_room.getRoomData().id).getAllUsers();
+    
+
+
+
+
     res.answerTimeout = this->m_room.getRoomData().timePerQuestion;
 
     this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
 
-    res.players = this->m_room.getAllUsers();
+    res.players = this->m_room.getAllUsersInString();
     res.status = this->m_room.getRoomData().isActive;
     
 
@@ -95,20 +114,6 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
             throw std::exception("getRoomState - not in switch");
         }
     }
-}
-
-void RoomMemberRequestHandler::refreshcurrentroom()
-{
-    for (auto itr = this->m_handlerFactory.getRoomManager().getRooms().begin(); itr != this->m_handlerFactory.getRoomManager().getRooms().end(); itr++) {
-        if (itr->getRoomData().id == this->m_room.getRoomData().id)
-        {
-            this->m_room = *itr;
-            return;
-        }
-    }
-    this->m_room.getRoomData().isActive = ROOM_CLOSE;
-
-
 }
 
 

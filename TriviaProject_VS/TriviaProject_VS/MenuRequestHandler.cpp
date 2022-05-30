@@ -106,7 +106,7 @@ RequestResult MenuRequestHanlder::getPlayersInRoom(RequestInfo info)
     GetPlayersInRoomRequest getPlayersInRoomReq;
 
     getPlayersInRoomReq  = JRPD::deserializeGetPlayersRequest(info.buffer);
-    std::vector<std::string> myUsers = this->m_roomManager.getRoom(getPlayersInRoomReq.roomId).getAllUsers();
+    std::vector<std::string> myUsers = this->m_roomManager.getRoom(getPlayersInRoomReq.roomId).getAllUsersInString();
     
     PlayersInRoomRes.players = myUsers;
    
