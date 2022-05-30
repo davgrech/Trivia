@@ -191,10 +191,8 @@ namespace ClientGui.MenuPages
             }
             return "";
         }
-
-        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        public void joinRoom(int index)
         {
-            int index = txtSelectedRoom.Text.LastIndexOf('#');
             if (index != -1)
             {
                 var join_info = new joinRoomRequest
@@ -218,13 +216,18 @@ namespace ClientGui.MenuPages
                 else
                 {
 
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock ,int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
                     this.Close();
                     WaitingWindow.Show();
 
 
                 }
             }
+        }
+        public void joinRoom_toggle(object sender, RoutedEventArgs e)
+        {
+            int index = txtSelectedRoom.Text.LastIndexOf('#');
+            joinRoom(index);
 
 
         }
