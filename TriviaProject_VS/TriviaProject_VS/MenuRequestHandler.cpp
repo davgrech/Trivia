@@ -139,6 +139,9 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     if (room.getRoomData().name == "") {
         throw std::exception("the rom doesnt exist");
     }
+    if (room.getRoomData().isActive != ROOM_OPEN){
+        throw std::exception("room closed or active");
+    }
     this->m_roomManager.getRoom(roomReq.roomId).addUser(this->m_user);
     roomRes.status = SUCCESS;
 

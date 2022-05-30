@@ -59,16 +59,14 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo value)
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
 {
     GetRoomStateResponse res;
+    refreshcurrentroom();
     res.answerTimeout = this->m_room.getRoomData().timePerQuestion;
 
     this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
 
     res.players = this->m_room.getAllUsers();
     res.status = this->m_room.getRoomData().isActive;
-    if (res.players.empty())
-    {
-        res.status = ROOM_CLOSE;
-    }
+    
 
     res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
     
@@ -98,3 +96,23 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
         }
     }
 }
+
+void RoomMemberRequestHandler::refreshcurrentroom()
+{
+    for (auto itr = this->m_handlerFactory.getRoomManager().getRooms().begin(); itr != this->m_handlerFactory.getRoomManager().getRooms().end(); itr++) {
+        if (itr->getRoomData().id == this->m_room.getRoomData().id)
+        {
+            this->m_room = *itr;
+            return;
+        }
+    }
+    this->m_room.getRoomData().isActive = ROOM_CLOSE;
+
+
+}
+
+
+
+
+
+
