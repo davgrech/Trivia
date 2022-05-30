@@ -267,7 +267,10 @@ void serveTool::cHandler(SOCKET client)
 						
 						
 					}
-
+					else
+					{
+						throw std::exception("not in the right handler");
+					}
 					break;
 				}
 				case CLIENT_SIGNOUT:
@@ -283,6 +286,10 @@ void serveTool::cHandler(SOCKET client)
 						this->sock_to_user.erase(client);
 						
 					}
+					else
+					{
+						throw std::exception("not in the right handler");
+					}
 
 					break;
 				}
@@ -292,6 +299,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("not in the right handler");
 					}
 
 					break;
@@ -315,6 +326,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("not in the right handler");
 					}
 
 					break;
