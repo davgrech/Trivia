@@ -64,7 +64,7 @@ namespace ClientGui.MenuPages
                     this.Close();
                     dynamic magic = JsonConvert.DeserializeObject(response);
                     string stringID = magic["Id"];
-                    int id = int.Parse(stringID);
+                    int id = Int16.Parse(stringID);
                     AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user);
                     waitingWindow.Show();
 

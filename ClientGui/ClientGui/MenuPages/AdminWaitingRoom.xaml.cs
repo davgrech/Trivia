@@ -89,9 +89,8 @@ namespace ClientGui.MenuPages
             char command = ';';
             string to_send = command + "0000";
             SendInfrmaionToServer(to_send);
-            string recv = ReciveInformationFromServer();
-            int status = JsonConvert.DeserializeObject<int>(recv);
 
+            string msg = ReciveInformationFromServer();
 
             background_worker.CancelAsync();
             this.Close();
@@ -103,23 +102,31 @@ namespace ClientGui.MenuPages
         {
             while(true)
             {
-                string to_send = "90000";
-                SendInfrmaionToServer(to_send);
-                string recv = ReciveInformationFromServer();
-                roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
-                if(myResponse.status == Constants.ROOM_OPEN)
+                if(background_worker.CancellationPending == false)
                 {
-                    m_players = myResponse.players;
-                    background_worker.ReportProgress(1);
+                    string to_send = "90000";
+                    SendInfrmaionToServer(to_send);
+                    string recv = ReciveInformationFromServer();
+                    roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
+                    if (myResponse.status == Constants.ROOM_OPEN)
+                    {
+                        m_players = myResponse.players;
+                        background_worker.ReportProgress(1);
 
 
 
+                    }
+                    else
+                    {
+                        background_worker.CancelAsync();
+                    }
+                    Thread.Sleep(4000);
                 }
                 else
                 {
-                    background_worker.CancelAsync();
+                    return;
                 }
-                Thread.Sleep(4000);
+                
             }
         }
 

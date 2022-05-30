@@ -84,25 +84,33 @@ namespace ClientGui.MenuPages
         {
             while(true)
             {
-                string msg = "70000";
-                SendInfrmaionToServer(msg);
-               
-                string response = ReciveInformationFromServer();
-                getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
-
-                //set the rooms
-                roomList = getRoomsResponse.rooms;
-                roomNames.Clear();
-                //add to roomNames
-                for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                if(background_worker.CancellationPending == false)
                 {
+                    string msg = "70000";
+                    SendInfrmaionToServer(msg);
 
-                    roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
+                    string response = ReciveInformationFromServer();
+                    getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
+
+                    //set the rooms
+                    roomList = getRoomsResponse.rooms;
+                    roomNames.Clear();
+                    //add to roomNames
+                    for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                    {
+
+                        roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
+                    }
+                    background_worker.ReportProgress(1);
+
+
+                    Thread.Sleep(4000);
                 }
-                background_worker.ReportProgress(1);
+                else
+                {
+                    return;
+                }
                 
-
-                Thread.Sleep(4000);
             }
             
             

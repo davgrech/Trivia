@@ -68,34 +68,42 @@ namespace ClientGui.MenuPages
         {
             while (true)
             {
-                string to_send = "90000";
-                SendInfrmaionToServer(to_send);
-                string recv = ReciveInformationFromServer();
-                roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
-                if (myResponse.status == Constants.ROOM_OPEN)
+                if(background_worker.CancellationPending == false)
                 {
-                    m_players = myResponse.players;
-                    background_worker.ReportProgress(1);
+                    string to_send = "90000";
+                    SendInfrmaionToServer(to_send);
+                    string recv = ReciveInformationFromServer();
+                    roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
+                    if (myResponse.status == Constants.ROOM_OPEN)
+                    {
+                        m_players = myResponse.players;
+                        background_worker.ReportProgress(1);
 
 
 
+                    }
+                    else if (myResponse.status == Constants.ROOM_CLOSE)
+                    {
+
+                        sendLeaveCommandToServer(mysock);
+                        background_worker.CancelAsync();
+                    }
+                    else if (myResponse.status == Constants.ROOM_ACTIVE)
+                    {
+                        GameWindow myWindow = new GameWindow();
+                        this.Visibility = Visibility.Collapsed;
+                        myWindow.Show();
+                        background_worker.CancelAsync();
+
+
+                    }
+                    Thread.Sleep(4000);
                 }
-                else if(myResponse.status == Constants.ROOM_CLOSE)
+                else
                 {
-
-                    sendLeaveCommandToServer(mysock);
-                    background_worker.CancelAsync();
+                    return;
                 }
-                else if(myResponse.status == Constants.ROOM_ACTIVE)
-                {
-                    GameWindow myWindow = new GameWindow();
-                    this.Visibility = Visibility.Collapsed;
-                    myWindow.Show();
-                    background_worker.CancelAsync();
-                    
-
-                }
-                Thread.Sleep(4000);
+                
             }
         }
 
