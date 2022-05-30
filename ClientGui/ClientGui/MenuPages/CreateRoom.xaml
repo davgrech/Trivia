@@ -30,13 +30,14 @@
                     BorderBrush="DarkKhaki" BorderThickness="0,0,0,1">
                     <Grid>
                         <TextBlock Grid.Row="0" Text ="Resposnse" x:Name="txtResponse" HorizontalAlignment="Left" FontSize="40" Width="838" Margin="80,78,0,467" Grid.RowSpan="2" Foreground="Gray" Visibility="hidden"></TextBlock>
-                        <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                        <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFlatButton}"
                         Click="button_toggle">
                             <Image Source="/Resources/back.png"/>
 
                         </Button>
                         <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
+                            
                          x:Name="btnExit"
                          Height="70"
                          Foreground="RoyalBlue"

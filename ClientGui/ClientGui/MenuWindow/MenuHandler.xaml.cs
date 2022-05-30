@@ -52,7 +52,14 @@ namespace ClientGui.MenuWindow
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch (Exception ex)
+            {
+                //lol
+            }
         }
 
         private void logout_toggle(object sender, RoutedEventArgs e)

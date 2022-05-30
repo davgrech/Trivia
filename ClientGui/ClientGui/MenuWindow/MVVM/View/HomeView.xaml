@@ -34,8 +34,9 @@
                 <Grid>
 
                     <StackPanel
-                     MouseLeftButtonDown="StackPanel_MouseLeftButtonDown"
->
+                        MouseLeftButtonUp="StackPanel_MouseLeftButtonUp"
+                        MouseRightButtonUp="StackPanel_MouseLeftButtonUp"
+                        MouseDown="StackPanel_MouseLeftButtonUp">
                         <TextBlock Text="Quick&#x0a;Room Creation"
                                    Foreground="White"
                                    Margin="20,10,10,0"
@@ -68,7 +69,8 @@
             <Border Width="200"
                     Height="200"
                     CornerRadius="10"
-                    Margin="45, 0,0,0">
+                    Margin="45, 0,0,0"
+                    >
 
 
                 <Border.Background>

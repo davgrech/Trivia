@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,13 @@ namespace ClientGui.MenuWindow.MVVM.View
             InitializeComponent();
         }
 
-        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //move to room creation
-            //Console.WriteLine("HEYYYYY");
+            System.Diagnostics.Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://www.youtube.com/watch?v=9hhMUT2U2L4",
+                UseShellExecute = true
+            });
         }
     }
 }
