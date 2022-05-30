@@ -29,6 +29,7 @@ namespace ClientGui.MenuPages
             mySock = client;
             user = userName;
             InitializeComponent();
+
         }
 
         private void button_toggle(object sender, RoutedEventArgs e)
@@ -45,39 +46,44 @@ namespace ClientGui.MenuPages
             }
             return msg;
         }
-       
-        private void createRoom_btn(object sender, RoutedEventArgs e)
+        //func that creates a room using Create info
+        public void CreateNewRoom(string createInfo, bool isQuickCreate)
         {
-           
-            string createInfo = "{\"roomName\":\"" + txtRoomName.Text + "\",\"maxUsers\":\""+ txtMaxPlayers.Text+"\",\"questionCount\":\""+txtMaxQuestions.Text+"\",\"answerTimeout\":\""+txtQuestionTimeout.Text+"\"}";
+
             string msgLen = padMsg(createInfo.Length.ToString(), 4);
             string to_send = "4" + msgLen + createInfo;
 
             SendInfrmaionToServer(to_send);
 
             string response = ReciveInformationFromServer();
-            
-                if (!(response.Contains("message"))) 
+            if (!(response.Contains("message")))
+            {
+                if (!isQuickCreate) // if isnt quick create mode theres no need to close a window
                 {
-                   
-
                     this.Close();
-                    dynamic magic = JsonConvert.DeserializeObject(response);
-                    string stringID = magic["Id"];
-                    int id = Int16.Parse(stringID);
-                    AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user);
-                    waitingWindow.Show();
+                }
+                dynamic magic = JsonConvert.DeserializeObject(response);
+                string stringID = magic["Id"];
+                int id = Int16.Parse(stringID);
+                AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user);
+                waitingWindow.Show();
+            }
+            else
+            {
+                dynamic magic = JsonConvert.DeserializeObject(response);
+                string msg = magic["message"];
+                MessageBox.Show(msg, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+        //create room using input from CreateRoomxaml
+        private void createRoom_btn(object sender, RoutedEventArgs e)
+        {
+            string createInfo = "{\"roomName\":\"" + txtRoomName.Text + "\",\"maxUsers\":\"" + txtMaxPlayers.Text + "\",\"questionCount\":\"" + txtMaxQuestions.Text + "\",\"answerTimeout\":\"" + txtQuestionTimeout.Text + "\"}";
+            CreateNewRoom(createInfo, false);
 
-                }
-                else
-                {
-                    dynamic magic = JsonConvert.DeserializeObject(response);
-                    string msg = magic["message"];
-                    MessageBox.Show(msg, "Alert", MessageBoxButton.OK , MessageBoxImage.Information);
-                }
-            
-            
-           
+
+
+
         }
 
 
@@ -135,6 +141,6 @@ namespace ClientGui.MenuPages
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
-      
+
     }
 }

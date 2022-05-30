@@ -54,7 +54,7 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFlatButton}"
                         Click="Button_Click">
                 <Image Source="/Resources/back.png"/>
             </Button>
@@ -131,7 +131,7 @@
                         <TextBlock x:Name="ThirdDisplay"
                         Foreground="White"
                                    FontWeight="Bold"
-                        FontSize="28"
+                        FontSize="24"
                         HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                        
