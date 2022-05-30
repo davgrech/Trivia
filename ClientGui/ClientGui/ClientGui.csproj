@@ -8,30 +8,78 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MenuWindow\Images\woman.png" />
+    <Compile Remove="MenuWindow\Fonts\**" />
+    <Compile Remove="MenuWindow\Images\**" />
+    <Compile Remove="MenuWindow\MVVM\Model\**" />
+    <EmbeddedResource Remove="MenuWindow\Fonts\**" />
+    <EmbeddedResource Remove="MenuWindow\Images\**" />
+    <EmbeddedResource Remove="MenuWindow\MVVM\Model\**" />
+    <None Remove="MenuWindow\Fonts\**" />
+    <None Remove="MenuWindow\Images\**" />
+    <None Remove="MenuWindow\MVVM\Model\**" />
+    <Page Remove="MenuWindow\Fonts\**" />
+    <Page Remove="MenuWindow\Images\**" />
+    <Page Remove="MenuWindow\MVVM\Model\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\armyCamo.png" />
     <None Remove="Resources\back.png" />
+    <None Remove="Resources\badge.png" />
+    <None Remove="Resources\badge1.png" />
     <None Remove="Resources\bg1.jpg" />
     <None Remove="Resources\bg4.jpg" />
     <None Remove="Resources\camoBg.jpg" />
+    <None Remove="Resources\control.png" />
+    <None Remove="Resources\control1.png" />
+    <None Remove="Resources\darkThemeBg.jpg" />
     <None Remove="Resources\david.jpeg" />
     <None Remove="Resources\dolev.jpeg" />
+    <None Remove="Resources\lightThemeBg.jpg" />
     <None Remove="Resources\luigi.png" />
     <None Remove="Resources\mario.png" />
     <None Remove="Resources\mario1.png" />
     <None Remove="Resources\menuMusic.wav" />
+    <None Remove="Resources\olivebg.jpg" />
     <None Remove="Resources\return.png" />
+    <None Remove="Resources\siman4.jpg" />
+    <None Remove="Resources\tankBlush.png" />
     <None Remove="Resources\tankLoginLogo.png" />
+    <None Remove="Resources\tankreg.png" />
+    <None Remove="Resources\tankThumbsUp.png" />
+    <None Remove="Resources\turtle1.png" />
+    <None Remove="Resources\turtle2.png" />
+    <None Remove="Resources\turtleThumbsUp.png" />
     <None Remove="Resources\Xbtn1.png" />
+    <None Remove="Resources\xBtn2.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\armyCamo.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\back.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\badge.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\badge1.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\bg1.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\camoBg.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\control.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\control1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\darkThemeBg.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\david.jpeg">
@@ -46,10 +94,35 @@
     <Content Include="Resources\menuMusic.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\lightThemeBg.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\luigi.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\mario1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\olivebg.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\siman4.jpg" />
+    <Resource Include="Resources\tankBlush.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\tankreg.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\tankThumbsUp.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\turtle1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\turtle2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\turtleThumbsUp.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\woman.png">
@@ -61,17 +134,14 @@
     <Resource Include="Resources\xBtn1.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\xBtn2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MenuWindow\Images\" />
-    <Folder Include="MenuWindow\MVVM\Model\" />
-    <Folder Include="MenuWindow\Fonts\" />
   </ItemGroup>
 
 </Project>
