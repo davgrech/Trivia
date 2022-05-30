@@ -68,34 +68,47 @@ namespace ClientGui.MenuPages
         {
             while (true)
             {
-                string to_send = "90000";
-                SendInfrmaionToServer(to_send);
-                string recv = ReciveInformationFromServer();
-                roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
-                if (myResponse.status == Constants.ROOM_OPEN)
+                if(background_worker.CancellationPending == false)
                 {
-                    m_players = myResponse.players;
-                    background_worker.ReportProgress(1);
+                    string to_send = "90000";
+                    SendInfrmaionToServer(to_send);
+                    string recv = ReciveInformationFromServer();
+                    roomStateResponse myResponse = JsonConvert.DeserializeObject<roomStateResponse>(recv);
+                    if (myResponse.status == Constants.ROOM_OPEN)
+                    {
+                        m_players = myResponse.players;
+                        background_worker.ReportProgress(1);
 
 
 
+                    }
+                    else if (myResponse.status == Constants.ROOM_CLOSE)
+                    {
+
+                        sendLeaveCommandToServer(mysock);
+                        ReciveInformationFromServer();
+                        background_worker.CancelAsync();
+                        this.Close();
+                        MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
+                        window.Show();
+                        
+                    }
+                    else if (myResponse.status == Constants.ROOM_ACTIVE)
+                    {
+                        GameWindow myWindow = new GameWindow();
+                        this.Visibility = Visibility.Collapsed;
+                        myWindow.Show();
+                        background_worker.CancelAsync();
+
+
+                    }
+                    Thread.Sleep(4000);
                 }
-                else if(myResponse.status == Constants.ROOM_CLOSE)
+                else
                 {
-
-                    sendLeaveCommandToServer(mysock);
-                    background_worker.CancelAsync();
+                    return;
                 }
-                else if(myResponse.status == Constants.ROOM_ACTIVE)
-                {
-                    GameWindow myWindow = new GameWindow();
-                    this.Visibility = Visibility.Collapsed;
-                    myWindow.Show();
-                    background_worker.CancelAsync();
-                    
-
-                }
-                Thread.Sleep(4000);
+                
             }
         }
 
@@ -118,11 +131,12 @@ namespace ClientGui.MenuPages
         private void exit_toggle(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
+
             Environment.Exit(0);
         }
         void sendLeaveCommandToServer(Socket client)
         {
-            char command = '9';
+            char command = '8';
             string to_send = command + "0000";
             SendInfrmaionToServer(to_send);
         }
@@ -130,6 +144,12 @@ namespace ClientGui.MenuPages
         {
             //return to menu // leave room
             sendLeaveCommandToServer(mysock);
+            ReciveInformationFromServer();
+            background_worker.CancelAsync();
+            this.Close();
+            MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
+            window.Show();
+
 
         }
 

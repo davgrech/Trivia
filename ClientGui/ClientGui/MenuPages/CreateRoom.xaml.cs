@@ -57,8 +57,12 @@ namespace ClientGui.MenuPages
 
             string response = ReciveInformationFromServer();
 
-            if (!(response.Contains("message")))
-            {
+                    this.Close();
+                    dynamic magic = JsonConvert.DeserializeObject(response);
+                    string stringID = magic["Id"];
+                    int id = Int16.Parse(stringID);
+                    AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user);
+                    waitingWindow.Show();
 
                 if(!isQuickCreate) // if isnt quick create mode theres no need to close a window
                 {

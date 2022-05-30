@@ -59,7 +59,7 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo value)
 
     this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
 
-    res.players = this->m_room.getAllUsers();
+    res.players = this->m_room.getAllUsersInString();
     res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
     res.status = this->m_room.getRoomData().isActive;
 
