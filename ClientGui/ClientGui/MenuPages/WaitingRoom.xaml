@@ -17,6 +17,9 @@
     <materialDesign:Card Background="#272537"
             UniformCornerRadius="20">
         <Border CornerRadius="20">
+            <Border.Background>
+                <ImageBrush ImageSource="\Resources\darkThemeBg.jpg"/>
+            </Border.Background>
 
             <Grid x:Name="inner_grid">
                 <Button 
@@ -52,10 +55,15 @@
                 </Button>
 
 
-                <TextBlock Text="Waiting for players" FontSize="40" Foreground="DarkGreen" HorizontalAlignment="Center" Margin="0,12,0,520" FontWeight="Bold" Width="368"/>
-
-                <ListBox x:Name="myListBox" HorizontalAlignment="Center" Margin="0,154,0,31" Width="228" BorderThickness="2" BorderBrush="Black" Foreground="DarkGreen" FontStyle="Normal" 
+                <TextBlock Text="Waiting for players" FontSize="40" Foreground="PaleGoldenrod" HorizontalAlignment="Center" Margin="0,12,0,520" FontWeight="Bold" Width="368"/>
+                <Grid>
+                    <Border
+                        BorderBrush="PaleGoldenrod" BorderThickness="0,1,0,0" Margin="0,85,0,0">
+                        <ListBox x:Name="myListBox" HorizontalAlignment="Center" Margin="0,154,0,31" Width="228" BorderThickness="2" BorderBrush="Black" Foreground="DarkGreen" FontStyle="Normal" 
                          materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
+                    </Border>
+                </Grid>
+
             </Grid>
         </Border>
     </materialDesign:Card>
