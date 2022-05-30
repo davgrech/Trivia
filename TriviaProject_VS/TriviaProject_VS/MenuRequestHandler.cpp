@@ -143,7 +143,7 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
         throw std::exception("room closed or active");
     }
     this->m_roomManager.getRoom(roomReq.roomId).addUser(this->m_user);
-    roomRes.status = SUCCESS;
+    roomRes.status = SUCCESS; 
 
     // will be changed
     return RequestResult{ JRPS::serializeResponse(roomRes), m_handlerFactory.createRoomMemberRequest(this->m_user.getUsername(), roomReq.roomId)};

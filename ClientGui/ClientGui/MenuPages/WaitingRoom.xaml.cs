@@ -86,7 +86,12 @@ namespace ClientGui.MenuPages
                     {
 
                         sendLeaveCommandToServer(mysock);
+                        ReciveInformationFromServer();
                         background_worker.CancelAsync();
+                        this.Close();
+                        MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
+                        window.Show();
+                        
                     }
                     else if (myResponse.status == Constants.ROOM_ACTIVE)
                     {
@@ -126,11 +131,12 @@ namespace ClientGui.MenuPages
         private void exit_toggle(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
+
             Environment.Exit(0);
         }
         void sendLeaveCommandToServer(Socket client)
         {
-            char command = '9';
+            char command = '8';
             string to_send = command + "0000";
             SendInfrmaionToServer(to_send);
         }
@@ -138,6 +144,7 @@ namespace ClientGui.MenuPages
         {
             //return to menu // leave room
             sendLeaveCommandToServer(mysock);
+            ReciveInformationFromServer();
             background_worker.CancelAsync();
             this.Close();
             MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
