@@ -14,7 +14,7 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
 
-    
+
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
@@ -38,7 +38,7 @@
                        Foreground="RoyalBlue"
                        FontWeight="Bold"
                        FontSize="22"
-                       Margin="10,0,0,0" Width="190"/>
+                       Margin="30,0,0,0" Width="190"/>
 
             <Button Content ="LOGOUT"
                          x:Name="btnLogout"
@@ -47,8 +47,9 @@
                          Grid.Row="0"
                          Grid.Column="1"
                          HorizontalAlignment="Right"
-                         Height="70"
-                         Margin="0,0,70,0"
+                         Height="50"
+                        Width="120"
+                         Margin="0,0,45,0"
                          FontWeight="Bold"
                          
                          Style="{StaticResource MaterialDesignFlatButton}" Click="logout_toggle"
@@ -56,13 +57,14 @@
 
             <Button  
                          x:Name="btnExit"
-                         Height="70"
+                         
                          Foreground="RoyalBlue"
                          FontSize="20"
                          Grid.Row="0"
                          Grid.Column="1"
                          HorizontalAlignment="Right"
-                         Width="75"
+                         Width="55"
+                         Height="50"
                          FontWeight="Bold"
                          Style="{StaticResource MaterialDesignFlatButton}" Click="exit_toggle"
                          >
@@ -88,6 +90,7 @@
                              FontSize="14"
                              Click="Button_Click_1"
                              Background="Transparent"
+                        Style="{StaticResource MaterialDesignFlatButton}"
                         BorderBrush="Transparent"
                         />
                 <Button Content="Join Room"
@@ -95,6 +98,7 @@
                              Foreground="White"
                              FontSize="14"
                              Click="Button_Click_2"
+                        Style="{StaticResource MaterialDesignFlatButton}"
                              Background="Transparent"
                         BorderBrush="Transparent"/>
                 <Button Content="Personal Statistics"
@@ -103,18 +107,43 @@
                              FontSize="14"
                              Click="Button_Click_3"
                              Background="Transparent"
+                        Style="{StaticResource MaterialDesignFlatButton}"
                         BorderBrush="Transparent"/>
                 <Button Content="Leaderboard"
                              Height="70"
                              Foreground="White"
                              FontSize="14"
                              Click="Button_Click_4"
+                        Style="{StaticResource MaterialDesignFlatButton}"
                              Background="Transparent"
                         BorderBrush="Transparent"/>
             </StackPanel>
             <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
                             Content="{Binding CurrentView}"/>
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
+            <Button Grid.Row="1" Grid.Column="1" Margin="10,73,310,262"
+                    Width="390"
+                    Height="190"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Background="Transparent"
+                    Foreground="Transparent"
+                    Click="Button_Click_6">
+
+
+
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" Margin="454,68,66,257"
+                    Width="200"
+                    Height="200"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+
+                    Background="Transparent"
+                    Foreground="Transparent"
+                    Click="Button_Click_5">
+
+            </Button>
+
+
         </Grid>
 
     </Border>

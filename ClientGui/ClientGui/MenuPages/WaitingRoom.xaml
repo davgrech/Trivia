@@ -41,14 +41,14 @@
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform/>
-                                <RotateTransform Angle="0.777"/>
+                                <RotateTransform Angle="0"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Image.RenderTransform>
                     </Image>
                 </Button>
 
-                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+                <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFlatButton}"
                         Margin="10,10,0,520" Click="return_toggle">
                     <Image Source="/Resources/back.png"/>
 

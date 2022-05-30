@@ -215,23 +215,62 @@ namespace ClientGui.MenuPages
             }
             return "";
         }
-
-        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        string ParseToID(string str)
         {
-            int index = txtSelectedRoom.Text.LastIndexOf('#');
+            if (!(str.Any(char.IsDigit))) // if str doesnt contain any letter
+            {
+                return "";
+            }
+            str = (str.Split('"'))[4];
+            str = str.Remove(0, 1);
+            str = str.Split(",")[0];
+            return str;
+
+        }
+        //in case shit goes down - we can always abort to menu :)
+        void abortToMenu()
+        {
+            MenuHandler returnToMenu = new MenuHandler(mysock, userName);
+            this.Close();
+            returnToMenu.Show();
+        }
+        //func that returns the room id (a "non gui" way to get the room id)
+        string GetRoomID(int index)
+        {
+            string msgToSend = "70000";
+            SendInfrmaionToServer(msgToSend);
+            string received = ReciveInformationFromServer();
+            return ParseToID(received);
+        }
+        public void joinRoomFunc(int index, bool IsQuickCreate)
+        { 
+
             if (index != -1)
             {
+                string _roomId = "";
                 var join_info = new joinRoomRequest
                 {
                     roomId = txtSelectedRoom.Text.Substring(index + 1)
                 };
+
+                if (IsQuickCreate)
+                {
+                    _roomId = GetRoomID(index);
+                    if (String.IsNullOrEmpty(_roomId))
+                    {
+                        MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        abortToMenu();
+                        return;
+
+                    }
+                    join_info.roomId = _roomId;
+                }
                 string jsonString = JsonConvert.SerializeObject(join_info);
                 string len = padMsg(jsonString.Length.ToString(), 4);
 
                 string to_send = "5" + len + jsonString;
                 SendInfrmaionToServer(to_send);
                 string rec = ReciveInformationFromServer();
-
                 if (rec.Contains("message"))
                 {
                     dynamic magic = JsonConvert.DeserializeObject(rec);
@@ -242,15 +281,31 @@ namespace ClientGui.MenuPages
                 else
                 {
                     background_worker.CancelAsync();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock ,int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
-                    this.Close();
-                    WaitingWindow.Show();
+                    
+
+                    if(!IsQuickCreate)
+                    {
+                        this.Close();
+                        WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
+                        WaitingWindow.Show();
+                    }
+                    else
+                    {
+                        WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(_roomId), userName);
+                        WaitingWindow.Show();
+
+                    }
+
+                    
 
 
                 }
             }
-
-
+        }
+        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        {
+            int index = txtSelectedRoom.Text.LastIndexOf('#');
+            joinRoomFunc(index, false);
         }
 
 

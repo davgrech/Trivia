@@ -52,7 +52,7 @@
             </Image>
 
             <Image Source="/Resources/turtleThumbsUp.png" Margin="705,167,-73,12" Grid.Row="1"/>
-            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
+            <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFlatButton}"
                         Click="Button_Click">
                 <Image Source="/Resources/back.png"/>
             </Button>
@@ -80,7 +80,7 @@
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="0.777"/>
+                            <RotateTransform Angle="0"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
