@@ -162,6 +162,23 @@ namespace ClientGui.MenuWindow
             this.Close();
             
         }
+        //quick room join
+        
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+        //quick room creation
+        // makes a room with stats i gave it yolo
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            CreateRoom quickCreate = new CreateRoom(mySock, userName);
+            System.Random random = new System.Random();
+            string createInfo = "{\"roomName\":\"" + "Room " + (random.Next(1, 50)).ToString() + "\",\"maxUsers\":\"" + ((5).ToString()) + "\",\"questionCount\":\"" + ((12).ToString()) + "\",\"answerTimeout\":\"" + ((10).ToString()) + "\"}";
+            quickCreate.CreateNewRoom(createInfo);
+            this.Close();
+        }
     }
 
 

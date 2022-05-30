@@ -121,6 +121,29 @@
             <ContentControl Grid.Row="1" Grid.Column="1" Margin=" 10"
                             Content="{Binding CurrentView}"/>
             <!-- IF YOU WANT TO CHANGE THE WINDOW YOU HAVE TO CHANGE THE CURRENTVIEW - (to a diffrent viewModel) -->
+            <Button Grid.Row="1" Grid.Column="1" Margin="10,73,310,262"
+                    Width="390"
+                    Height="190"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Background="Transparent"
+                    Foreground="Transparent"
+                    Click="Button_Click_6">
+                    
+
+
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" Margin="454,68,66,257"
+                    Width="200"
+                    Height="200"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+
+                    Background="Transparent"
+                    Foreground="Transparent"
+                    Click="Button_Click_5">
+
+            </Button>
+
+
         </Grid>
 
     </Border>
