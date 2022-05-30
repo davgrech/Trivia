@@ -16,7 +16,8 @@ using System.Net;
 using ClientGui.MenuWindow;
 //using System.Text.Json;
 using Newtonsoft.Json;
-
+using System.Threading;
+using System.ComponentModel;
 
 namespace ClientGui.MenuPages
 {
@@ -29,8 +30,15 @@ namespace ClientGui.MenuPages
         string userName;
         private List<string> roomNames = new List<string>();
         private List<RoomData> roomList = new List<RoomData>();
+        private BackgroundWorker background_worker = new BackgroundWorker();
 
+        class Parameters
+        {
+            public Size Size { get; set; }
+            public Point Location { get; set; } 
 
+            public Color Color { get; set; }
+        }
         public class ErrorMessage
         {
             public string message;
@@ -60,35 +68,58 @@ namespace ClientGui.MenuPages
             userName = _name;
 
 
-            
-            putNamesInListBox();
+            background_worker.WorkerSupportsCancellation = true;
+            background_worker.WorkerReportsProgress = true;
+            background_worker.DoWork += putNamesInListBox;
+            background_worker.ProgressChanged += updateRooms;
+            background_worker.RunWorkerAsync();
+
             
             
             
           
 
         }
-       private void putNamesInListBox()
+       private void putNamesInListBox(object sender, DoWorkEventArgs e)
         {
-            string msg = "70000";
-            SendInfrmaionToServer(msg);
-            string response = ReciveInformationFromServer();
-            getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
-
-            //set the rooms
-            roomList = getRoomsResponse.rooms;
-
-            //add to roomNames
-            for(var i = 0; i < getRoomsResponse.rooms.Count; i++)
+            while(true)
             {
+                string msg = "70000";
+                SendInfrmaionToServer(msg);
+               
+                string response = ReciveInformationFromServer();
+                getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
+
+                //set the rooms
+                roomList = getRoomsResponse.rooms;
+                roomNames.Clear();
+                //add to roomNames
+                for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                {
+
+                    roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
+                }
+                background_worker.ReportProgress(1);
                 
-                roomNames.Add(getRoomsResponse.rooms[i].name+"#"+getRoomsResponse.rooms[i].id);
+
+                Thread.Sleep(4000);
             }
-            myListBox.ItemsSource = roomNames;
             
+            
+        }
+        private void updateRooms(object sender, ProgressChangedEventArgs e) 
+        {
+            myListBox.Items.Clear();
+            
+            foreach(string name in roomNames)
+            {
+                myListBox.Items.Add(name);
+            }
+           
         }
         private void button_toggle(object sender, RoutedEventArgs e)
         {
+            background_worker.CancelAsync();
             MenuHandler returnToMenu = new MenuHandler(mysock, userName);
             this.Close();
             returnToMenu.Show();
@@ -104,6 +135,7 @@ namespace ClientGui.MenuPages
         private void exit_toggle(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
+            background_worker.CancelAsync();
             Environment.Exit(0);
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -186,7 +218,7 @@ namespace ClientGui.MenuPages
                 else
                 {
 
-                    WaitingRoom WaitingWindow = new WaitingRoom(int.Parse(txtSelectedRoom.Text.Substring(index + 1)), );
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock ,int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
                     this.Close();
                     WaitingWindow.Show();
 

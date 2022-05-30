@@ -19,6 +19,7 @@ private:
 
 	RequestResult leaveRoom(RequestInfo value);
 	RequestResult getRoomState(RequestInfo value);
+	void refreshcurrentroom();
 public:
 	RoomMemberRequestHandler(Room& room, LoggedUser user, RequestHandleFactory& handlerFactory);
 	virtual bool isRequestRelevant(RequestInfo value);

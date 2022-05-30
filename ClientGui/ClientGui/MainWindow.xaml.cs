@@ -53,19 +53,20 @@ namespace ClientGui
 
             //bind to the server
             ConnectToServer();
-
+           
             //login handler
             if (new FileInfo("rememberme.txt").Length == 0)
             {
-                loginWindow hi = new loginWindow(_clientSocket);
+
 
                 //show login handler
+                loginWindow hi = new loginWindow(_clientSocket);
                 hi.Show();
             }
             else
             {
                 rememberMeCheck();
-               
+
             }
         }
         public void rememberMeCheck()
