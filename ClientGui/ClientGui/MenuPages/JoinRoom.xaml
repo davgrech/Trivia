@@ -52,13 +52,13 @@
                     </Button>
                 </Border>
 
-                <Button Width="75" Height="70" HorizontalAlignment="Left" 
-                        VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent"
-                         Margin="10,10,0,520" Click="button_toggle">
+                <Button Width="85" Height="80" HorizontalAlignment="Left" 
+                        VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Click="button_toggle"
+                        Style="{StaticResource MaterialDesignFlatButton}">
                     <Image Source="/Resources/back.png"/>
                 </Button>
-            
-                
+
+
                 <ListBox x:Name="myListBox" HorizontalAlignment="Left" Margin="79,149,0,36" Width="228" SelectionChanged="myListBox_SelectionChanged" BorderThickness="1" BorderBrush="Black" Foreground="LawnGreen" FontStyle="Normal" 
                          materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
                 <TextBlock Text="Rooms: " FontWeight="Bold" FontSize="40" Foreground="White" Margin="79,80,677,465" />

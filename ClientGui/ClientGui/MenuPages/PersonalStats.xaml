@@ -55,7 +55,8 @@
                 </Image.RenderTransform>
             </Image>
             <Button Width="75" Height="70" HorizontalAlignment="Left" Background="Transparent" BorderBrush="Transparent"
-                        Click="Button_Click">
+                        Click="Button_Click"
+                    Style="{StaticResource MaterialDesignFlatButton}">
                 <Image Source="/Resources/back.png"/>
             </Button>
 

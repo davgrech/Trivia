@@ -52,7 +52,14 @@ namespace ClientGui.MenuWindow
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch (Exception ex)
+            {
+                //lol
+            }
         }
 
         private void logout_toggle(object sender, RoutedEventArgs e)
@@ -154,6 +161,25 @@ namespace ClientGui.MenuWindow
             moveToLeader.Show();
             this.Close();
             
+        }
+        //quick room join
+        
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            
+            JoinRoom joinRoom = new JoinRoom(mySock, userName);
+            joinRoom.joinRoomFunc(0, true); // join room indexed at 0
+            this.Close();
+        }
+        //quick room creation
+        // makes a room with stats i gave it yolo
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            CreateRoom quickCreate = new CreateRoom(mySock, userName);
+            System.Random random = new System.Random();
+            string createInfo = "{\"roomName\":\"" + "Room " + (random.Next(1, 50)).ToString() + "\",\"maxUsers\":\"" + ((4).ToString()) + "\",\"questionCount\":\"" + ((10).ToString()) + "\",\"answerTimeout\":\"" + ((10).ToString()) + "\"}";
+            quickCreate.CreateNewRoom(createInfo, true);
+            this.Close();
         }
     }
 
