@@ -34,6 +34,7 @@
     <None Remove="Resources\control1.png" />
     <None Remove="Resources\darkThemeBg.jpg" />
     <None Remove="Resources\david.jpeg" />
+    <None Remove="Resources\dogtag.png" />
     <None Remove="Resources\dolev.jpeg" />
     <None Remove="Resources\lightThemeBg.jpg" />
     <None Remove="Resources\luigi.png" />
@@ -83,6 +84,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\david.jpeg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\dogtag.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\dolev.jpeg">
