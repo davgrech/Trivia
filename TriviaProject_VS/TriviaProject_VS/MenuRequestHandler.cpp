@@ -137,7 +137,7 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     roomReq = JRPD::deserializeJoinRoomRequest(info.buffer);
     Room room = this->m_roomManager.getRoom(roomReq.roomId);
     if (room.getRoomData().name == "") {
-        throw std::exception("the rom doesnt exist");
+        throw std::exception("the room doesnt exist");
     }
     if (room.getRoomData().isActive != ROOM_OPEN){
         throw std::exception("room closed or active");
@@ -176,7 +176,7 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     if (createRoomReq.questionCount > 10) {
         throw std::exception("not more than 10 question!");
     }
-
+    //{"message":"
     if (createRoomReq.questionCount < 1) {
         throw std::exception("at least 1 question!");
     }

@@ -166,11 +166,11 @@ namespace ClientGui.MenuWindow
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
-
-            JoinRoom joinRoom = new JoinRoom(mySock, userName);
-            bool isGood = joinRoom.joinRoomFunc(0, true); // join room indexed at 0
-            if(isGood)
-            {
+            JoinRoom QuickJoin = new JoinRoom(mySock, userName);
+            bool IsSuccessful = QuickJoin.QuickJoin();
+            
+            if (IsSuccessful) // if quick room join works out, close this window
+            { 
                 this.Close();
             }
         }
