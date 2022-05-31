@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 #include "Room.h"
-
-
+#include "question.h"
+#include <map>
 
 struct ErrorResponse {
 	std::string message;
@@ -78,3 +78,14 @@ struct LeaveRoomResponse
 {
 	unsigned int status;
 };
+struct LeaveGameResponse
+{
+	unsigned int status;
+}typedef LeaveGameResponse;
+
+struct GetQuestionResponse
+{
+	unsigned int status;
+	std::string question;
+	std::map<unsigned int, std::string> results;
+}typedef GetQuestionResponse;
