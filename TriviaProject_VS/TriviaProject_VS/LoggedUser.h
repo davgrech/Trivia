@@ -3,7 +3,9 @@
 #include <string>
 
 class LoggedUser {
+
 public:
+	LoggedUser();
 	LoggedUser(std::string name);
 	std::string getUsername();
 

@@ -15,15 +15,25 @@ Room::Room(RoomData dataOfroom) : m_metadata(dataOfroom)
 {
 }
 
-std::vector<std::string> Room::getAllUsers()
+std::vector<LoggedUser> Room::getAllUsers()
 {
-    std::vector<std::string> tempVec;
+    
+    return this->m_users;
+}
+
+std::vector<std::string> Room::getAllUsersInString()
+{
+    std::vector<std::string> users;
     for (auto itr = this->m_users.begin(); itr != this->m_users.end(); itr++)
     {
-        tempVec.push_back(itr->getUsername());
+        users.push_back(itr->getUsername());
+
     }
-    return tempVec;
+    return users;
 }
+
+
+
 
 void Room::addUser(LoggedUser user)
 {
@@ -66,12 +76,12 @@ bool Room::removeUser(LoggedUser user)
 
 }
 
-bool Room::isActive()
+int Room::isActive()
 {
     return this->m_metadata.isActive;
 }
 
-RoomData Room::getRoomData()
+RoomData& Room::getRoomData()
 {
     return this->m_metadata;
 }
@@ -83,15 +93,25 @@ std::string Room::getName()
 
 bool Room::isInRoomAlready(std::string userName)
 {
-    std::vector<std::string> userLst = this->getAllUsers();
+    std::vector<LoggedUser> userLst = this->getAllUsers();
     for (int i = 0; i < userLst.size(); i++)
     {
-        if (userLst[i] == userName)
+        if (userLst[i].getUsername() == userName)
         {
             return true;
         }
     }
     return false;
+}
+
+void Room::setAllUsers(std::vector<LoggedUser> value)
+{
+    this->m_users = value;
+}
+
+void Room::setState(int value)
+{
+    this->m_metadata.isActive= value;
 }
 
 

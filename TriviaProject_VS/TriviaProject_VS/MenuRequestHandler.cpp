@@ -81,12 +81,17 @@ RequestResult MenuRequestHanlder::logout()
     return RequestResult{JRPS::serializeResponse(logoutRes), this->m_handlerFactory.createLoginRequestHandler()};
 }
 
+std::string MenuRequestHanlder::getType()
+{
+    return typeid(this).name();
+}
+
 RequestResult MenuRequestHanlder::getRooms(RequestInfo info)
 {
     GetRoomResponse getRoomRes;
     std::vector<Room> rooms = this->m_roomManager.getRooms();
     for (auto it = rooms.begin(); it != rooms.end(); it++) {
-        if (!it->isActive()) {
+        if (it->isActive() == ROOM_OPEN) {
             getRoomRes.rooms.push_back(it->getRoomData());
         }
     }
@@ -101,7 +106,7 @@ RequestResult MenuRequestHanlder::getPlayersInRoom(RequestInfo info)
     GetPlayersInRoomRequest getPlayersInRoomReq;
 
     getPlayersInRoomReq  = JRPD::deserializeGetPlayersRequest(info.buffer);
-    std::vector<std::string> myUsers = this->m_roomManager.getRoom(getPlayersInRoomReq.roomId).getAllUsers();
+    std::vector<std::string> myUsers = this->m_roomManager.getRoom(getPlayersInRoomReq.roomId).getAllUsersInString();
     
     PlayersInRoomRes.players = myUsers;
    
@@ -134,11 +139,14 @@ RequestResult MenuRequestHanlder::joinRoom(RequestInfo info)
     if (room.getRoomData().name == "") {
         throw std::exception("the rom doesnt exist");
     }
+    if (room.getRoomData().isActive != ROOM_OPEN){
+        throw std::exception("room closed or active");
+    }
     this->m_roomManager.getRoom(roomReq.roomId).addUser(this->m_user);
-    roomRes.status = SUCCESS;
+    roomRes.status = SUCCESS; 
 
     // will be changed
-    return RequestResult{ JRPS::serializeResponse(roomRes), this };
+    return RequestResult{ JRPS::serializeResponse(roomRes), m_handlerFactory.createRoomMemberRequest(this->m_user.getUsername(), roomReq.roomId)};
 }
 
 RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
@@ -172,6 +180,10 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     if (createRoomReq.questionCount < 1) {
         throw std::exception("at least 1 question!");
     }
+    if (createRoomReq.answerTimeout < 3)
+    {
+        throw std::exception("at least 4 seconds of timout!");
+    }
     /*
     unsigned int id;
 	std::string name;
@@ -187,15 +199,15 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
         createRoomReq.maxUsers,
         createRoomReq.questionCount,
         createRoomReq.answerTimeout,
-        false
+        ROOM_OPEN
 
     };
     this->m_roomManager.createRoom(m_user, RoomInfo);
 
-    createRoomRes.status = SUCCESS;
+    createRoomRes.Id = newID;
     
 
 
     //will be changed
-    return RequestResult{JRPS::serializeResponse(createRoomRes), this};
+    return RequestResult{JRPS::serializeResponse(createRoomRes), m_handlerFactory.createRoomAdminRequest(this->m_user.getUsername(), this->m_roomManager.getRoom(newID))};
 }

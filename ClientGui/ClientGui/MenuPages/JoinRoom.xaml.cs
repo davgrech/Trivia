@@ -16,7 +16,8 @@ using System.Net;
 using ClientGui.MenuWindow;
 //using System.Text.Json;
 using Newtonsoft.Json;
-
+using System.Threading;
+using System.ComponentModel;
 
 namespace ClientGui.MenuPages
 {
@@ -26,11 +27,18 @@ namespace ClientGui.MenuPages
     public partial class JoinRoom : Window
     {
         Socket mysock;
-        string name;
+        string userName;
         private List<string> roomNames = new List<string>();
         private List<RoomData> roomList = new List<RoomData>();
+        private BackgroundWorker background_worker = new BackgroundWorker();
 
+        class Parameters
+        {
+            public Size Size { get; set; }
+            public Point Location { get; set; } 
 
+            public Color Color { get; set; }
+        }
         public class ErrorMessage
         {
             public string message;
@@ -52,43 +60,91 @@ namespace ClientGui.MenuPages
         {
             public List<RoomData> rooms { get; set;}
         }
-        public JoinRoom(Socket client, string userName)
+        public JoinRoom(Socket client, string _name)
         {
             InitializeComponent();
 
             mysock = client;
-            name = userName;
+            userName = _name;
 
 
-            
-            putNamesInListBox();
+            background_worker.WorkerSupportsCancellation = true;
+            background_worker.WorkerReportsProgress = true;
+            background_worker.DoWork += putNamesInListBox;
+            background_worker.ProgressChanged += updateRooms;
+            background_worker.RunWorkerAsync();
+
             
             
             
           
 
         }
-       private void putNamesInListBox()
+       private void putNamesInListBox(object sender, DoWorkEventArgs e)
         {
-            string msg = "70000";
-            SendInfrmaionToServer(msg);
-            string response = ReciveInformationFromServer();
-            getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
-
-            //set the rooms
-            roomList = getRoomsResponse.rooms;
-
-            //add to roomNames
-            for(var i = 0; i < getRoomsResponse.rooms.Count; i++)
+            while(true)
             {
-                roomNames.Add(getRoomsResponse.rooms[i].name);
+                if(background_worker.CancellationPending == false)
+                {
+                    try
+                    {
+                        string msg = "70000";
+                        SendInfrmaionToServer(msg);
+
+                        string response = ReciveInformationFromServer();
+                        getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
+
+                        //set the rooms
+                        
+                        //add to roomNames
+                        if(getRoomsResponse.rooms != null)
+                        {
+                            roomList = getRoomsResponse.rooms;
+                            roomNames.Clear();
+                            for (var i = 0; i < getRoomsResponse.rooms.Count; i++)
+                            {
+
+                                roomNames.Add(getRoomsResponse.rooms[i].name + "#" + getRoomsResponse.rooms[i].id);
+                            }
+                        }    
+                        
+                        background_worker.ReportProgress(1);
+
+
+                        Thread.Sleep(4000);
+                    }
+                    catch (Exception ex)
+                    {
+                        background_worker.CancelAsync();
+                    }
+                   
+                }
+                else
+                {
+                    return;
+                }
+                
             }
-            myListBox.ItemsSource = roomNames;
             
+            
+        }
+        private void updateRooms(object sender, ProgressChangedEventArgs e) 
+        {
+            myListBox.Items.Clear();
+            if(roomNames.Count > 0)
+            {
+                foreach (string name in roomNames)
+                {
+                    myListBox.Items.Add(name);
+                }
+
+            }
+
         }
         private void button_toggle(object sender, RoutedEventArgs e)
         {
-            MenuHandler returnToMenu = new MenuHandler(mysock, name);
+            background_worker.CancelAsync();
+            MenuHandler returnToMenu = new MenuHandler(mysock, userName);
             this.Close();
             returnToMenu.Show();
         }
@@ -103,6 +159,7 @@ namespace ClientGui.MenuPages
         private void exit_toggle(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Hidden;
+            background_worker.CancelAsync();
             Environment.Exit(0);
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -113,9 +170,12 @@ namespace ClientGui.MenuPages
 
         private void myListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtSelectedRoom.Text = myListBox.SelectedItem.ToString();
-            txtSelectedRoom.Visibility = Visibility.Visible;
-
+            if(myListBox.SelectedItem != null)
+            {
+                txtSelectedRoom.Text = myListBox.SelectedItem.ToString();
+                txtSelectedRoom.Visibility = Visibility.Visible;
+            }    
+            
         }
 
 
@@ -158,50 +218,113 @@ namespace ClientGui.MenuPages
             }
             return "";
         }
-
-        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        string ParseToID(string str)
         {
-            for(var i = 0; i < roomList.Count;i++)
+            if (!(str.Any(char.IsDigit))) // if str doesnt contain any letter
             {
-                if(roomList[i].name == txtSelectedRoom.Text)
-                {
-                    var join_info = new joinRoomRequest
-                    {
-                        roomId = roomList[i].id.ToString()
-                    };
-                    string jsonString = JsonConvert.SerializeObject(join_info);
-                    string len = padMsg(jsonString.Length.ToString(), 4);
+                return "";
+            }
+            str = (str.Split('"'))[4];
+            str = str.Remove(0, 1);
+            str = str.Split(",")[0];
+            return str;
 
-                    string to_send = "5" + len + jsonString;
-                    SendInfrmaionToServer(to_send);
-                    string rec = ReciveInformationFromServer();
-                    if(rec.Length > 10)
+        }
+        //in case shit goes down - we can always abort to menu :)
+        void abortToMenu()
+        {
+            MenuHandler returnToMenu = new MenuHandler(mysock, userName);
+            this.Close();
+            returnToMenu.Show();
+        }
+        //func that returns the room id (a "non gui" way to get the room id)
+        string GetRoomID(int index)
+        {
+            string msgToSend = "70000";
+            SendInfrmaionToServer(msgToSend);
+            string received = ReciveInformationFromServer();
+            return ParseToID(received);
+        }
+        public bool joinRoomFunc(int index, bool IsQuickCreate)
+        { 
+
+            if (index != -1)
+            {
+                string _roomId = "";
+                var join_info = new joinRoomRequest
+                {
+                    roomId = txtSelectedRoom.Text.Substring(index + 1)
+                };
+
+                if (IsQuickCreate)
+                {
+                    _roomId = GetRoomID(index);
+                    if (String.IsNullOrEmpty(_roomId))
                     {
-                        if (rec[10] != '1')
-                        {
-                            dynamic magic = JsonConvert.DeserializeObject(rec);
-                            txtSelectedRoom.Text = magic["message"];
-                            txtSelectedRoom.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            txtSelectedRoom.Text = "succeed to join";
-                            txtSelectedRoom.Visibility = Visibility.Visible;
-                        }
+                        background_worker.CancelAsync();
+                        MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                        abortToMenu();
+                       
+                        return false;
+
+                    }
+                    join_info.roomId = _roomId;
+                }
+                string jsonString = JsonConvert.SerializeObject(join_info);
+                string len = padMsg(jsonString.Length.ToString(), 4);
+
+                string to_send = "5" + len + jsonString;
+                SendInfrmaionToServer(to_send);
+                string rec = ReciveInformationFromServer();
+                if (rec.Contains("message"))
+                {
+                    dynamic magic = JsonConvert.DeserializeObject(rec);
+                    string msg = magic["message"];
+                    MessageBox.Show(msg, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    if(IsQuickCreate)
+                    {
+                        background_worker.CancelAsync();
+                    }
+                    
+                    return false;
+                }
+                else
+                {
+                    background_worker.CancelAsync();
+                    
+
+                    if(!IsQuickCreate)
+                    {
+                        this.Close();
+                        WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
+                        WaitingWindow.Show();
+                       
+                        
                     }
                     else
                     {
-                        dynamic magic = JsonConvert.DeserializeObject(rec);
-                        txtSelectedRoom.Text = magic["message"];
-                        txtSelectedRoom.Visibility = Visibility.Visible;
+                        WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(_roomId), userName);
+                        WaitingWindow.Show();
+
                     }
-                    
-                    
+                    return true;
+
 
 
 
                 }
             }
+            return false;
         }
+        private void joinRoom_toggle(object sender, RoutedEventArgs e)
+        {
+            int index = txtSelectedRoom.Text.LastIndexOf('#');
+            joinRoomFunc(index, false);
+        }
+
+
+
+
     }
 }

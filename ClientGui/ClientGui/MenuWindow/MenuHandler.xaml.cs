@@ -23,7 +23,7 @@ namespace ClientGui.MenuWindow
     /// Interaction logic for MenuHandler.xaml
     /// </summary>
     /// 
-   
+
     public partial class MenuHandler : Window
     {
 
@@ -35,7 +35,7 @@ namespace ClientGui.MenuWindow
             InitializeComponent();
             mySock = _clientSocket;
             userName = user;
-            userTxt.Text = "hi "+user+"!";
+            userTxt.Text = "hi " + user + "!";
             //playSound();
 
 
@@ -43,7 +43,7 @@ namespace ClientGui.MenuWindow
         }
         private void playSound()
         {
-            SoundPlayer soundPlayer = new SoundPlayer("\\Resources\\menuMusic.wav"); 
+            SoundPlayer soundPlayer = new SoundPlayer("\\Resources\\menuMusic.wav");
             soundPlayer.Play();
             soundPlayer.PlayLooping();
 
@@ -52,7 +52,14 @@ namespace ClientGui.MenuWindow
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch (Exception ex)
+            {
+                //lol
+            }
         }
 
         private void logout_toggle(object sender, RoutedEventArgs e)
@@ -60,7 +67,7 @@ namespace ClientGui.MenuWindow
             string msgToSend = "20000";
             SendInfrmaionToServer(msgToSend);
             string received = ReciveInformationFromServer();
-            if(received[10] == '1')
+            if (received[10] == '1')
             {
                 File.WriteAllText("rememberme.txt", String.Empty);
                 this.Close();
@@ -141,11 +148,11 @@ namespace ClientGui.MenuWindow
          */
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            
+
             PersonalStats moveToStats = new PersonalStats(mySock, userName);
             moveToStats.Show();
             this.Close();
-            
+
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -153,7 +160,29 @@ namespace ClientGui.MenuWindow
             HighScores moveToLeader = new HighScores(mySock, userName);
             moveToLeader.Show();
             this.Close();
-            
+
+        }
+        //quick room join
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+
+            JoinRoom joinRoom = new JoinRoom(mySock, userName);
+            bool isGood = joinRoom.joinRoomFunc(0, true); // join room indexed at 0
+            if(isGood)
+            {
+                this.Close();
+            }
+        }
+        //quick room creation
+        // makes a room with stats i gave it yolo
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            CreateRoom quickCreate = new CreateRoom(mySock, userName);
+            System.Random random = new System.Random();
+            string createInfo = "{\"roomName\":\"" + "Room " + (random.Next(1, 50)).ToString() + "\",\"maxUsers\":\"" + ((4).ToString()) + "\",\"questionCount\":\"" + ((10).ToString()) + "\",\"answerTimeout\":\"" + ((10).ToString()) + "\"}";
+            quickCreate.CreateNewRoom(createInfo, true);
+            this.Close();
         }
     }
 

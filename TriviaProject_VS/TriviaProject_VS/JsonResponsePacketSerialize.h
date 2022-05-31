@@ -21,6 +21,11 @@ public:
 	static std::vector<unsigned char> serializeResponse(CreateRoomResponse value);
 	static std::vector<unsigned char> serializeResponse(getHighScoreResponse value);
 	static std::vector<unsigned char> serializeResponse(getPersonalStatsResponse value);
+
+	static std::vector<unsigned char> serializeResponse(CloseRoomResponse value);
+	static std::vector<unsigned char> serializeResponse(StartGameResponse value);
+	static std::vector<unsigned char> serializeResponse(GetRoomStateResponse value);
+	static std::vector<unsigned char> serializeResponse(LeaveRoomResponse value);
 	
 
 

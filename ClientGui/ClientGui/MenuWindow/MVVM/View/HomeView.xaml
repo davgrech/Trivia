@@ -52,11 +52,12 @@
                     </StackPanel>
 
 
-                    <Image Width="204" Height="208"
-                           Source="/Resources/woman.png"
+                    <Image Width="178" Height="180"
+                           Source="/Resources/dogtag.png"
                            HorizontalAlignment="Left"
-                           VerticalAlignment="Top" Margin="269,0,0,0"
+                           VerticalAlignment="Top" Margin="322,15,0,0"
                            />
+
 
 
                 </Grid>
@@ -68,6 +69,8 @@
                     Height="200"
                     CornerRadius="10"
                     Margin="45, 0,0,0">
+
+
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
                         <GradientStop Color="#ffc554" Offset="0.0"/>
@@ -75,13 +78,22 @@
 
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBlock Text="Quick Join&#x0a;A Game"
+                <Grid>
+                    <Image Width="128" Height="146"
+                           Source="/Resources/control.png"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top" Margin="136,98,0,0"
+                           />
+                    <TextBlock Text="Quick Join&#x0a;A Game"
                                    Foreground="White"
                                    Margin="15,26,15,0"
                                    FontSize="28"
                                    VerticalAlignment="Top">
 
-                </TextBlock>
+                    </TextBlock>
+
+                </Grid>
+
             </Border>
         </StackPanel>
 

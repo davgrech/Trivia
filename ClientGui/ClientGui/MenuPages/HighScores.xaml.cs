@@ -63,7 +63,7 @@ namespace ClientGui.MenuPages
         private recvInfoLeaderboard getUserStats()
         {
 
-            string to_send = "90000";
+            string to_send = "=0000";
             SendInfrmaionToServer(to_send);
             string received = ReciveInformationFromServer();
             try

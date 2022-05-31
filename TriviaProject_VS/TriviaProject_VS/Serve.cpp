@@ -98,8 +98,24 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 	// if logged in
 	if (this->sock_to_user.count(socket) > 0)
 	{
+		
 		std::lock_guard<std::mutex> mtx1(login_manager);
 		this->m_handlerFactory->deleteUser(this->sock_to_user.at(socket));
+
+		std::lock_guard<std::mutex> mtx2(room_manager);
+		if (this->_clients.at(socket)->getType() == typeid(RoomAdminRequestHandler*).name())
+		{
+			this->_clients.at(socket)->handleRequest(RequestInfo{CLIENT_CLOSE_ROOM, NULL,std::vector<unsigned char>()});
+		}
+		else if (this->_clients.at(socket)->getType() == typeid(RoomMemberRequestHandler*).name())
+		{
+			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_ROOM, NULL,std::vector<unsigned char>() });
+		}
+		//here put if it is in game  -> so just leave because admin can close only before starting
+		else if (true)
+		{
+
+		}
 
 		
 	}
@@ -251,7 +267,10 @@ void serveTool::cHandler(SOCKET client)
 						
 						
 					}
-
+					else
+					{
+						throw std::exception("not in the right handler");
+					}
 					break;
 				}
 				case CLIENT_SIGNOUT:
@@ -267,6 +286,10 @@ void serveTool::cHandler(SOCKET client)
 						this->sock_to_user.erase(client);
 						
 					}
+					else
+					{
+						throw std::exception("not in the right handler");
+					}
 
 					break;
 				}
@@ -276,6 +299,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("not in the right handler");
 					}
 
 					break;
@@ -287,7 +314,10 @@ void serveTool::cHandler(SOCKET client)
 						reqResult = handler->handleRequest(msgInfo);
 					
 					}
-
+					else
+					{
+						throw std::exception("already in room");
+					}
 					break;
 				}
 				case CLIENT_GET_PLAYERS_ROOM:
@@ -296,6 +326,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(room_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("not in the right handler");
 					}
 
 					break;
@@ -307,7 +341,68 @@ void serveTool::cHandler(SOCKET client)
 						reqResult = handler->handleRequest(msgInfo);
 						
 					}
+					else
+					{
+						throw std::exception("in room");
+					}
 
+					break;
+				}
+				case CLIENT_LEAVE_ROOM:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						std::lock_guard<std::mutex> mtx1(room_manager);
+						reqResult = handler->handleRequest(msgInfo);
+
+					}
+					else
+					{
+						throw std::exception("first join room");
+					}
+
+					break;
+				}
+				case CLIENT_CLOSE_ROOM:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						std::lock_guard<std::mutex> mtx1(room_manager);
+						reqResult = handler->handleRequest(msgInfo);
+
+					}
+					else
+					{
+						throw std::exception("you are not an admin");
+					}
+
+
+					break;
+				}
+				case CLIENT_GET_STATE:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						std::lock_guard<std::mutex> mtx1(room_manager);
+						reqResult = handler->handleRequest(msgInfo);
+
+					}
+					else
+					{
+						throw std::exception("join room first");
+					}
+
+					break;
+				}
+				case CLIENT_START_GAME:
+				{
+					if (handler->isRequestRelevant(msgInfo)) {
+						std::lock_guard<std::mutex> mtx1(room_manager);
+						reqResult = handler->handleRequest(msgInfo);
+
+
+					}
+					else
+					{
+						throw std::exception("you are not an admin");
+					}
 					break;
 				}
 				case CLIENT_GET_STATS_USER:
@@ -316,6 +411,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(statistic_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
 					}
 
 					break;
@@ -326,6 +425,10 @@ void serveTool::cHandler(SOCKET client)
 						std::lock_guard<std::mutex> mtx1(statistic_manager);
 						reqResult = handler->handleRequest(msgInfo);
 						
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
 					}
 
 					break;
