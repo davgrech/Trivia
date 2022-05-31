@@ -131,12 +131,15 @@ namespace ClientGui.MenuPages
         private void updateRooms(object sender, ProgressChangedEventArgs e) 
         {
             myListBox.Items.Clear();
-            
-            foreach(string name in roomNames)
+            if(roomNames.Count > 0)
             {
-                myListBox.Items.Add(name);
+                foreach (string name in roomNames)
+                {
+                    myListBox.Items.Add(name);
+                }
+
             }
-           
+
         }
         private void button_toggle(object sender, RoutedEventArgs e)
         {
@@ -242,7 +245,7 @@ namespace ClientGui.MenuPages
             string received = ReciveInformationFromServer();
             return ParseToID(received);
         }
-        public void joinRoomFunc(int index, bool IsQuickCreate)
+        public bool joinRoomFunc(int index, bool IsQuickCreate)
         { 
 
             if (index != -1)
@@ -258,9 +261,11 @@ namespace ClientGui.MenuPages
                     _roomId = GetRoomID(index);
                     if (String.IsNullOrEmpty(_roomId))
                     {
+                        background_worker.CancelAsync();
                         MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                         abortToMenu();
-                        return;
+                       
+                        return false;
 
                     }
                     join_info.roomId = _roomId;
@@ -277,6 +282,12 @@ namespace ClientGui.MenuPages
                     string msg = magic["message"];
                     MessageBox.Show(msg, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                    if(IsQuickCreate)
+                    {
+                        background_worker.CancelAsync();
+                    }
+                    
+                    return false;
                 }
                 else
                 {
@@ -288,6 +299,8 @@ namespace ClientGui.MenuPages
                         this.Close();
                         WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(txtSelectedRoom.Text.Substring(index + 1)), userName);
                         WaitingWindow.Show();
+                       
+                        
                     }
                     else
                     {
@@ -295,12 +308,14 @@ namespace ClientGui.MenuPages
                         WaitingWindow.Show();
 
                     }
+                    return true;
 
-                    
+
 
 
                 }
             }
+            return false;
         }
         private void joinRoom_toggle(object sender, RoutedEventArgs e)
         {

@@ -28,6 +28,7 @@
 
 #include "RequestHandlerFactory.h"
 #include "Helper.h"
+#include "IRequestHandler.h"
 
 #define TRACE(msg, ...) printf(msg "\n", __VA_ARGS__);
 
