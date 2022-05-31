@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -5,15 +6,13 @@
 class question
 {
 	public:
-		int getId();
+		question(std::string question, std::vector<std::string> _possibleAnswers);
 		std::string getQuestion();
 		std::vector<std::string> getPossibleAnswers();
-		std::string getCorrectAnswer();
+		std::string getCorrectAnswers();
 
 	private:
-		unsigned int ID;
-		std::string question;
-		std::vector<std::string> _possible_answers;
-		std::string _correct_answer;
+		std::string m_question;
+		std::vector<std::string>  m_possibleAnswers;
 
 };

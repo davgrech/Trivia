@@ -1,21 +1,28 @@
 #include "question.h"
 
-int question::getId()
+/*
+every question is a vector of {0,1,2,3,4} stings each index is answer and 4 is the right answer
+*/
+question::question(std::string question, std::vector<std::string> _possibleAnswers)
 {
-    return 0;
+    this->m_possibleAnswers = _possibleAnswers;
+    this->m_question = question;
+
 }
 
 std::string question::getQuestion()
 {
-    return std::string();
+    return this->m_question;
 }
 
 std::vector<std::string> question::getPossibleAnswers()
 {
-    return std::vector<std::string>();
+    return this->m_possibleAnswers;
 }
 
-std::string question::getCorrectAnswer()
+std::string question::getCorrectAnswers()
 {
-    return std::string();
+    return this->m_possibleAnswers[4];
 }
+
+

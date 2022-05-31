@@ -97,6 +97,7 @@ std::vector<unsigned char> JRPS::serializeResponse(LogoutResponse value)
 std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse response)
 {
     std::string json = "{\"Rooms\": [";
+    
     for (RoomData room : response.rooms) {
         
         json += "{\"id\":" + std::to_string(room.id);
@@ -105,9 +106,11 @@ std::vector<unsigned char> JRPS::serializeResponse(GetRoomResponse response)
         json += ",\"timePerQuestion\":" + std::to_string(room.timePerQuestion);
         json += ",\"maxPlayers\":" + std::to_string(room.maxPlayers) + "},";
     }
+
     if (response.rooms.size() != 0) // if not empty
         json = json.substr(0, json.size() - 1);
     
+   
     json += "]}";
 
     std::vector<unsigned char> v_response(json.begin(), json.end());
@@ -241,4 +244,24 @@ std::vector<unsigned char> JRPS::serializeResponse(LeaveRoomResponse value)
 
     j["status"] = value.status;
     return ConvertMsg(j.dump());
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(GetGameResultsResponse value)
+{
+    return std::vector<unsigned char>();
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(SubmitAnswerResponse value)
+{
+    return std::vector<unsigned char>();
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(GetQuestionResponse value)
+{
+    return std::vector<unsigned char>();
+}
+
+std::vector<unsigned char> JRPS::serializeResponse(LeaveGameResponse value)
+{
+    return std::vector<unsigned char>();
 }

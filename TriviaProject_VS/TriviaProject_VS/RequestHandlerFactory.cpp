@@ -8,7 +8,7 @@
 
 
 
-RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db), m_StatisticManager(db) {}
+RequestHandleFactory::RequestHandleFactory(IDatabase* db) : m_database(db), m_LoginManager(db), m_StatisticManager(db), m_gameManager(db) {}
 
 
 LoginRequestHandler* RequestHandleFactory::createLoginRequestHandler()
@@ -54,6 +54,18 @@ RoomAdminRequestHandler* RequestHandleFactory::createRoomAdminRequest(std::strin
     }
 }
 
+GameRequestHandler* RequestHandleFactory::createGameRequestHandler(int id, LoggedUser user)
+{
+    while (true)
+    {
+        try {
+            return new GameRequestHandler((*this), id, user);
+        }
+        catch(...){}
+    }
+    return nullptr;
+}
+
 
 RoomManager& RequestHandleFactory::getRoomManager()
 {
@@ -68,6 +80,11 @@ LoginManager& RequestHandleFactory::getLoginManager()
 StatisticsManager& RequestHandleFactory::getStatisticManager()
 {
     return this->m_StatisticManager;
+}
+
+GameManager& RequestHandleFactory::getGameManager()
+{
+    return this->m_gameManager;
 }
 
 void RequestHandleFactory::deleteUser(std::string username)

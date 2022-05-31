@@ -144,6 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClientError.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameRequestHandler.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="informationVerification.cpp" />
     <ClCompile Include="JsonRequestPacketDeserialize.cpp" />
@@ -172,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientError.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameRequestHandler.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="informationVerification.h" />

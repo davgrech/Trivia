@@ -71,3 +71,8 @@ CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> 
 
     return createRoomReq;
 }
+
+SubmitAnswerRequest JRPD::deserializeSubmitAnswerRequest(std::vector<unsigned char> buffer)
+{
+    return SubmitAnswerRequest();
+}

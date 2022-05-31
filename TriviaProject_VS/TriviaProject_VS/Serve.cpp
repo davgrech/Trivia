@@ -103,10 +103,12 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 		this->m_handlerFactory->deleteUser(this->sock_to_user.at(socket));
 
 		std::lock_guard<std::mutex> mtx2(room_manager);
+		// if client wants to leave and hes admin
 		if (this->_clients.at(socket)->getType() == typeid(RoomAdminRequestHandler*).name())
 		{
 			this->_clients.at(socket)->handleRequest(RequestInfo{CLIENT_CLOSE_ROOM, NULL,std::vector<unsigned char>()});
 		}
+		//if client wants to leave and hes member
 		else if (this->_clients.at(socket)->getType() == typeid(RoomMemberRequestHandler*).name())
 		{
 			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_ROOM, NULL,std::vector<unsigned char>() });
