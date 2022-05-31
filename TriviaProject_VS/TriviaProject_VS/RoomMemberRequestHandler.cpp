@@ -65,8 +65,8 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
 
    
     std::vector<Room> lol = this->m_roomManager.getRooms();
-
-    for (auto it = lol.begin(); it != lol.end(); it++)
+    auto it = lol.begin();
+    for (it; it != lol.end(); it++)
     {
         if (it->getRoomData().id == this->m_room.getRoomData().id)
         {
@@ -74,6 +74,15 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
             this->m_room.setState(it->getRoomData().isActive);
             break;
         }
+    }
+    if (it == lol.end())
+    {
+        res.status = ROOM_CLOSE;
+    }
+    else
+    {
+        res.status = this->m_room.getRoomData().isActive;
+
     }
     std::vector<LoggedUser> users = this->m_roomManager.getRoom(m_room.getRoomData().id).getAllUsers();
     
@@ -86,8 +95,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
     this->m_room.getRoomData().isActive == ROOM_ACTIVE ? res.hasGameBegun = true : res.hasGameBegun = false;
 
     res.players = this->m_room.getAllUsersInString();
-    res.status = this->m_room.getRoomData().isActive;
-    
+   
 
     res.questionCount = this->m_room.getRoomData().numOfQuestionsInGame;
     

@@ -29,7 +29,7 @@ namespace ClientGui.MenuPages
     public partial class WaitingRoom : Window
     {
 
-
+        int isClose = 1;
         Socket mysock;
         string userName;
         int idRoom;
@@ -60,9 +60,14 @@ namespace ClientGui.MenuPages
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += getStateWorker;
             background_worker.ProgressChanged += updatePlayersListBox;
+            background_worker.RunWorkerCompleted += back_worker_do_work;
             background_worker.RunWorkerAsync();
 
 
+        }
+        void back_worker_do_work(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.Close();
         }
         private void getStateWorker(object sender, DoWorkEventArgs e)
         {
@@ -78,7 +83,7 @@ namespace ClientGui.MenuPages
                     {
                         m_players = myResponse.players;
                         background_worker.ReportProgress(1);
-
+                        isClose = 1;
 
 
                     }
@@ -88,17 +93,17 @@ namespace ClientGui.MenuPages
                         sendLeaveCommandToServer(mysock);
                         ReciveInformationFromServer();
                         background_worker.CancelAsync();
-                        this.Close();
-                        MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
-                        window.Show();
+                        isClose = 0;
+                        background_worker.ReportProgress(1);
+                        
                         
                     }
                     else if (myResponse.status == Constants.ROOM_ACTIVE)
                     {
-                        GameWindow myWindow = new GameWindow();
-                        this.Visibility = Visibility.Collapsed;
-                        myWindow.Show();
+                        isClose = 2;
                         background_worker.CancelAsync();
+                        background_worker.ReportProgress(1);
+                      
 
 
                     }
@@ -115,11 +120,28 @@ namespace ClientGui.MenuPages
 
         private void updatePlayersListBox(object sender, ProgressChangedEventArgs e)
         {
-            myListBox.Items.Clear();
-            foreach (string player in m_players)
+            if(isClose == 1)
             {
-                myListBox.Items.Add(player);
+                myListBox.Items.Clear();
+                foreach (string player in m_players)
+                {
+                    myListBox.Items.Add(player);
+                }
             }
+            else if(isClose == 0)
+            {
+
+                this.Close();
+                MenuWindow.MenuHandler window = new MenuWindow.MenuHandler(mysock, userName);
+                window.Show();
+            }
+            else if(isClose == 2)
+            {
+                GameWindow myWindow = new GameWindow();
+                this.Close();
+                myWindow.Show();
+            }
+            
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
