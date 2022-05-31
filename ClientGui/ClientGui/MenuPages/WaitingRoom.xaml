@@ -59,8 +59,9 @@
                 <Grid>
                     <Border
                         BorderBrush="PaleGoldenrod" BorderThickness="0,1,0,0" Margin="0,85,0,0">
-                        <ListBox x:Name="myListBox" HorizontalAlignment="Center" Margin="0,154,0,31" Width="228" BorderThickness="2" BorderBrush="Black" Foreground="DarkGreen" FontStyle="Normal" 
-                         materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"/>
+                        <ListBox x:Name="myListBox" HorizontalAlignment="Center" Margin="0,154,0,31" Width="228" BorderThickness="2" BorderBrush="Black" Foreground="PaleGoldenrod" FontStyle="Normal" 
+                         materialDesign:ScrollBarAssist.ThumbHeight="20" FontSize="20" Style="{StaticResource MaterialDesignListBox}"
+                                 HorizontalContentAlignment="Center"/>
                     </Border>
                 </Grid>
 
