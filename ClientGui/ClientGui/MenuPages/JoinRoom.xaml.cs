@@ -229,26 +229,38 @@ namespace ClientGui.MenuPages
         }
 
 
-        //func that returns the room id (a "non gui" way to get the room id)
-        string GetRoomID()
+        //func that attemps to connect to the first avalible room
+        public bool QuickJoin()
         {
-            string msgToSend = "70000";
+            string rec;
+            string msgToSend = "70000"; // ask server for room list
             SendInfrmaionToServer(msgToSend);
             string response = ReciveInformationFromServer();
             getRoomsResponse RoomsList = JsonConvert.DeserializeObject<getRoomsResponse>(response);
+
             if(RoomsList == null)
             {
-                return ""; // no rooms avalible
+                MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                return false;
             }
-            ;
-            foreach(var v in RoomsList.rooms)
+            
+            foreach(var v in RoomsList.rooms) // iterate through each room in roomlist
             {
-                sendAndRecieve(new joinRoomRequest(v.id)); //create a joinroomrequest later lets go
-
+                var attempJoin = new joinRoomRequest // try to connect to any room
+                {
+                    roomId = v.id.ToString()
+                };
+                rec = sendAndRecieve(attempJoin);
+                if (!(rec.Contains("message"))) // if there isnt an error
+                {
+                    background_worker.CancelAsync();
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, v.id, userName); 
+                    WaitingWindow.Show(); // connect and display waiting room
+                    return true;
+                }
             }
-            return "";
-
-
+            MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+            return false;
         }
         //send join room request and returns rec str from server
         string sendAndRecieve(joinRoomRequest join_info)
