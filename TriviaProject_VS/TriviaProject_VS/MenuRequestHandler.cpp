@@ -180,6 +180,10 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     if (createRoomReq.questionCount < 1) {
         throw std::exception("at least 1 question!");
     }
+    if (createRoomReq.answerTimeout < 3)
+    {
+        throw std::exception("at least 4 seconds of timout!");
+    }
     /*
     unsigned int id;
 	std::string name;
