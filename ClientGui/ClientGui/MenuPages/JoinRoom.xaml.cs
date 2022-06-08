@@ -240,6 +240,7 @@ namespace ClientGui.MenuPages
 
             if(RoomsList == null)
             {
+                background_worker.CancelAsync();
                 MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
@@ -254,12 +255,13 @@ namespace ClientGui.MenuPages
                 if (!(rec.Contains("message"))) // if there isnt an error
                 {
                     background_worker.CancelAsync();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, v.id, userName); 
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName); 
                     WaitingWindow.Show(); // connect and display waiting room
                     return true;
                 }
             }
             MessageBox.Show("No Rooms Available", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+            background_worker.CancelAsync();
             return false;
         }
         //send join room request and returns rec str from server
@@ -296,7 +298,7 @@ namespace ClientGui.MenuPages
                 {
                     background_worker.CancelAsync();
                     this.Close();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, int.Parse(_roomId), userName);
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName);
                     WaitingWindow.Show();
 
 

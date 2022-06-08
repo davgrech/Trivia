@@ -32,7 +32,7 @@ namespace ClientGui.MenuPages
         int isClose = 1;
         Socket mysock;
         string userName;
-        int idRoom;
+        
         List<string> m_players;
         public class roomStateResponse
         {
@@ -49,12 +49,12 @@ namespace ClientGui.MenuPages
         private BackgroundWorker background_worker = new BackgroundWorker();
 
 
-        public WaitingRoom(Socket _mysock, int _idRoom, string _userName)
+        public WaitingRoom(Socket _mysock, string _userName)
         {
             InitializeComponent();
             mysock = _mysock;
             userName = _userName;
-            idRoom = _idRoom;
+            
 
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
