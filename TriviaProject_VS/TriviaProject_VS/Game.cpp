@@ -4,6 +4,12 @@ Game::Game(int timeForQuestion, int idOfGame, std::vector<question> myQuestions,
 {
  
 }
+
+Game::Game()
+{
+	
+}
+
 void Game::getQuestion(LoggedUser user)
 {
 }

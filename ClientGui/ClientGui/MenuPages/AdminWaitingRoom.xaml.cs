@@ -159,6 +159,7 @@ namespace ClientGui.MenuPages
             char command = ':';
             string to_send = command + "0000";
             SendInfrmaionToServer(to_send);
+            string myResponse = ReciveInformationFromServer();
 
             this.Close();
             GameWindow myWindow = new GameWindow();

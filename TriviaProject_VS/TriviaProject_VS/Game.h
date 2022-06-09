@@ -23,6 +23,7 @@ class Game
 {
 public:
 	Game(int timeForQuestion, int idOfGame, std::vector<question> myQuestions, std::map<LoggedUser, GameData> listUsers);
+	Game();
 	void getQuestion(LoggedUser user);
 	void submitAnswer(LoggedUser, std::string answer);
 	void removePlayer(LoggedUser);

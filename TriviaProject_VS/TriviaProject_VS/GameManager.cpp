@@ -41,6 +41,15 @@ void GameManager::deleteGame(Game x)
 
 Game& GameManager::getGame(int _id)
 {
-    return this->m_games.at(_id);
+    Game* x = new Game();
+    if (this->m_games.find(_id) != this->m_games.end())
+    {
+        return this->m_games.at(_id);
+
+    }
+    else
+    {
+        return *x;
+    }
 }
 
