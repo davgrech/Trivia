@@ -17,7 +17,7 @@ public:
 	virtual bool isRequestRelevant(RequestInfo request);
 	virtual RequestResult handleRequest(RequestInfo value);
 	virtual std::string getType();
-	GameRequestHandler(RequestHandleFactory& _handlerFactory, int id ,LoggedUser user);
+	//GameRequestHandler(RequestHandleFactory& _handlerFactory, int id ,LoggedUser user);
 private:
 	Game m_game;
 	LoggedUser m_user;

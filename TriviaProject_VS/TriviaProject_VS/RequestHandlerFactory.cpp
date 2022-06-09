@@ -56,13 +56,13 @@ RoomAdminRequestHandler* RequestHandleFactory::createRoomAdminRequest(std::strin
 
 GameRequestHandler* RequestHandleFactory::createGameRequestHandler(int id, LoggedUser user)
 {
-    while (true)
+   /* while (true)
     {
         try {
             return new GameRequestHandler((*this), id, user);
         }
         catch(...){}
-    }
+    }*/
     return nullptr;
 }
 

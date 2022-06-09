@@ -248,20 +248,63 @@ std::vector<unsigned char> JRPS::serializeResponse(LeaveRoomResponse value)
 
 std::vector<unsigned char> JRPS::serializeResponse(GetGameResultsResponse value)
 {
-    return std::vector<unsigned char>();
+    std::string json = "{\"status\":\"" + std::to_string(value.status) + "\", \"Results\": [";
+    for (PlayerResults item : value.results)
+    {
+        item.averageAnswerTime;
+        item.correctAnswerCount;
+        item.username;
+        item.wrongAnswerCount;
+        json += "{\"averageAnswerTime\":\"" + std::to_string(item.averageAnswerTime) + "\",";
+        json += "\"correctAnswerCount\":\"" + std::to_string(item.correctAnswerCount) + "\",";
+        json += "\"username\": \"" + item.username + "\",";
+        json += "\"wrongAnswerCount\": \"" + std::to_string(item.wrongAnswerCount) + "\"},";
+    }
+    if (value.results.size() != 0) // if not empty
+        json = json.substr(0, json.size() - 1);
+
+
+    json += "]}";
+
+    std::vector<unsigned char> v_response(json.begin(), json.end());
+    return v_response;
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(SubmitAnswerResponse value)
 {
-    return std::vector<unsigned char>();
+    
+    json j;
+    j["status"] = value.status;
+   
+    std::vector<unsigned char> v_response(j.begin(), j.end());
+    return v_response;
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(GetQuestionResponse value)
 {
-    return std::vector<unsigned char>();
+    json j;
+    value.question;
+    value.results;
+    value.status;
+    j["question"] = value.question;
+    j["status"] = value.status;
+    j["results"] = value.results;
+
+
+
+
+    std::cout << j << std::endl; 
+    std::vector<unsigned char> v_response(j.begin(), j.end());
+    return v_response;
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(LeaveGameResponse value)
 {
-    return std::vector<unsigned char>();
+    json j;
+    j["status"] = value.status;
+
+
+    std::vector<unsigned char> v_response(j.begin(), j.end());
+
+    return v_response;
 }
