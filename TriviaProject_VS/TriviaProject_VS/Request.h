@@ -28,6 +28,7 @@ struct CreateRoomRequest
 
 struct SubmitAnswerRequest
 {
+	std::string question; 
 	unsigned int answerId;
 };
 

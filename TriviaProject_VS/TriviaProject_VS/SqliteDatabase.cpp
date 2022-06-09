@@ -202,6 +202,16 @@ std::vector<std::string> SqliteDatabase::getTopFive()
 }
 
 
+std::vector<question> SqliteDatabase::getQuestions(int number)
+{
+    std::vector<question> myResults;
+    char* pError = NULL;
+    
+    std::string statement = "SELECT * FROM QUESTIONS WHERE ID IN (SELECT ID FROM QUESTIONS ORDER BY RANDOM() LIMIT " + std::to_string(number) + ");";
+    int res = sqlite3_exec(this->db, statement.c_str(), getQuestionsCallBack, &myResults, &pError);
+    return myResults;
+}
+
 bool SqliteDatabase::createTableOrInsert(std::string statement)
 {
     char* errMessage = NULL;

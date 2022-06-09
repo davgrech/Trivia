@@ -10,6 +10,7 @@ public:
 	std::string getUsername();
 
 	friend bool operator == (const LoggedUser& a, const LoggedUser& b);
+	friend bool operator <(const LoggedUser& a, const LoggedUser& b);
 private:
 	std::string m_username;
 };

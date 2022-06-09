@@ -4,7 +4,7 @@
 #include "IDatabase.h"
 #include "sqlite3.h"
 #include <io.h>
-
+#include "question.h"
 
 // all about information Verification and REGEX BONOUS!
 #include "informationVerification.h"
@@ -54,6 +54,11 @@ public:
 
 	virtual std::vector<std::string> getTopFive();
 	
+
+	//4.0.0
+
+	virtual std::vector<question> getQuestions(int number);
+
 	//virtual void addUserStatistics();
 
 	bool createTableOrInsert(std::string statement);

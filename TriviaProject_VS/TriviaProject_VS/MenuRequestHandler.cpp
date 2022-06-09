@@ -157,7 +157,7 @@ RequestResult MenuRequestHanlder::createRoom(RequestInfo info)
     //int id = random_a_valid_RoomId()
 
     int newID = rand();
-    while (this->m_roomManager.getRoom(newID).getRoomData().name != "")
+    while (this->m_roomManager.getRoom(newID).getRoomData().name != "" || this->m_handlerFactory.getGameManager().getGame(newID).getNumOfPlayers() != 0)
     {
         newID = rand();
     }

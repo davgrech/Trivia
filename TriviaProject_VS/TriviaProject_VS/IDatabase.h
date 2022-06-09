@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "question.h"
 class IDatabase;
 
 class IDatabase
@@ -21,6 +22,11 @@ public:
 	virtual std::vector<std::string> getTopFive() = 0;
 	virtual int getWinnerPointOfUsers(std::string user) = 0;
 	//virtual void addUserStatistics();
+
+
+	//4.0.0
+	virtual std::vector<question> getQuestions(int number) = 0;
+
 
 	virtual void open() = 0;
 	virtual void close() = 0;

@@ -1,5 +1,7 @@
 #include "GameManager.h"
 
+
+
 GameManager::GameManager(IDatabase* myDatabase)
 {
     this->m_database = myDatabase;
@@ -8,15 +10,29 @@ GameManager::GameManager(IDatabase* myDatabase)
 
 
 
-//Game GameManager::createGame(Room value)
-//{
-//    the id is the id of the room
-//    std::vector<question> list;
-//
-//    int id;
-//
-//    return Game(list, value.getAllUsers());
-//}
+
+Game GameManager::createGame(Room value)
+{
+    std::vector<question> question_list;
+    std::map<LoggedUser, GameData> myUsersList;
+
+    std::vector<LoggedUser> myUsers = value.getAllUsers();
+
+    
+    question_list = this->m_database->getQuestions(value.getRoomData().numOfQuestionsInGame);
+
+    int id = value.getRoomData().id;
+
+    
+    
+    for (auto itr = myUsers.begin(); itr != myUsers.end(); itr++)
+    {
+        
+       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, GameData(question_list.front())));
+    }
+    
+    return Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList);
+}
 
 void GameManager::deleteGame(Game x)
 {
@@ -27,5 +43,4 @@ Game& GameManager::getGame(int _id)
 {
     return this->m_games.at(_id);
 }
-
 

@@ -12,6 +12,10 @@ struct GameData
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	unsigned int averangeAnswerTime;
+	GameData(question e){
+		currentQuestion = e;
+		
+	}
 };
 
 
@@ -22,6 +26,7 @@ public:
 	void getQuestion(LoggedUser user);
 	void submitAnswer(LoggedUser, std::string answer);
 	void removePlayer(LoggedUser);
+	int getNumOfPlayers();
 	int getId();
 private:
 	int _id;

@@ -59,14 +59,14 @@ CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> 
     
     auto j = json::parse(buffer.begin(), buffer.end());
     CreateRoomRequest createRoomReq;
-    std::string cock;
-    cock = j["answerTimeout"];
-    createRoomReq.answerTimeout = std::stoi(cock);
-    cock = j["questionCount"];
-    createRoomReq.questionCount = std::stoi(cock);
+    std::string parsing;
+    parsing = j["answerTimeout"];
+    createRoomReq.answerTimeout = std::stoi(parsing);
+    parsing = j["questionCount"];
+    createRoomReq.questionCount = std::stoi(parsing);
     createRoomReq.roomName = j["roomName"];
-    cock = j["maxUsers"];
-    createRoomReq.maxUsers = std::stoi(cock);
+    parsing = j["maxUsers"];
+    createRoomReq.maxUsers = std::stoi(parsing);
 
 
     return createRoomReq;
@@ -74,5 +74,13 @@ CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> 
 
 SubmitAnswerRequest JRPD::deserializeSubmitAnswerRequest(std::vector<unsigned char> buffer)
 {
-    return SubmitAnswerRequest();
+    SubmitAnswerRequest submitAnswer;
+    std::string strAnswer, strQuestion;
+    auto j = json::parse(buffer.begin(), buffer.end());
+
+    strAnswer = j["answerId"];
+    strQuestion = j["question"];
+    submitAnswer.answerId = std::stoi(strAnswer);
+
+    return submitAnswer;
 }

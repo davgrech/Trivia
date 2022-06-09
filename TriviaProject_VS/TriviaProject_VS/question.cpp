@@ -10,6 +10,10 @@ question::question(std::string question, std::vector<std::string> _possibleAnswe
 
 }
 
+question::question()
+{
+}
+
 std::string question::getQuestion()
 {
     return this->m_question;

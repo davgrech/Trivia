@@ -14,4 +14,10 @@ public:
 private:
 	IDatabase* m_database;
 	std::map<int, Game> m_games;
+
+
+
+	
+
+
 };
