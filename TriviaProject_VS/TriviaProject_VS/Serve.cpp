@@ -114,12 +114,10 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_ROOM, NULL,std::vector<unsigned char>() });
 		}
 		//here put if it is in game  -> so just leave because admin can close only before starting
-		else if (true)
+		else if (this->_clients.at(socket)->getType() == typeid(RoomMemberRequestHandler*).name())
 		{
-
+			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_GAME, NULL, std::vector<unsigned char>() });
 		}
-
-		
 	}
 
 	std::lock_guard<std::mutex> mtx1(user_map);

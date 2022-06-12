@@ -24,11 +24,15 @@ Game GameManager::createGame(Room value)
     int id = value.getRoomData().id;
 
     
-    
+    GameData tempGameData;
     for (auto itr = myUsers.begin(); itr != myUsers.end(); itr++)
     {
-        
-       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, GameData()));
+        //init GameData
+        tempGameData.averangeAnswerTime = 0;
+        tempGameData.correctAnswerCount = 0;
+        tempGameData.wrongAnswerCount = 0;
+        tempGameData.doesActive = true;
+       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, tempGameData));
     }
     
     return Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList);

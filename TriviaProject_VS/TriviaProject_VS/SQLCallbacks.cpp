@@ -104,13 +104,13 @@ int getQuestionsCallBack(void* pQuestions, int argc, char** colData, char** colN
             case 6:
             {
                 //correct Answer
-                myPossibleAnswers.push_back(colData[6]);
+                myResult->push_back(question(myQuestion, myPossibleAnswers, colData[6]));
                 break;
             }
         }
     }
 
-    myResult->push_back(question(myQuestion, myPossibleAnswers));
+    
     return 0;
 }
 

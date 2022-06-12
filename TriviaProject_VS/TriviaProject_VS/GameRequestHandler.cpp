@@ -53,13 +53,48 @@ GameRequestHandler::GameRequestHandler(RequestHandleFactory& _handlerFactory, in
 
 RequestResult GameRequestHandler::getQuestions(RequestInfo myInfo)
 {
+    GetQuestionResponse myResponse;
+    question myQuestion;
+    myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getQuestion(this->m_user);
+    myResponse.question = myQuestion.getQuestion();
+    myResponse.results = myQuestion.getPossibleAnswers();
     
     return RequestResult();
 }
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
 {
-    return RequestResult();
+    SubmitAnswerRequest myRequest;
+    SubmitAnswerResponse myResponse;
+    bool isCorrect;
+
+
+
+    myRequest = JRPD::deserializeSubmitAnswerRequest(myInfo.buffer);
+
+    //get question 
+    question myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getQuestion(this->m_user);
+
+    //check if question of client is valid
+    if (myRequest.answerId != 'A' || myRequest.answerId != 'B' || myRequest.answerId != 'C' || myRequest.answerId != 'D') {
+        throw std::exception("didnt sent a type of answer");
+    }
+        
+    //get the answer in string
+    std::string myAnswer = myQuestion.getPossibleAnswers()[int(myRequest.answerId) - 17];
+    int time = 0;
+
+    //calculate the time in seconds
+    time = static_cast<int>(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+        - this->m_gameManager.getGame(this->m_game.getId()).getStartingPoint(this->m_user);
+
+    //submit answer
+    isCorrect = this->m_gameManager.getGame(this->m_game.getId()).submitAnswer(this->m_user, myAnswer, time);
+
+    //return 0 if 
+    myResponse.status = isCorrect;
+
+    return RequestResult{JRPS::serializeResponse(myResponse), this};
 }
 
 RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
@@ -95,11 +130,19 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo myInfo)
 bool GameRequestHandler::doesGameEnd(std::vector<PlayerResults> myResults)
 {
     for (auto itr = myResults.begin(); itr != myResults.end(); itr++) {
-        //if one of the players didnt finish all the questions then game isnt finish
-        if (itr->correctAnswerCount + itr->wrongAnswerCount != this->m_game.getNumOfQuestions())
+        
+        //only check if player finished if he didnt leave. if he left
+        if (this->m_gameManager.getGame(this->m_game.getId()).doesUserActive(itr->username))
         {
-            return false;
+
+            //if one of the players didnt finish all the questions then game isnt finish
+
+            if (itr->correctAnswerCount + itr->wrongAnswerCount != this->m_game.getNumOfQuestions())
+            {
+                return false;
+            }
         }
+        
     }
     return true;
 }

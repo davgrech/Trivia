@@ -251,10 +251,6 @@ std::vector<unsigned char> JRPS::serializeResponse(GetGameResultsResponse value)
     std::string json = "{\"status\":\"" + std::to_string(value.status) + "\", \"Results\": [";
     for (PlayerResults item : value.results)
     {
-        item.averageAnswerTime;
-        item.correctAnswerCount;
-        item.username;
-        item.wrongAnswerCount;
         json += "{\"averageAnswerTime\":\"" + std::to_string(item.averageAnswerTime) + "\",";
         json += "\"correctAnswerCount\":\"" + std::to_string(item.correctAnswerCount) + "\",";
         json += "\"username\": \"" + item.username + "\",";

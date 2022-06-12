@@ -28,7 +28,7 @@ struct CreateRoomRequest
 
 struct SubmitAnswerRequest
 {
-	unsigned int answerId;
+	unsigned char answerId;
 };
 
 
