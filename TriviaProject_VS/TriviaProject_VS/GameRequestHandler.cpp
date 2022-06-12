@@ -2,7 +2,7 @@
 
 bool GameRequestHandler::isRequestRelevant(RequestInfo request)
 {
-    return CLIENT_LEAVE_GAME || CLIENT_GET_QUESTION || CLIENT_SUBMIT_ANSWER || CLIENT_GET_GAME_RESULT;
+    return CLIENT_LEAVE_GAME == request.id || CLIENT_GET_QUESTION == request.id || CLIENT_SUBMIT_ANSWER == request.id || CLIENT_GET_GAME_RESULT == request.id;
 }
 
 RequestResult GameRequestHandler::handleRequest(RequestInfo value)
