@@ -79,7 +79,7 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo value)
         {
 
             //will be changed to game handler
-            return RequestResult{ JRPS::serializeResponse(res), this };
+            return RequestResult{ JRPS::serializeResponse(res), m_handlerFactory.createGameRequestHandler(this->m_room.getRoomData().id, this->m_user)};
             break;
         }
         default:
@@ -97,6 +97,6 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo value)
     this->m_handlerFactory.getGameManager().createGame(this->m_room);
 
 
-    //need to be changed
-    return RequestResult{JRPS::serializeResponse(res), this};
+
+    return RequestResult{JRPS::serializeResponse(res), m_handlerFactory.createGameRequestHandler(this->m_room.getRoomData().id, m_user)};
 }

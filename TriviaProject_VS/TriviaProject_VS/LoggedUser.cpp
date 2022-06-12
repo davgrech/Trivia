@@ -8,9 +8,14 @@ LoggedUser::LoggedUser(std::string name)
     this->m_username = name;
 }
 
-std::string LoggedUser::getUsername()
+std::string LoggedUser::getUsername() const
 {
     return this->m_username;
+}
+
+bool LoggedUser::operator==(const LoggedUser& a)
+{
+    return this->m_username == a.m_username;
 }
 
 bool operator==(const LoggedUser& a, const LoggedUser& b)

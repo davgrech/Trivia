@@ -27,6 +27,12 @@ enum msgType : byte
 	//statistic related
 	CLIENT_GET_STATS_USER = 12,
 	CLIENT_HIGH_SCORE = 13, 
+
+	//4.0.0
+	CLIENT_LEAVE_GAME = 14,
+	CLIENT_GET_QUESTION = 15,
+	CLIENT_SUBMIT_ANSWER = 16,
+	CLIENT_GET_GAME_RESULT = 17,
 	
 	
 

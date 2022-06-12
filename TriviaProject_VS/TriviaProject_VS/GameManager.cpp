@@ -28,7 +28,7 @@ Game GameManager::createGame(Room value)
     for (auto itr = myUsers.begin(); itr != myUsers.end(); itr++)
     {
         
-       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, GameData(question_list.front())));
+       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, GameData()));
     }
     
     return Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList);

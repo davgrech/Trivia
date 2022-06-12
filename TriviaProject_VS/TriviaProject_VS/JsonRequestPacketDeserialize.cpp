@@ -75,11 +75,10 @@ CreateRoomRequest JRPD::deserializeCreateRoomRequest(std::vector<unsigned char> 
 SubmitAnswerRequest JRPD::deserializeSubmitAnswerRequest(std::vector<unsigned char> buffer)
 {
     SubmitAnswerRequest submitAnswer;
-    std::string strAnswer, strQuestion;
+    std::string strAnswer;
     auto j = json::parse(buffer.begin(), buffer.end());
 
     strAnswer = j["answerId"];
-    strQuestion = j["question"];
     submitAnswer.answerId = std::stoi(strAnswer);
 
     return submitAnswer;

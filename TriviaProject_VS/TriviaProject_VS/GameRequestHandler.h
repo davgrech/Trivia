@@ -27,5 +27,7 @@ private:
 	RequestResult submitAnswer(RequestInfo myInfo);
 	RequestResult getGameResults(RequestInfo myInfo);
 	RequestResult leaveGame(RequestInfo myInfo);
+
+	bool doesGameEnd(std::vector<PlayerResults> myResults);
 	
 };

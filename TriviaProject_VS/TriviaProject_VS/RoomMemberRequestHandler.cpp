@@ -116,7 +116,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo value)
         {
 
             //will be changed to game handler
-            return RequestResult{JRPS::serializeResponse(res),this};
+            return RequestResult{JRPS::serializeResponse(res), m_handlerFactory.createGameRequestHandler(this->m_room.getRoomData().id, m_user)};
             break;
         }
         default:

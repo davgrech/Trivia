@@ -12,21 +12,42 @@ Game::Game()
 
 void Game::getQuestion(LoggedUser user)
 {
+
 }
 
-void Game::submitAnswer(LoggedUser, std::string answer)
+void Game::submitAnswer(LoggedUser user, std::string answer)
 {
 }
 
-void Game::removePlayer(LoggedUser)
+void Game::removePlayer(LoggedUser user)
 {
+	m_players.erase(user);
+	
+}
+
+std::vector<PlayerResults> Game::getResults()
+{
+	PlayerResults temp;
+	std::vector<PlayerResults> myGameResults;
+	for (auto it = this->m_players.begin(); it != this->m_players.end(); it++)
+	{
+		temp.averageAnswerTime = it->second.averangeAnswerTime;
+		temp.correctAnswerCount = it->second.correctAnswerCount;
+		temp.username = it->first.getUsername();
+		temp.wrongAnswerCount = it->second.wrongAnswerCount;
+		myGameResults.push_back(temp);
+	}
+	return myGameResults;
 }
 
 int Game::getNumOfPlayers()
 {
 	return this->m_players.size();
 }
-
+int Game::getNumOfQuestions()
+{
+	return this->m_questions.size();
+}
 int Game::getId()
 {
 	return _id;
