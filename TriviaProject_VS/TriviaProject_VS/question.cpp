@@ -12,6 +12,7 @@ question::question(std::string question, std::vector<std::string> _possibleAnswe
 
 question::question()
 {
+    this->m_question = "";
 }
 
 std::string question::getQuestion()

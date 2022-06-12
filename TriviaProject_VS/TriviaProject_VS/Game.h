@@ -28,24 +28,32 @@ class Game
 public:
 	Game(int timeForQuestion, int idOfGame, std::vector<question> myQuestions, std::map<LoggedUser, GameData> listUsers);
 	Game();
-	question getQuestion(LoggedUser user);
-	question getCurrentQuestion(LoggedUser user);
+	
+	
 
-
+	//requests
 	bool submitAnswer(LoggedUser user, std::string answer,int time);
 	void removePlayer(LoggedUser user);
+	question getQuestionRequst(LoggedUser user);
 	std::vector<PlayerResults> getResults();
+
+
+	//getters
 	int getNumOfPlayers();
 	int getNumOfQuestions();
 	int getId();
 	int getStartingPoint(LoggedUser user) const;
 	std::map<LoggedUser, GameData> getPlayers() const;
-
+	question getCurrentQuestion(LoggedUser user);
 	bool doesUserActive(LoggedUser user) const;
+
+
 private:
 	int _id;
 	int _timeForQustion;
 	std::vector<question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
+	std::string  getNotAnsweredQuestion(LoggedUser user);
+	bool isNotInAnsweredQuestions(LoggedUser user, question myQuestion);
 	
 };

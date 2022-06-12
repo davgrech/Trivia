@@ -55,11 +55,17 @@ RequestResult GameRequestHandler::getQuestions(RequestInfo myInfo)
 {
     GetQuestionResponse myResponse;
     question myQuestion;
-    myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getQuestion(this->m_user);
+
+    //get my current msg
+    myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getQuestionRequst(this->m_user);
+
     myResponse.question = myQuestion.getQuestion();
     myResponse.results = myQuestion.getPossibleAnswers();
-    
-    return RequestResult();
+
+    myResponse.question == "" ? myResponse.status = 0 : myResponse.status = 1;
+
+
+    return RequestResult{JRPS::serializeResponse(myResponse), this};
 }
 
 RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
@@ -73,10 +79,10 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
     myRequest = JRPD::deserializeSubmitAnswerRequest(myInfo.buffer);
 
     //get question 
-    question myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getQuestion(this->m_user);
+    question myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getCurrentQuestion(this->m_user);
 
     //check if question of client is valid
-    if (myRequest.answerId != 'A' || myRequest.answerId != 'B' || myRequest.answerId != 'C' || myRequest.answerId != 'D') {
+    if (myRequest.answerId != 'A' && myRequest.answerId != 'B' && myRequest.answerId != 'C' && myRequest.answerId != 'D') {
         throw std::exception("didnt sent a type of answer");
     }
         
@@ -103,7 +109,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
     GetGameResultsResponse myResponse;
     myResponse.results = this->m_gameManager.getGame(this->m_game.getId()).getResults();
     myResponse.status;
-    myResponse.status = (int)doesGameEnd(myResponse.results);
+    myResponse.status = doesGameEnd(myResponse.results);
     if (!myResponse.status)
     {
         myResponse.results.clear();

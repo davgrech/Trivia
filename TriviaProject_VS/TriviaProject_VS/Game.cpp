@@ -10,15 +10,64 @@ Game::Game()
 	
 }
 
-question Game::getQuestion(LoggedUser user)
+
+
+std::string Game::getNotAnsweredQuestion(LoggedUser user)
 {
-	
+
+
+	for (auto it = m_questions.begin(); it != m_questions.end(); it++)
+	{
+		if (isNotInAnsweredQuestions(user, *it))
+		{
+			return it->getQuestion();
+		}
+	}
+
+
+	return "";
+}
+bool Game::isNotInAnsweredQuestions(LoggedUser user, question myQuestion)
+{
+	std::vector<question> myAnsweredQuestions = this->m_players.at(user).hasAlreadyAnswered;
+	for (auto it = myAnsweredQuestions.begin(); it != myAnsweredQuestions.end(); it++)
+	{
+		if (!it->getQuestion().compare(myQuestion.getQuestion()))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+
+
+
+
+
+question Game::getQuestionRequst(LoggedUser user)
+{
+	question myQuestion;
 	this->m_players.at(user).startingPoint = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+	std::string questionInString = getNotAnsweredQuestion(user);
 
 
 
 	//putting some algorithem to get a random question that doesnt appear in alreadyAnswered 
-	return;
+
+	//if no questions left the output is ""
+	for (auto it = m_questions.begin(); it != m_questions.end(); it++)
+	{
+		if (!it->getQuestion().compare(questionInString))
+		{
+			myQuestion = *it;
+			this->m_players.at(user).currentQuestion = myQuestion;
+		}
+	}
+
+	
+	return myQuestion;
 }
 question Game::getCurrentQuestion(LoggedUser user)
 {
@@ -28,24 +77,36 @@ question Game::getCurrentQuestion(LoggedUser user)
 
 bool Game::submitAnswer(LoggedUser user, std::string answer, int time )
 {
+	bool isCorrect = false;
 	if (!answer.compare(m_players.at(user).currentQuestion.getCorrectAnswer())){
 
-		m_players.at(user).correctAnswerCount++;
 		
-
-		this->m_players.at(user).averangeAnswerTime = (this->m_players.at(user).averangeAnswerTime + time)
-			/ (this->m_players.at(user).correctAnswerCount + this->m_players.at(user).wrongAnswerCount);
-
-
-
-		return true;
+		isCorrect = true;
+		m_players.at(user).correctAnswerCount++;
 	}
-	return false;
+	else
+	{
+		m_players.at(user).wrongAnswerCount++;
+		isCorrect = false;
+		
+	}
+
+	//calculating avg time
+	this->m_players.at(user).averangeAnswerTime = (this->m_players.at(user).averangeAnswerTime + time)
+		/ (this->m_players.at(user).correctAnswerCount + this->m_players.at(user).wrongAnswerCount);
+
+
+	//restarting starting point
+	this->m_players.at(user).startingPoint = 0;
+
+	//save the question that he answered
+	this->m_players.at(user).hasAlreadyAnswered.push_back(m_players.at(user).currentQuestion);
+
+	return isCorrect;
 }
 
 void Game::removePlayer(LoggedUser user)
 {
-	m_players.erase(user);
 	m_players.at(user).doesActive = false;
 }
 
@@ -96,3 +157,5 @@ bool Game::doesUserActive(LoggedUser user) const
 {
 	return this->m_players.at(user).doesActive;
 }
+
+
