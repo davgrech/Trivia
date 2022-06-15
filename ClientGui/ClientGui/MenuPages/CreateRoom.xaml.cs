@@ -66,9 +66,18 @@ namespace ClientGui.MenuPages
                 string stringID = magic["Id"];
                 int id = Int16.Parse(stringID);
                 dynamic results = JsonConvert.DeserializeObject(createInfo);
-              
-                AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user, results["answerTimeout"]) ;
-                waitingWindow.Show();
+                if(isQuickCreate)
+                {
+                    AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user, results["answerTimeout"]);
+                    waitingWindow.Show();
+                }
+                else
+                {
+                    AdminWaitingRoom waitingWindow = new AdminWaitingRoom(mySock, id, user, Int32.Parse(txtQuestionTimeout.Text));
+                    waitingWindow.Show();
+                }
+                
+               
             }
             else
             {
