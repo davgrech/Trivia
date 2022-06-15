@@ -4,9 +4,75 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientGui"
-        mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         
-    </Grid>
+         Background="{x:Null}"
+        mc:Ignorable="d"
+        Title="MenuHandler" Height="650" Width="1024"
+        WindowStyle = "None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        >
+
+    <Border Background="#272537"
+            CornerRadius="20">
+        <Grid>
+            <Border CornerRadius="20">
+                
+
+
+                <StackPanel Margin="0,0,0,561" Background="White" >
+
+                </StackPanel>
+            </Border>
+
+            <Border CornerRadius="20" Margin="10,130,0,0">
+                <StackPanel Margin="-10,-42,0,296" Background="AntiqueWhite" >
+
+                </StackPanel>
+            </Border>
+            <Button x:Name="ANSWER_BLUE" Margin="0,500,512,0" BorderThickness="4" BorderBrush="White" Background="Blue" Height="150" />
+            <Button x:Name="ANSWER_GREEN" Margin="0,350,512,150" BorderThickness="4" BorderBrush="white" Background="green" Height="150" />
+            <Button x:Name="ANSWER_YELLOW"  Margin="512,500,0,0" BorderThickness="4" BorderBrush="white"  Background="Yellow" Height="150" />
+            <Button x:Name="ANSWER_RED" Margin="512,350,0,150" BorderThickness="4" BorderBrush="white" Background="red" Height="150" />
+            <TextBlock x:Name="txtQUESTION" FontSize="30" FontWeight="Bold" VerticalAlignment="Top" Text="hello world" Margin="106,10,96,0" Height="74"/>
+            <Button Width="70" Background="MediumPurple" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="10,182,944,412"/>
+
+            <Button x:Name="returnBtn" Content="Give Up" Margin="922,93,10,525" />
+
+            <Button 
+                         materialDesign:ButtonAssist.CornerRadius="20"
+                         x:Name="btnExit"
+                         Height="70"
+                         Foreground="RoyalBlue"
+                         FontSize="20"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Width="75"
+                         FontWeight="Bold"
+                         Style="{StaticResource MaterialDesignFlatButton}" Margin="0,10,10,0" >
+                <Image Source="/Resources/xBtn1.png" RenderTransformOrigin="0.5,0.5" Height="36" Width="39"
+                       >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+            </Button>
+
+
+
+        </Grid>
+
+
+
+    </Border>
+
+
 </Window>

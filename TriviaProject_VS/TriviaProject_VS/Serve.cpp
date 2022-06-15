@@ -114,7 +114,7 @@ void serveTool::Disconnected(SOCKET socket, std::string userName)
 			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_ROOM, NULL,std::vector<unsigned char>() });
 		}
 		//here put if it is in game  -> so just leave because admin can close only before starting
-		else if (this->_clients.at(socket)->getType() == typeid(RoomMemberRequestHandler*).name())
+		else if (this->_clients.at(socket)->getType() == typeid(GameRequestHandler*).name())
 		{
 			this->_clients.at(socket)->handleRequest(RequestInfo{ CLIENT_LEAVE_GAME, NULL, std::vector<unsigned char>() });
 		}
@@ -395,6 +395,7 @@ void serveTool::cHandler(SOCKET client)
 				{
 					if (handler->isRequestRelevant(msgInfo)) {
 						std::lock_guard<std::mutex> mtx1(room_manager);
+						std::lock_guard<std::mutex> mtx2(game_manager);
 						reqResult = handler->handleRequest(msgInfo);
 
 
@@ -424,13 +425,65 @@ void serveTool::cHandler(SOCKET client)
 					if (handler->isRequestRelevant(msgInfo)) {
 						std::lock_guard<std::mutex> mtx1(statistic_manager);
 						reqResult = handler->handleRequest(msgInfo);
-						
+
 					}
 					else
 					{
 						throw std::exception("you are not in the right handler");
 					}
 
+					break;
+				}
+				case CLIENT_LEAVE_GAME:
+				{
+					if(handler->isRequestRelevant(msgInfo))
+					{
+						std::lock_guard<std::mutex> mtx1(game_manager);
+						reqResult = handler->handleRequest(msgInfo);
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
+					}
+					break;
+				}
+				case CLIENT_GET_QUESTION:
+				{
+					if (handler->isRequestRelevant(msgInfo))
+					{
+						std::lock_guard<std::mutex> mtx1(game_manager);
+						reqResult = handler->handleRequest(msgInfo);
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
+					}
+					break;
+				}
+				case CLIENT_SUBMIT_ANSWER:
+				{
+					if (handler->isRequestRelevant(msgInfo))
+					{
+						std::lock_guard<std::mutex> mtx1(game_manager);
+						reqResult = handler->handleRequest(msgInfo);
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
+					}
+					break;
+				}
+				case CLIENT_GET_GAME_RESULT:
+				{
+					if (handler->isRequestRelevant(msgInfo))
+					{
+						std::lock_guard<std::mutex> mtx1(game_manager);
+						reqResult = handler->handleRequest(msgInfo);
+					}
+					else
+					{
+						throw std::exception("you are not in the right handler");
+					}
 					break;
 				}
 				default:
@@ -471,7 +524,7 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					if (this->sock_to_user.count(client) > 0)
+					if (this->sock_to_user.count(client) > 0) //if loggined
 					{
 						Disconnected(client, sock_to_user.at(client));
 

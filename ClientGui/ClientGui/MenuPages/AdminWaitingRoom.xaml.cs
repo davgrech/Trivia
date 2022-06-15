@@ -58,7 +58,6 @@ namespace ClientGui.MenuPages
             mysock = client;
             userName = name;
             roomID = Id;
-
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += getStateWorker;
@@ -162,6 +161,7 @@ namespace ClientGui.MenuPages
             string myResponse = ReciveInformationFromServer();
 
             this.Close();
+
             GameWindow myWindow = new GameWindow();
             myWindow.Show();
 

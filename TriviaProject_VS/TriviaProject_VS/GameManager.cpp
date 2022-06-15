@@ -34,6 +34,8 @@ Game GameManager::createGame(Room value)
         tempGameData.doesActive = true;
        myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, tempGameData));
     }
+
+    this->m_games.insert(std::pair<int, Game>(id, Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList)));
     
     return Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList);
 }
@@ -46,6 +48,7 @@ void GameManager::deleteGame(Game x)
 Game& GameManager::getGame(int _id)
 {
     Game* x = new Game();
+    
     if (this->m_games.find(_id) != this->m_games.end())
     {
         return this->m_games.at(_id);

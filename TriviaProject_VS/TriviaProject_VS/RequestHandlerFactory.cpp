@@ -64,7 +64,6 @@ GameRequestHandler* RequestHandleFactory::createGameRequestHandler(int id, Logge
         }
         catch(...){}
     }
-    return nullptr;
 }
 
 

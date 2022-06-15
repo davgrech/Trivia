@@ -45,8 +45,8 @@ std::string GameRequestHandler::getType()
     return typeid(this).name();
 }
 
-GameRequestHandler::GameRequestHandler(RequestHandleFactory& _handlerFactory, int id, LoggedUser user) : m_user(user), m_handlerFactory(_handlerFactory)
-, m_game(m_handlerFactory.getGameManager().getGame(id)), m_gameManager(_handlerFactory.getGameManager())
+GameRequestHandler::GameRequestHandler(RequestHandleFactory& _handlerFactory, int id, LoggedUser user) : m_user(user), m_handlerFactory(_handlerFactory),
+m_gameManager(_handlerFactory.getGameManager()), m_game(_handlerFactory.getGameManager().getGame(id))
 {
    
 }
