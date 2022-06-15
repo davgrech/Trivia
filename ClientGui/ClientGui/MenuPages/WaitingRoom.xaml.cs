@@ -34,6 +34,7 @@ namespace ClientGui.MenuPages
         string userName;
         int timeperquestion = 0;
         List<string> m_players;
+        int maxQuestions = 0;
         public class roomStateResponse
         {
 
@@ -49,12 +50,13 @@ namespace ClientGui.MenuPages
         private BackgroundWorker background_worker = new BackgroundWorker();
 
 
-        public WaitingRoom(Socket _mysock, string _userName, int secondsPerQustion)
+        public WaitingRoom(Socket _mysock, string _userName, int secondsPerQustion, int _maxQuestions)
         {
             InitializeComponent();
             mysock = _mysock;
             userName = _userName;
             timeperquestion = secondsPerQustion;
+            maxQuestions = _maxQuestions;
 
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
@@ -137,7 +139,7 @@ namespace ClientGui.MenuPages
             }
             else if(isClose == 2)
             {
-                GameWindow myWindow = new GameWindow(mysock, userName, timeperquestion);
+                GameWindow myWindow = new GameWindow(mysock, userName, timeperquestion, maxQuestions);
                 this.Close();
                 myWindow.Show();
             }

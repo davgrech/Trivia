@@ -57,6 +57,14 @@ namespace ClientGui.MenuPages
             public int timePerQuestion { get; set; }
             public int isActive { get; set; }
         }
+        public class getroomstateresponse
+        {
+            public int status;
+            public bool hasGameBegun;
+            public List<string> players = new List<string>();
+            public int questionCount;
+            public int answerTimeout;
+        }
         public class getRoomsResponse
         {
             public List<RoomData> rooms { get; set;}
@@ -255,7 +263,8 @@ namespace ClientGui.MenuPages
                 if (!(rec.Contains("message"))) // if there isnt an error
                 {
                     background_worker.CancelAsync();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, v.timePerQuestion); 
+                    
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, v.timePerQuestion, v.numberOfQuestions); 
                     WaitingWindow.Show(); // connect and display waiting room
                     return true;
                 }
@@ -280,11 +289,7 @@ namespace ClientGui.MenuPages
 
             if (index != -1) // index under 0 isnt valid
             {
-                string to_send = "90000";
-                 SendInfrmaionToServer(to_send);
-                string recv = ReciveInformationFromServer();
                 
-               RoomData room_data = JsonConvert.DeserializeObject<RoomData>(recv);
 
                 
 
@@ -313,10 +318,14 @@ namespace ClientGui.MenuPages
                 {
                     background_worker.CancelAsync();
                     this.Close();
+                    string to_send = "90000";
+                    SendInfrmaionToServer(to_send);
+                    string recv = ReciveInformationFromServer();
+
+                    getroomstateresponse room_data = JsonConvert.DeserializeObject<getroomstateresponse>(recv);
+
                     
-
-
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, room_data.timePerQuestion);
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, room_data.answerTimeout, room_data.questionCount);
                     WaitingWindow.Show();
 
 

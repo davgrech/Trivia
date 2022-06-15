@@ -14,10 +14,10 @@ GameManager::GameManager(IDatabase* myDatabase)
 Game GameManager::createGame(Room value)
 {
     std::vector<question> question_list;
-    std::map<LoggedUser, GameData> myUsersList;
+    std::map<LoggedUser, GameData> myUsersList =  std::map<LoggedUser, GameData>();
 
     std::vector<LoggedUser> myUsers = value.getAllUsers();
-
+    std::map<std::string, GameData> proTest = std::map<std::string, GameData>();
     
     question_list = this->m_database->getQuestions(value.getRoomData().numOfQuestionsInGame);
 
@@ -25,16 +25,18 @@ Game GameManager::createGame(Room value)
 
     
     GameData tempGameData;
+    std::vector<std::string> x;
+    tempGameData.averangeAnswerTime = 0;
+    tempGameData.correctAnswerCount = 0;
+    tempGameData.wrongAnswerCount = 0;
+    tempGameData.doesActive = true;
     for (auto itr = myUsers.begin(); itr != myUsers.end(); itr++)
-    {
-        //init GameData
-        tempGameData.averangeAnswerTime = 0;
-        tempGameData.correctAnswerCount = 0;
-        tempGameData.wrongAnswerCount = 0;
-        tempGameData.doesActive = true;
-       myUsersList.insert(std::pair<LoggedUser, GameData>(*itr, tempGameData));
+   {
+        myUsersList.insert({ LoggedUser(*itr), tempGameData });
+        
+       
+        
     }
-
     this->m_games.insert(std::pair<int, Game>(id, Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList)));
     
     return Game(value.getRoomData().timePerQuestion, id, question_list, myUsersList);

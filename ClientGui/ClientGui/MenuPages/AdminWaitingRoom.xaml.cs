@@ -51,14 +51,16 @@ namespace ClientGui.MenuPages
         string userName;
         int roomID = 0;
         int timeperquestion = 0;
-
+        int maxQuestion = 0;
         private BackgroundWorker background_worker = new BackgroundWorker();
-        public AdminWaitingRoom(Socket client, int Id, string name, int timePerQuestion)
+        public AdminWaitingRoom(Socket client, int Id, string name, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
             mysock = client;
             userName = name;
             roomID = Id;
+            maxQuestion = _maxQuestion;
+
             timeperquestion = timePerQuestion;
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
@@ -164,7 +166,7 @@ namespace ClientGui.MenuPages
 
             this.Close();
 
-            GameWindow myWindow = new GameWindow(mysock, userName, timeperquestion);
+            GameWindow myWindow = new GameWindow(mysock, userName, timeperquestion, maxQuestion);
             myWindow.Show();
 
 

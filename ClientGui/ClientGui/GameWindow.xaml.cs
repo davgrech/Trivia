@@ -38,50 +38,55 @@ namespace ClientGui
             public string answerId;
         }
 
+        public class PlayersResults
+        {
+            public string username;
+            public int correctAnswerCount;
+            public int wrongAnswerCount;
+            public int averageAnswerTime;
+        }
+        public class GetGameResultsResponse
+        {
+            public int status;
+            public List<PlayersResults> results = new List<PlayersResults>();
+
+        }
+
         Socket mysock;
         string userName;
         private BackgroundWorker background_worker = new BackgroundWorker();
         private DispatcherTimer Timer;
         private int timeQuestion = 0;
         private int time = 0;
-        public GameWindow(Socket socket, string user, int timePerQuestion)
+        private int maxQuestion = 0;
+        public GameWindow(Socket socket, string user, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
 
             mysock = socket;
             userName = user;
-            timeQuestion = timePerQuestion + 1;
-
+            timeQuestion = timePerQuestion;
+            txtQuestionsLeft.Text = _maxQuestion.ToString();
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Tick += myGame;
             Timer.Start();
 
 
-            background_worker.WorkerSupportsCancellation = true;
-            background_worker.WorkerReportsProgress = true;
-            // put function -> do work ->background_worker.DoWork += getStateWorker;
-            // put function here where we can change -> background_worker.ProgressChanged += updatePlayersListBox;
-            background_worker.RunWorkerAsync();
 
-            // getRoomsResponse getRoomsResponse = JsonConvert.DeserializeObject<getRoomsResponse>(response);
-            string to_send = "?0000";
-            SendInfrmaionToServer(to_send);
-            string reciv = ReciveInformationFromServer();
-            GetQuestionResponse myQuestion = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv);
-            if(myQuestion != null)
+          
+            int res = getQuestion();
+            if (res == 0)
             {
-                txtQUESTION.Text = myQuestion.question;
-                txtANSWER_BLUE.Content = myQuestion.results.ElementAt(0); // A
-                txtANSWER_GREEN.Content = myQuestion.results.ElementAt(1); // B
-                txtANSWER_RED.Content = myQuestion.results.ElementAt(2); // C
-                txtANSWER_YELLOW.Content = myQuestion.results.ElementAt(3);//D
-
-
+                this.Close();
             }
+            
+           
             
 
         }
+
+
 
         void myGame(object sender, EventArgs e)
         {
@@ -92,9 +97,39 @@ namespace ClientGui
             }
             else
             {
-                time = timeQuestion + 1;
+                string recv = submitAnswer("X");
+                int res = getQuestion();
+                if(res == 0)
+                {
+                    this.Close();
+                }
+
+                time = timeQuestion;
+
             }
             
+        }
+       
+        
+
+
+        private int getQuestion()
+        {
+            string to_send = "?0000";
+            SendInfrmaionToServer(to_send);
+            string reciv = ReciveInformationFromServer();
+            GetQuestionResponse myQuestion = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv);
+            if (myQuestion != null)
+            {
+                txtQUESTION.Text = myQuestion.question;
+                txtANSWER_BLUE.Content = myQuestion.results.ElementAt(0); // A
+                txtANSWER_GREEN.Content = myQuestion.results.ElementAt(1); // B
+                txtANSWER_RED.Content = myQuestion.results.ElementAt(2); // C
+                txtANSWER_YELLOW.Content = myQuestion.results.ElementAt(3);//D
+
+
+            }
+            return myQuestion.status;
         }
         private string submitAnswer(string myAnswer)
         {
@@ -119,31 +154,7 @@ namespace ClientGui
             base.OnMouseLeftButtonDown(e);
             DragMove();
         }
-        /*
-         private void exit_toggle(object sender, RoutedEventArgs e)
-        {
-            background_worker.CancelAsync();
-            this.Visibility = Visibility.Hidden;
-            Environment.Exit(0);
-        }
-
-        private void return_toggle(object sender, RoutedEventArgs e)
-        {
-            //return to menu // close room
-            char command = ';';
-            string to_send = command + "0000";
-            SendInfrmaionToServer(to_send);
-
-            string msg = ReciveInformationFromServer();
-
-            background_worker.CancelAsync();
-            this.Close();
-            MenuWindow.MenuHandler myWindow = new MenuWindow.MenuHandler(mysock, userName);
-            myWindow.Show();
-
-        }
-         */
-
+       
 
 
         public string padMsg(string msg, int len)
@@ -215,6 +226,50 @@ namespace ClientGui
             this.Close();
             MenuWindow.MenuHandler myWindow = new MenuWindow.MenuHandler(mysock, userName);
             myWindow.Show();
+        }
+
+        private void blue_event(object sender, RoutedEventArgs e)
+        {
+            submitAnswer("A");
+            int res = getQuestion();
+            time = timeQuestion;
+            if (res== 0)
+            {
+                this.Close();
+            }
+        }
+
+        private void green_event(object sender, RoutedEventArgs e)
+        {
+            submitAnswer("B");
+            int res = getQuestion();
+            time = timeQuestion;
+            if (res == 0)
+            {
+                this.Close();
+            }
+        }
+
+        private void yellow_event(object sender, RoutedEventArgs e)
+        {
+            submitAnswer("D");
+            int res = getQuestion();
+            time = timeQuestion;
+            if (res == 0)
+            {
+                this.Close();
+            }
+        }
+
+        private void red_event(object sender, RoutedEventArgs e)
+        {
+            submitAnswer("C");
+            int res = getQuestion();
+            time = timeQuestion;
+            if (res == 0)
+            {
+                this.Close();
+            }
         }
     }
 }

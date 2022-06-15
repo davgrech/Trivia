@@ -524,16 +524,12 @@ void serveTool::cHandler(SOCKET client)
 			//sending
 			try {
 				if (send(client, responseString.c_str(), responseString.size(), 0) == INVALID_SOCKET) {
-					if (this->sock_to_user.count(client) > 0) //if loggined
-					{
-						Disconnected(client, sock_to_user.at(client));
+					
+					Disconnected(client, sock_to_user.at(client));
 
-					}
-					else
-					{
-						std::lock_guard<std::mutex> mtx2(connect_map);
-						this->_clients.erase(client);
-					}
+
+					
+					
 					return;
 				}
 				std::cout << "Response sent: " << responseString;

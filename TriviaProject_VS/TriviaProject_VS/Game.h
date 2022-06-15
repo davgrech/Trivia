@@ -46,7 +46,7 @@ public:
 	std::map<LoggedUser, GameData> getPlayers() const;
 	question getCurrentQuestion(LoggedUser user);
 	bool doesUserActive(LoggedUser user) const;
-
+	int getTimerPerQuestion();
 
 private:
 	

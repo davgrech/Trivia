@@ -83,23 +83,28 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
 
     //check if question of client is valid
     if (myRequest.answerId != "A" && myRequest.answerId != "B" && myRequest.answerId != "C" && myRequest.answerId != "D") {
-        throw std::exception("didnt sent a type of answer");
+        isCorrect =  this->m_gameManager.getGame(this->m_game.getId()).submitAnswer(this->m_user, "X", this->m_gameManager.getGame(this->m_game.getId()).getTimerPerQuestion());
+        myResponse.status = isCorrect;
+    }
+    else
+    {
+        int x = int(myRequest.answerId[0]) - 'A';
+        std::string myAnswer = myQuestion.getPossibleAnswers()[x];
+        int time = 0;
+
+        //calculate the time in seconds
+        time = static_cast<int>(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count())
+            - this->m_gameManager.getGame(this->m_game.getId()).getStartingPoint(this->m_user);
+
+        //submit answer
+        isCorrect = this->m_gameManager.getGame(this->m_game.getId()).submitAnswer(this->m_user, myAnswer, time);
+
+        //return 0 if 
+        myResponse.status = isCorrect;
     }
         
     //get the answer in string
-    int x = int(myRequest.answerId[0]) - 'A';
-    std::string myAnswer = myQuestion.getPossibleAnswers()[x];
-    int time = 0;
-
-    //calculate the time in seconds
-    time = static_cast<int>(std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count())
-        - this->m_gameManager.getGame(this->m_game.getId()).getStartingPoint(this->m_user);
-
-    //submit answer
-    isCorrect = this->m_gameManager.getGame(this->m_game.getId()).submitAnswer(this->m_user, myAnswer, time);
-
-    //return 0 if 
-    myResponse.status = isCorrect;
+   
 
     return RequestResult{JRPS::serializeResponse(myResponse), this};
 }
@@ -109,7 +114,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
 
     GetGameResultsResponse myResponse;
     myResponse.results = this->m_gameManager.getGame(this->m_game.getId()).getResults();
-    myResponse.status;
+  
     myResponse.status = doesGameEnd(myResponse.results);
     if (!myResponse.status)
     {
@@ -130,8 +135,9 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo myInfo)
     this->m_gameManager.getGame(this->m_game.getId()).removePlayer(this->m_user);
     if (isZeroPlayersActive())
     {
-        this->m_gameManager.deleteGame(this->m_game);
         this->m_handlerFactory.getRoomManager().deleteRoom(this->m_game.getId());
+        this->m_gameManager.deleteGame(this->m_game);
+       
 
     }
   

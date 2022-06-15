@@ -93,18 +93,27 @@ question Game::getCurrentQuestion(LoggedUser user)
 bool Game::submitAnswer(LoggedUser user, std::string answer, int time )
 {
 	bool isCorrect = false;
-	if (!answer.compare(m_players.at(user).currentQuestion.getCorrectAnswer())){
-
-		
-		isCorrect = true;
-		m_players.at(user).correctAnswerCount++;
-	}
-	else
+	if (answer == "X")
 	{
 		m_players.at(user).wrongAnswerCount++;
 		isCorrect = false;
-		
 	}
+	else
+	{
+		if (!answer.compare(m_players.at(user).currentQuestion.getCorrectAnswer())) {
+
+
+			isCorrect = true;
+			m_players.at(user).correctAnswerCount++;
+		}
+		else
+		{
+			m_players.at(user).wrongAnswerCount++;
+			isCorrect = false;
+
+		}
+	}
+	
 
 	//calculating avg time
 	this->m_players.at(user).averangeAnswerTime = (this->m_players.at(user).averangeAnswerTime + time)
@@ -123,15 +132,9 @@ bool Game::submitAnswer(LoggedUser user, std::string answer, int time )
 void Game::removePlayer(LoggedUser user)
 {
 	m_players.at(user).doesActive = false;
-	for(auto it = m_players.begin(); it != m_players.end(); it++)
-	{
-		if (it->second.doesActive)
-		{
-
-		}
-	}
-		
 	
+		
+	;
 }
 
 std::vector<PlayerResults> Game::getResults()
@@ -180,6 +183,11 @@ std::map<LoggedUser, GameData> Game::getPlayers() const
 bool Game::doesUserActive(LoggedUser user) const
 {
 	return this->m_players.at(user).doesActive;
+}
+
+int Game::getTimerPerQuestion()
+{
+	return this->_timeForQustion;
 }
 
 

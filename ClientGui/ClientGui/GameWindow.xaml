@@ -30,12 +30,12 @@
             <Border CornerRadius="20" Margin="10,130,0,0">
                 <StackPanel Margin="-10,-42,0,296" Background="AntiqueWhite" />
             </Border>
-            <Button x:Name="txtANSWER_BLUE"  Content="myAquestion"  FontSize="20" FontWeight="Bold" Margin="0,500,512,0" BorderThickness="4" BorderBrush="White" Background="Blue" Height="150" />
-            <Button x:Name="txtANSWER_GREEN" Content="myBquestion" FontSize="20" FontWeight="Bold" Margin="0,350,512,150" BorderThickness="4" BorderBrush="white" Background="green" Height="150" />
-            <Button x:Name="txtANSWER_YELLOW" Content="myCquestion" FontSize="20" FontWeight="Bold" Margin="512,500,0,0" BorderThickness="4" BorderBrush="white"  Background="Yellow" Height="150" />
-            <Button x:Name="txtANSWER_RED" Content="myDquestion" FontSize="20" FontWeight="Bold" Margin="512,350,0,150" BorderThickness="4" BorderBrush="white" Background="red" Height="150" />
-            <TextBlock x:Name="txtQUESTION" FontSize="30" FontWeight="Bold" VerticalAlignment="Top" Text="hello world" Margin="106,10,96,0" Height="74"/>
-            <Button  x:Name ="buttonTimmer" FontSize="20" FontWeight="Bold" Width="70" Background="MediumPurple" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="44,201,910,393"/>
+            <Button x:Name="txtANSWER_BLUE"  Content="myAquestion"  FontSize="20" FontWeight="Bold" Margin="0,500,512,0" BorderThickness="4" BorderBrush="White" Background="Blue" Height="150" Click="blue_event" />
+            <Button x:Name="txtANSWER_GREEN" Content="myBquestion" FontSize="20" FontWeight="Bold" Margin="0,350,512,150" BorderThickness="4" BorderBrush="white" Background="green" Height="150" Click="green_event" />
+            <Button x:Name="txtANSWER_YELLOW" Content="myCquestion" FontSize="20" FontWeight="Bold" Margin="512,500,0,0" BorderThickness="4" BorderBrush="white"  Background="#D8E0A613" Height="150" Click="yellow_event" />
+            <Button x:Name="txtANSWER_RED" Content="myDquestion" FontSize="20" FontWeight="Bold" Margin="512,350,0,150" BorderThickness="4" BorderBrush="white" Background="red" Height="150" Click="red_event" />
+            <TextBlock x:Name="txtQUESTION" FontSize="30" FontWeight="Bold" VerticalAlignment="Top" Text="hello world" Margin="34,10,85,0" Height="74"/>
+            <Button  x:Name ="buttonTimmer" FontSize="20" FontWeight="Bold" Width="70" Background="MediumPurple" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="933,160,21,434"/>
 
             <Button x:Name="returnBtn" Content="Give Up" Margin="922,93,10,525" Click="giveup_event" />
 
@@ -63,8 +63,8 @@
                 </Image>
 
             </Button>
-
-
+            <TextBlock x:Name="txtCorrect" Text="Correct: 0" FontWeight="Bold" FontSize="30" Margin="10,98,749,506"/>
+            <TextBlock x:Name="txtQuestionsLeft" FontWeight="Bold" FontSize="30" Text="Questions left: 0" Margin="10,149,749,462"/>
 
         </Grid>
 
