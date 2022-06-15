@@ -6,7 +6,7 @@
 class question
 {
 	public:
-		question(std::string question, std::vector<std::string> _possibleAnswers, std::string CHRcorrectAnswerIndex);
+		question(std::string question, std::vector<std::string> _possibleAnswers, std::string correctAnswer);
 		question();
 		std::string getQuestion();
 		std::vector<std::string> getPossibleAnswers();

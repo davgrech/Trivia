@@ -1,13 +1,13 @@
 #include "question.h"
 
 /*
-every question is a vector of {A,B,C,D} THE ANSWER IS A CHAR A/ B/ C/ D
+every question is a vector of {A,B,C,D} THE ANSWER IS A a string
 */
-question::question(std::string question, std::vector<std::string> _possibleAnswers, std::string CHRcorrectAnswerIndex)
+question::question(std::string question, std::vector<std::string> _possibleAnswers, std::string correctAnswer)
 {
     this->m_possibleAnswers = _possibleAnswers;
     this->m_question = question;
-    this->answer = CHRcorrectAnswerIndex;
+    this->answer = correctAnswer;
 }
 
 question::question()
@@ -27,8 +27,8 @@ std::vector<std::string> question::getPossibleAnswers()
 
 std::string question::getCorrectAnswer()
 {
-    int ascii = int(this->answer.c_str()) - 17;
-    return this->m_possibleAnswers[ascii];
+   
+    return this->answer;
     
 }
 

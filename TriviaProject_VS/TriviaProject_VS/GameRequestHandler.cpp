@@ -82,12 +82,13 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
     question myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getCurrentQuestion(this->m_user);
 
     //check if question of client is valid
-    if (myRequest.answerId != 'A' && myRequest.answerId != 'B' && myRequest.answerId != 'C' && myRequest.answerId != 'D') {
+    if (myRequest.answerId != "A" && myRequest.answerId != "B" && myRequest.answerId != "C" && myRequest.answerId != "D") {
         throw std::exception("didnt sent a type of answer");
     }
         
     //get the answer in string
-    std::string myAnswer = myQuestion.getPossibleAnswers()[int(myRequest.answerId) - 17];
+    int x = int(myRequest.answerId[0]) - 'A';
+    std::string myAnswer = myQuestion.getPossibleAnswers()[x];
     int time = 0;
 
     //calculate the time in seconds

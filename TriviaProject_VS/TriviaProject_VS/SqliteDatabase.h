@@ -18,15 +18,15 @@
 
 //questions - sql Table
 #define Q1 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q2 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q3 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q4 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q5 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q6 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q7 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q8 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q9 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
-#define Q10 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('1', 'a', 'b', 'c', 'd', 'a');"
+#define Q2 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('2', 'a', 'b', 'c', 'd', 'a');"
+#define Q3 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('3', 'a', 'b', 'c', 'd', 'a');"
+#define Q4 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('4', 'a', 'b', 'c', 'd', 'a');"
+#define Q5 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('5', 'a', 'b', 'c', 'd', 'a');"
+#define Q6 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('6', 'a', 'b', 'c', 'd', 'a');"
+#define Q7 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('7', 'a', 'b', 'c', 'd', 'a');"
+#define Q8 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('8', 'a', 'b', 'c', 'd', 'a');"
+#define Q9 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('9', 'a', 'b', 'c', 'd', 'a');"
+#define Q10 "INSERT INTO QUESTIONS (QUESTION, A, B,C, D, ANSWER) VALUES('10', 'a', 'b', 'c', 'd', 'a');"
 
 
 class SqliteDatabase : public IDatabase 

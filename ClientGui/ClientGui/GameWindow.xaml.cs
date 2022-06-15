@@ -33,6 +33,10 @@ namespace ClientGui
             public string question;
             public List<string> results = new List<string>();
         }
+        public class SubmitAnswerRequest
+        {
+            public string answerId;
+        }
 
         Socket mysock;
         string userName;
@@ -58,17 +62,39 @@ namespace ClientGui
             if(myQuestion != null)
             {
                 txtQUESTION.Text = myQuestion.question;
-                txtANSWER_BLUE.Content = myQuestion.results.ElementAt(0);
-                txtANSWER_GREEN.Content = myQuestion.results.ElementAt(1);
-                txtANSWER_RED.Content = myQuestion.results.ElementAt(2);
-                txtANSWER_YELLOW.Content = myQuestion.results.ElementAt(3);
+                txtANSWER_BLUE.Content = myQuestion.results.ElementAt(0); // A
+                txtANSWER_GREEN.Content = myQuestion.results.ElementAt(1); // B
+                txtANSWER_RED.Content = myQuestion.results.ElementAt(2); // C
+                txtANSWER_YELLOW.Content = myQuestion.results.ElementAt(3);//D
 
 
             }
+            submitAnswer("A");
+            string to_send1 = "?0000";
+            SendInfrmaionToServer(to_send);
+            string reciv1 = ReciveInformationFromServer();
+            GetQuestionResponse r1 = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv1);
+            if(r1 != null)
+            {
+                txtQUESTION.Text = r1.status.ToString();
+            }
+
+        }
+        private string submitAnswer(string myAnswer)
+        {
+            
+            var mySubmit = new SubmitAnswerRequest
+            {
+                answerId = myAnswer,
+            };
+            string jsonString = JsonConvert.SerializeObject(mySubmit);
+            string len = padMsg(jsonString.Length.ToString(), 4);
+            string to_send = "@" + len + jsonString;
+
+            SendInfrmaionToServer(to_send);
 
 
-
-
+            return ReciveInformationFromServer();
 
 
         }
@@ -104,7 +130,14 @@ namespace ClientGui
 
 
 
-
+        public string padMsg(string msg, int len)
+        {
+            while (msg.Length < len)
+            {
+                msg = "0" + msg;
+            }
+            return msg;
+        }
 
 
         private void SendInfrmaionToServer(string userInfo)

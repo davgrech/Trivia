@@ -15,17 +15,31 @@ Game::Game()
 std::string Game::getNotAnsweredQuestion(LoggedUser user)
 {
 
-
+	std::vector<std::string> myValidQuestions;
 	for (auto it = m_questions.begin(); it != m_questions.end(); it++)
 	{
 		if (isNotInAnsweredQuestions(user, *it))
 		{
-			return it->getQuestion();
+			myValidQuestions.push_back(it->getQuestion());
 		}
 	}
 
+	//get a random qeustion
+	if (myValidQuestions.size())
+	{
+		srand(time(NULL));
+		int random = rand() %myValidQuestions.size();
+		auto it = myValidQuestions.cbegin();
 
-	return "";
+		std::advance(it, random);
+		return *it;
+		
+	}
+	else
+	{
+		return "";
+	}
+	
 }
 bool Game::isNotInAnsweredQuestions(LoggedUser user, question myQuestion)
 {
