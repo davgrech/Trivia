@@ -50,14 +50,16 @@ namespace ClientGui.MenuPages
         Socket mysock;
         string userName;
         int roomID = 0;
+        int timeperquestion = 0;
 
         private BackgroundWorker background_worker = new BackgroundWorker();
-        public AdminWaitingRoom(Socket client, int Id, string name)
+        public AdminWaitingRoom(Socket client, int Id, string name, int timePerQuestion)
         {
             InitializeComponent();
             mysock = client;
             userName = name;
             roomID = Id;
+            timeperquestion = timePerQuestion;
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
             background_worker.DoWork += getStateWorker;
@@ -162,7 +164,7 @@ namespace ClientGui.MenuPages
 
             this.Close();
 
-            GameWindow myWindow = new GameWindow(mysock, userName);
+            GameWindow myWindow = new GameWindow(mysock, userName, timeperquestion);
             myWindow.Show();
 
 

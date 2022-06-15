@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net;
 using System.Net.Sockets;
-
+using System.Windows.Threading;
 using Newtonsoft.Json;
 using System.Threading;
 using System.ComponentModel;
@@ -41,12 +41,22 @@ namespace ClientGui
         Socket mysock;
         string userName;
         private BackgroundWorker background_worker = new BackgroundWorker();
-        public GameWindow(Socket socket, string user)
+        private DispatcherTimer Timer;
+        private int timeQuestion = 0;
+        private int time = 0;
+        public GameWindow(Socket socket, string user, int timePerQuestion)
         {
             InitializeComponent();
 
             mysock = socket;
             userName = user;
+            timeQuestion = timePerQuestion + 1;
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 1);
+            Timer.Tick += myGame;
+            Timer.Start();
+
 
             background_worker.WorkerSupportsCancellation = true;
             background_worker.WorkerReportsProgress = true;
@@ -69,16 +79,22 @@ namespace ClientGui
 
 
             }
-            submitAnswer("A");
-            string to_send1 = "?0000";
-            SendInfrmaionToServer(to_send);
-            string reciv1 = ReciveInformationFromServer();
-            GetQuestionResponse r1 = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv1);
-            if(r1 != null)
-            {
-                txtQUESTION.Text = r1.status.ToString();
-            }
+            
 
+        }
+
+        void myGame(object sender, EventArgs e)
+        {
+            if(time > 0)
+            {
+                time--;
+                buttonTimmer.Content = time.ToString();
+            }
+            else
+            {
+                time = timeQuestion + 1;
+            }
+            
         }
         private string submitAnswer(string myAnswer)
         {

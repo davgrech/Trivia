@@ -255,7 +255,7 @@ namespace ClientGui.MenuPages
                 if (!(rec.Contains("message"))) // if there isnt an error
                 {
                     background_worker.CancelAsync();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName); 
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, v.timePerQuestion); 
                     WaitingWindow.Show(); // connect and display waiting room
                     return true;
                 }
@@ -280,12 +280,27 @@ namespace ClientGui.MenuPages
 
             if (index != -1) // index under 0 isnt valid
             {
+                string to_send = "90000";
+                 SendInfrmaionToServer(to_send);
+                string recv = ReciveInformationFromServer();
+                
+               RoomData room_data = JsonConvert.DeserializeObject<RoomData>(recv);
+
+                
+
+
+
+
+
+
                 string _roomId = "";
                 var join_info = new joinRoomRequest
                 {
                     roomId = txtSelectedRoom.Text.Substring(index + 1) // get room id using gui
                 };
+                
 
+                txtSelectedRoom.Text.Substring(index + 1);
                 string rec = sendAndRecieve(join_info);
                 if (rec.Contains("message"))
                 {
@@ -298,7 +313,10 @@ namespace ClientGui.MenuPages
                 {
                     background_worker.CancelAsync();
                     this.Close();
-                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName);
+                    
+
+
+                    WaitingRoom WaitingWindow = new WaitingRoom(mysock, userName, room_data.timePerQuestion);
                     WaitingWindow.Show();
 
 
