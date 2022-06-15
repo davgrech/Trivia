@@ -63,6 +63,7 @@ question Game::getQuestionRequst(LoggedUser user)
 		{
 			myQuestion = *it;
 			this->m_players.at(user).currentQuestion = myQuestion;
+			break;
 		}
 	}
 
@@ -108,6 +109,15 @@ bool Game::submitAnswer(LoggedUser user, std::string answer, int time )
 void Game::removePlayer(LoggedUser user)
 {
 	m_players.at(user).doesActive = false;
+	for(auto it = m_players.begin(); it != m_players.end(); it++)
+	{
+		if (it->second.doesActive)
+		{
+
+		}
+	}
+		
+	
 }
 
 std::vector<PlayerResults> Game::getResults()

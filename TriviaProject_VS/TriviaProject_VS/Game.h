@@ -49,11 +49,13 @@ public:
 
 
 private:
+	
 	int _id;
 	int _timeForQustion;
 	std::vector<question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
 	std::string  getNotAnsweredQuestion(LoggedUser user);
 	bool isNotInAnsweredQuestions(LoggedUser user, question myQuestion);
+	
 	
 };

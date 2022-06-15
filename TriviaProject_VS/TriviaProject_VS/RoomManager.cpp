@@ -9,10 +9,14 @@ void RoomManager::createRoom(LoggedUser user, RoomData var)
 	std::vector<Room> roomLst = this->getRooms();
 	for (int i = 0; i < roomLst.size(); i++)
 	{
-		if (roomLst[i].isInRoomAlready(user.getUsername()))
+		if (roomLst[i].isActive() == ROOM_OPEN)
 		{
-			throw std::exception("user in a room already");
+			if (roomLst[i].isInRoomAlready(user.getUsername()))
+			{
+				throw std::exception("user in a room already");
+			}
 		}
+
 	}
 
 	this->m_rooms.insert(std::pair<unsigned int, Room>(var.id, Room(var)));

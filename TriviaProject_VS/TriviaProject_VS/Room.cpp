@@ -94,6 +94,7 @@ std::string Room::getName()
 bool Room::isInRoomAlready(std::string userName)
 {
     std::vector<LoggedUser> userLst = this->getAllUsers();
+    
     for (int i = 0; i < userLst.size(); i++)
     {
         if (userLst[i].getUsername() == userName)

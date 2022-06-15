@@ -162,7 +162,7 @@ namespace ClientGui.MenuPages
 
             this.Close();
 
-            GameWindow myWindow = new GameWindow();
+            GameWindow myWindow = new GameWindow(mysock, userName);
             myWindow.Show();
 
 

@@ -290,8 +290,7 @@ std::vector<unsigned char> JRPS::serializeResponse(GetQuestionResponse value)
 
 
     std::cout << j << std::endl; 
-    std::vector<unsigned char> v_response(j.begin(), j.end());
-    return v_response;
+    return ConvertMsg(j.dump());
 }
 
 std::vector<unsigned char> JRPS::serializeResponse(LeaveGameResponse value)

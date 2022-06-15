@@ -127,11 +127,34 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo myInfo)
 {
     LeaveGameResponse myResponse;
     this->m_gameManager.getGame(this->m_game.getId()).removePlayer(this->m_user);
+    if (isZeroPlayersActive())
+    {
+        this->m_gameManager.deleteGame(this->m_game);
+        this->m_handlerFactory.getRoomManager().deleteRoom(this->m_game.getId());
+
+    }
+  
     myResponse.status = 1;
 
 
     return RequestResult{JRPS::serializeResponse(myResponse), m_handlerFactory.createMenuRequestHandler(this->m_user)};
 }
+
+bool GameRequestHandler::isZeroPlayersActive()
+{
+    std::map<LoggedUser, GameData> myPlayers = this->m_gameManager.getGame(this->m_game.getId()).getPlayers();
+    for (auto it = myPlayers.begin(); it != myPlayers.end(); it++)
+    {
+        if (it->second.doesActive)
+        {
+            return false;
+        }
+    }
+    return true;
+   
+}
+
+
 
 bool GameRequestHandler::doesGameEnd(std::vector<PlayerResults> myResults)
 {

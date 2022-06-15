@@ -16,7 +16,6 @@ public:
 	GameRequestHandler(RequestHandleFactory& _handlerFactory, int id, LoggedUser user);
 
 
-
 	virtual bool isRequestRelevant(RequestInfo request);
 	virtual RequestResult handleRequest(RequestInfo value);
 	virtual std::string getType();
@@ -34,7 +33,7 @@ private:
 	RequestResult submitAnswer(RequestInfo myInfo);
 	RequestResult getGameResults(RequestInfo myInfo);
 	RequestResult leaveGame(RequestInfo myInfo);
-
+	bool isZeroPlayersActive();
 	bool doesGameEnd(std::vector<PlayerResults> myResults);
 	
 };

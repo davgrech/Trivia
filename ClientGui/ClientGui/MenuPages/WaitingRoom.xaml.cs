@@ -137,7 +137,7 @@ namespace ClientGui.MenuPages
             }
             else if(isClose == 2)
             {
-                GameWindow myWindow = new GameWindow();
+                GameWindow myWindow = new GameWindow(mysock, userName);
                 this.Close();
                 myWindow.Show();
             }

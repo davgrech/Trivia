@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "LoggedUser.h"
 #include <unordered_map>
+#include "Helper.h"
 class RoomManager
 {
 public:

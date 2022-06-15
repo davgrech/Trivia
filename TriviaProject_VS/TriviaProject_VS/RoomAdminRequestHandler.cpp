@@ -95,7 +95,7 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo value)
     res.status = ROOM_ACTIVE;
     this->m_handlerFactory.getRoomManager().getRoom(this->m_room.getRoomData().id).getRoomData().isActive = ROOM_ACTIVE;
     this->m_handlerFactory.getGameManager().createGame(this->m_room);
-
+    
 
 
     return RequestResult{JRPS::serializeResponse(res), m_handlerFactory.createGameRequestHandler(this->m_room.getRoomData().id, m_user)};
