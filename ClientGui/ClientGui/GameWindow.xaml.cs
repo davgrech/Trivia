@@ -62,7 +62,7 @@ namespace ClientGui
         public GameWindow(Socket socket, string user, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
-
+            time = timePerQuestion;
             mysock = socket;
             userName = user;
             timeQuestion = timePerQuestion;
@@ -71,15 +71,12 @@ namespace ClientGui
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Tick += myGame;
             Timer.Start();
-
+            
 
 
           
             int res = getQuestion();
-            if (res == 0)
-            {
-                this.Close();
-            }
+            
             
            
             
@@ -101,7 +98,7 @@ namespace ClientGui
                 int res = getQuestion();
                 if(res == 0)
                 {
-                    this.Close();
+                    txtQUESTION.Text = "Finished";
                 }
 
                 time = timeQuestion;
@@ -119,7 +116,8 @@ namespace ClientGui
             SendInfrmaionToServer(to_send);
             string reciv = ReciveInformationFromServer();
             GetQuestionResponse myQuestion = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv);
-            if (myQuestion != null)
+            
+            if (myQuestion != null && myQuestion.results.Count != 0)
             {
                 txtQUESTION.Text = myQuestion.question;
                 txtANSWER_BLUE.Content = myQuestion.results.ElementAt(0); // A
@@ -208,7 +206,7 @@ namespace ClientGui
 
         private void exit_event(object sender, RoutedEventArgs e)
         {
-            background_worker.CancelAsync();
+       
             this.Visibility = Visibility.Hidden;
             Environment.Exit(0);
         }
@@ -222,7 +220,7 @@ namespace ClientGui
 
             string msg = ReciveInformationFromServer();
 
-            background_worker.CancelAsync();
+            
             this.Close();
             MenuWindow.MenuHandler myWindow = new MenuWindow.MenuHandler(mysock, userName);
             myWindow.Show();
@@ -235,7 +233,7 @@ namespace ClientGui
             time = timeQuestion;
             if (res== 0)
             {
-                this.Close();
+                txtANSWER_BLUE.Content = "Finished";
             }
         }
 
@@ -246,7 +244,7 @@ namespace ClientGui
             time = timeQuestion;
             if (res == 0)
             {
-                this.Close();
+                txtANSWER_GREEN.Content = "Finished";
             }
         }
 
@@ -257,7 +255,7 @@ namespace ClientGui
             time = timeQuestion;
             if (res == 0)
             {
-                this.Close();
+                txtANSWER_YELLOW.Content = "Finished";
             }
         }
 
@@ -268,7 +266,7 @@ namespace ClientGui
             time = timeQuestion;
             if (res == 0)
             {
-                this.Close();
+                txtANSWER_RED.Content = "Finished";
             }
         }
     }
