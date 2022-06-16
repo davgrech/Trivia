@@ -59,6 +59,7 @@ namespace ClientGui
         private int timeQuestion = 0;
         private int time = 0;
         private int maxQuestion = 0;
+        int howmuchQuestionsLeft = 0;
         public GameWindow(Socket socket, string user, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
@@ -67,6 +68,7 @@ namespace ClientGui
             userName = user;
             timeQuestion = timePerQuestion;
             txtQuestionsLeft.Text = _maxQuestion.ToString();
+            howmuchQuestionsLeft = _maxQuestion;
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Tick += myGame;
@@ -102,7 +104,7 @@ namespace ClientGui
                 }
 
                 time = timeQuestion;
-
+               
             }
             
         }
@@ -125,8 +127,12 @@ namespace ClientGui
                 txtANSWER_RED.Content = myQuestion.results.ElementAt(2); // C
                 txtANSWER_YELLOW.Content = myQuestion.results.ElementAt(3);//D
 
+                howmuchQuestionsLeft--;
+                txtQuestionsLeft.Text = howmuchQuestionsLeft.ToString();
+
 
             }
+
             return myQuestion.status;
         }
         private string submitAnswer(string myAnswer)
@@ -141,9 +147,17 @@ namespace ClientGui
             string to_send = "@" + len + jsonString;
 
             SendInfrmaionToServer(to_send);
+            string reciv = ReciveInformationFromServer();
+            dynamic magic = JsonConvert.DeserializeObject(reciv);
+            if (magic["status"] == 1)
+            {
 
+                int x = Int32.Parse(txtCorrect.Text) + 1;
+                txtCorrect.Text = x.ToString();
+            }
+            
 
-            return ReciveInformationFromServer();
+            return reciv;
 
 
         }

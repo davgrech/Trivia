@@ -63,7 +63,7 @@
                 </Image>
 
             </Button>
-            <TextBlock x:Name="txtCorrect" Text="Correct: 0" FontWeight="Bold" FontSize="30" Margin="10,98,749,506"/>
+            <TextBlock x:Name="txtCorrect" Text="0" FontWeight="Bold" FontSize="30" Margin="10,98,749,506"/>
             <TextBlock x:Name="txtQuestionsLeft" FontWeight="Bold" FontSize="30" Text="Questions left: 0" Margin="10,149,749,462"/>
 
         </Grid>

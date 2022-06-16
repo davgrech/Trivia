@@ -155,6 +155,11 @@ std::vector<PlayerResults> Game::getResults()
 	return myGameResults;
 }
 
+bool Game::isFinishedToAnswerAllOfTheQusetions(LoggedUser user)
+{
+	return this->m_players.at(user).hasAlreadyAnswered.size() == this->m_questions.size();
+}
+
 int Game::getNumOfPlayers()
 {
 	return this->m_players.size();

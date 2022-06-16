@@ -36,6 +36,7 @@ public:
 	void removePlayer(LoggedUser user);
 	question getQuestionRequst(LoggedUser user);
 	std::vector<PlayerResults> getResults();
+	bool isFinishedToAnswerAllOfTheQusetions(LoggedUser user);
 
 
 	//getters

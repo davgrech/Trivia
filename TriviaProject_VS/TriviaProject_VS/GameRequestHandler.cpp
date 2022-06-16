@@ -78,7 +78,15 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo myInfo)
 
     myRequest = JRPD::deserializeSubmitAnswerRequest(myInfo.buffer);
 
+    //check if user finished to submit answers 
+    if (this->m_gameManager.getGame(this->m_game.getId()).isFinishedToAnswerAllOfTheQusetions(this->m_user))
+    {
+        throw std::exception("my man just finished to answer all the questions already...");
+    }
+
+
     //get question 
+    
     question myQuestion = this->m_gameManager.getGame(this->m_game.getId()).getCurrentQuestion(this->m_user);
 
     //check if question of client is valid
@@ -113,9 +121,14 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
 {
 
     GetGameResultsResponse myResponse;
-    myResponse.results = this->m_gameManager.getGame(this->m_game.getId()).getResults();
-  
-    myResponse.status = doesGameEnd(myResponse.results);
+    myResponse.status = false;
+    if (!isZeroPlayersActive())
+    {
+        myResponse.results = this->m_gameManager.getGame(this->m_game.getId()).getResults();
+
+        myResponse.status = doesGameEnd(myResponse.results);
+    }
+    
     if (!myResponse.status)
     {
         myResponse.results.clear();
