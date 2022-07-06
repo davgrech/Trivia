@@ -206,8 +206,8 @@ namespace ClientGui
                         }
                         else
                         {
-                            //var fileStream = File.Open("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", FileMode.Open);
-                            //File.WriteAllText("C:\\Users\\user\\Desktop\\Dolev\\magshimimProjects\\trivia_dolev_david_2022\\ClientGui\\ClientGui\\rememberme.txt", String.Empty);
+                            var fileStream = File.Open("\\ClientGui\\rememberme.txt", FileMode.Open);
+                            File.WriteAllText("\\ClientGui\\rememberme.txt", String.Empty);
                         }
                         isLoggedIn = true;
                         eventArgs.Session.Close(true);
