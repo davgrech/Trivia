@@ -20,6 +20,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.IO;
 
+
+using System.Threading;
+
+
 namespace ClientGui
 {
     /// <summary>

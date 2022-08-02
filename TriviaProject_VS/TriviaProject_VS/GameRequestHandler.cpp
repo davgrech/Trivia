@@ -122,6 +122,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
 
     GetGameResultsResponse myResponse;
     myResponse.status = false;
+    //check if players active
     if (!isZeroPlayersActive())
     {
         myResponse.results = this->m_gameManager.getGame(this->m_game.getId()).getResults();
@@ -136,6 +137,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
     }
     else
     {
+        //update 
         return RequestResult{ JRPS::serializeResponse(myResponse), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
     }
     

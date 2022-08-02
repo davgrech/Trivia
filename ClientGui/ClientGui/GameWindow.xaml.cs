@@ -132,7 +132,10 @@ namespace ClientGui
 
 
             }
+            if(myQuestion.status == 0)
+            {
 
+            }
             return myQuestion.status;
         }
         private string submitAnswer(string myAnswer)
