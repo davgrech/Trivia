@@ -19,6 +19,7 @@
         <materialDesign:DialogHost.DialogContent>
 
             <Grid Margin="20">
+
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -34,13 +35,18 @@
         </materialDesign:DialogHost.DialogContent>
         <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" 
                          Margin="25" materialDesign:ShadowAssist.ShadowDepth="Depth4">
-
+            
             <StackPanel>
+             
+                 
+          
                 <materialDesign:PopupBox HorizontalAlignment="Right" Margin="0 20 20 0"
                                          PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Height="25">
                     <StackPanel>
+
                         <StackPanel Margin="16 10 0 6" Orientation="Horizontal"
                                 HorizontalAlignment="Center">
+
                             <TextBlock VerticalAlignment="Center" Text="Dark Mode" />
 
                             <ToggleButton Cursor="Hand" ToolTip="Enable Dark Mode" Margin="12 0 8 0"
@@ -54,6 +60,7 @@
                     </StackPanel>
                 </materialDesign:PopupBox>
                 <Image Margin ="0 20 0 5" Source="/Resources/TankLoginLogo.png" Height="107" Width="377"/>
+              
 
                 <TextBlock Margin="0 25 0 5" HorizontalAlignment="Center" FontSize="28"
                            FontWeight="Bold" Text="Join TankiTrivia Today" />
@@ -92,6 +99,7 @@
                          materialDesign:HintAssist.Hint="Username" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
+
                 <PasswordBox Margin="0 20 0 0" x:Name="SignUpPassword" Width="300" FontSize="18"
                              materialDesign:HintAssist.Hint="Password" BorderThickness="2"
                              BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource
@@ -104,7 +112,7 @@
                 <TextBox Margin="0 20 0 0" x:Name="SignUpPhoneNumber" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Phone" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                
+
                 <TextBox Margin="0 20 0 0" x:Name="SignUpDate" Width="300" FontSize="18"
                          materialDesign:HintAssist.Hint="Date of Birth" BorderThickness="2"
                          BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
@@ -119,8 +127,7 @@
                     MaterialDesignFlatButton}" materialDesign:ShadowAssist.ShadowDepth="Depth0"
                         Height="25" Width="150" materialDesign:ButtonAssist.CornerRadius="10"
                         FontSize="12" Content="Return To login" Click="returnToLogin_Click" />
-
-
+                
 
 
 

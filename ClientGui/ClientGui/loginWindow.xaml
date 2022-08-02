@@ -14,25 +14,25 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen">
 
-        <materialDesign:DialogHost DialogOpened="openCB" DialogClosing="closingCB">
+    <materialDesign:DialogHost DialogOpened="openCB" DialogClosing="closingCB">
 
-            <materialDesign:DialogHost.DialogContent>
+        <materialDesign:DialogHost.DialogContent>
 
-                <Grid Margin="20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                        <RowDefinition></RowDefinition>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
 
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Logging in ..."  FontWeight="SemiBold" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Grid.Row ="1" IsIndeterminate="True" HorizontalAlignment="Center" Margin="0,10,0,0"></ProgressBar>
-                    <Button 
+                </Grid.RowDefinitions>
+                <TextBlock Text="Logging in ..."  FontWeight="SemiBold" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Grid.Row ="1" IsIndeterminate="True" HorizontalAlignment="Center" Margin="0,10,0,0"></ProgressBar>
+                <Button 
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                     Style="{StaticResource MaterialDesignRaisedAccentButton}"  Grid.Row ="2" Content="Cancel"  VerticalAlignment="Center" Margin="0,10,0,0" ></Button>
-                </Grid>
-            </materialDesign:DialogHost.DialogContent>
-            <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" 
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+        <materialDesign:Card UniformCornerRadius="15"  Background="{DynamicResource MaterialDesignPaper}" 
                          Margin="25" materialDesign:ShadowAssist.ShadowDepth="Depth4">
             <Border 
             CornerRadius="20">
@@ -92,6 +92,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+
                         <TextBlock FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0 40 0 0"
                            Text="Log in to your existing account" Height="25" />
                         <TextBox Margin="0 50 0 0" x:Name="txtUsername" Width="300" FontSize="18"
@@ -102,9 +103,6 @@
                              materialDesign:HintAssist.Hint="Enter Password" BorderThickness="2"
                              BorderBrush="{DynamicResource MaterialDesignDivider}" Style="{StaticResource
                     MaterialDesignOutlinedPasswordBox}"/>
-
-
-
                         <CheckBox x:Name ="Remember" IsChecked="False" HorizontalAlignment="Center" Margin="0 30 0 0" FontSize="20" Click="toggle_remember">Remember me</CheckBox>
 
 
@@ -126,6 +124,7 @@
 
 
                     </StackPanel>
+                  
                 </Grid>
 
             </Border>
@@ -133,7 +132,7 @@
 
 
 
-            </materialDesign:Card>
-        </materialDesign:DialogHost>
+        </materialDesign:Card>
+    </materialDesign:DialogHost>
 
 </Window>

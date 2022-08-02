@@ -197,18 +197,6 @@ namespace ClientGui
                 {
                     if (recieved[10] == '1')
                     {
-                        if (isRemember == true)
-                        {
-                            File.WriteAllText("rememberme.txt", String.Empty);
-                            string linetowrite = txtUsername.Text + "\n" + txtPassowrd.Password;
-                            await File.WriteAllTextAsync("rememberme.txt", linetowrite);
-
-                        }
-                        else
-                        {
-                            var fileStream = File.Open("\\ClientGui\\rememberme.txt", FileMode.Open);
-                            File.WriteAllText("\\ClientGui\\rememberme.txt", String.Empty);
-                        }
                         isLoggedIn = true;
                         eventArgs.Session.Close(true);
                         MenuWindow.MenuHandler moveToMenu = new MenuWindow.MenuHandler(mySock, GlobaluserName);

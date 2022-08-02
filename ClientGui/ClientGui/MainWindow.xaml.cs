@@ -55,25 +55,14 @@ namespace ClientGui
             ConnectToServer();
             //login handler
             string fileName = "rememberme.txt";
-            string path = System.IO.Path.Combine(Environment.CurrentDirectory, @"", fileName);
-            if (File.Exists(path)) // if remember me file exists(wont exist on first run)
-            {
-                if (new FileInfo("rememberme.txt").Length == 0) // if remember me isnt toggled
-                {
+           
+               
 
-                    openLogin();
+            openLogin();
 
-                }
-                else
-                {
-                    rememberMeCheck(); 
+     
+         
 
-                }
-            }
-            else
-            {
-                openLogin();
-            }
         } 
         /*
          * func that opens the login screen - inits the client
