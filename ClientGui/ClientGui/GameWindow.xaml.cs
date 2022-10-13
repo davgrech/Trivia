@@ -32,6 +32,7 @@ namespace ClientGui
             public int status;
             public string question;
             public List<string> results = new List<string>();
+            public string correct;
         }
         public class SubmitAnswerRequest
         {
@@ -60,6 +61,7 @@ namespace ClientGui
         private int time = 0;
         private int maxQuestion = 0;
         int howmuchQuestionsLeft = 0;
+        private GetQuestionResponse currentQuestion = null;
         public GameWindow(Socket socket, string user, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
@@ -118,7 +120,8 @@ namespace ClientGui
             SendInfrmaionToServer(to_send);
             string reciv = ReciveInformationFromServer();
             GetQuestionResponse myQuestion = JsonConvert.DeserializeObject<GetQuestionResponse>(reciv);
-            
+            currentQuestion = myQuestion;
+
             if (myQuestion != null && myQuestion.results.Count != 0)
             {
                 txtQUESTION.Text = myQuestion.question;
@@ -132,10 +135,7 @@ namespace ClientGui
 
 
             }
-            if(myQuestion.status == 0)
-            {
-
-            }
+           
             return myQuestion.status;
         }
         private string submitAnswer(string myAnswer)
@@ -158,11 +158,44 @@ namespace ClientGui
                 int x = Int32.Parse(txtCorrect.Text) + 1;
                 txtCorrect.Text = x.ToString();
             }
+            check_right_answer(myAnswer);
+            
             
 
             return reciv;
 
 
+        }
+        private void check_right_answer(string myAnswer)
+        {
+            switch (myAnswer)
+            {
+                case "A":
+                    if (txtANSWER_BLUE.Content == currentQuestion.correct)
+                    {
+                        txtANSWER_BLUE.BorderBrush = new SolidColorBrush(Colors.Green);
+                    }
+
+                    break;
+                case "B":
+                    if (txtANSWER_GREEN.Content == currentQuestion.correct)
+                    {
+                        txtANSWER_GREEN.BorderBrush = new SolidColorBrush(Colors.Green);
+                    }
+                    break;
+                case "C":
+                    if (txtANSWER_RED.Content == currentQuestion.correct)
+                    {
+                        txtANSWER_RED.BorderBrush = new SolidColorBrush(Colors.Green);
+                    }
+                    break;
+                case "D":
+                    if (txtANSWER_YELLOW.Content == currentQuestion.correct)
+                    {
+                        txtANSWER_YELLOW.BorderBrush = new SolidColorBrush(Colors.Green);
+                    }
+                    break;
+            }
         }
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
@@ -252,6 +285,7 @@ namespace ClientGui
             {
                 txtANSWER_BLUE.Content = "Finished";
             }
+            
         }
 
         private void green_event(object sender, RoutedEventArgs e)

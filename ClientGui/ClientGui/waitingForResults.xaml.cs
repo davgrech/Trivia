@@ -51,14 +51,14 @@ namespace ClientGui
             InitializeComponent();
             mySock = userSock;
 
-
-            string msg_to_send = "";
+            char chr = (char)17;
+            string msg_to_send = chr+"0000";
 
             SendInfrmaionToServer(msg_to_send);
 
             string reciv = ReciveInformationFromServer();
             gameResults myGameResult = JsonConvert.DeserializeObject<gameResults>(reciv);
-            if(myGameResult != null )
+            if (myGameResult != null)
             {
                 while (myGameResult.status != 1)
                 {
@@ -69,7 +69,8 @@ namespace ClientGui
                 }
 
                 //display the results on screen
-
+                Waiting.Visibility = Visibility.Hidden;
+                DisplayAllElements();
 
             }
 
@@ -80,7 +81,19 @@ namespace ClientGui
 
 
         }
+        private void DisplayAllElements()
+        {
+            Star1.Visibility = Visibility.Visible;
+            Star2.Visibility = Visibility.Visible;
+            Star3.Visibility = Visibility.Visible;
 
+            First.Visibility = Visibility.Visible;
+            Second.Visibility = Visibility.Visible;
+            Third.Visibility = Visibility.Visible;
+
+            Place.Visibility = Visibility.Visible;
+            
+        }
          private void SendInfrmaionToServer(string userInfo)
         {
             if (mySock.Connected)

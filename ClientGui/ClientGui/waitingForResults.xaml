@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientGui"
         mc:Ignorable="d"
-        Title="waitingForResults" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="WaitingRoom" Height="600" Width="920"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{x:Null}"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        >
+    <Border CornerRadius="20"  Background="#272537" >
+        <Grid>
+            <TextBlock Text="Waiting For The Game To Finish" FontSize="40" Margin="190,38,190,482" Foreground="Gold" Style="{StaticResource MaterialDesignHeadline1TextBlock}"></TextBlock>
+            <StackPanel x:Name="Waiting" Orientation="Horizontal" Margin="420,130,435,424">
+                <StackPanel.Triggers>
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard Name="waitingAnimation" RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetName="Dot1" BeginTime="0:0:0.1" Storyboard.TargetProperty="Opacity" From=".1" To="1" AutoReverse="True" Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetName="Dot2" BeginTime="0:0:0.2" Storyboard.TargetProperty="Opacity" From=".1" To="1" AutoReverse="True" Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetName="Dot3" BeginTime="0:0:0.3" Storyboard.TargetProperty="Opacity" From=".1" To="1" AutoReverse="True" Duration="0:0:0.4"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </StackPanel.Triggers>
+                <Ellipse Name="Dot1" Fill="White" Opacity=".1" Width="20" Height="20"/>
+                <Ellipse Name="Dot2" Fill="White" Opacity=".1" Width="20" Height="20" Margin="2,0,0,0"/>
+                <Ellipse Name="Dot3" Fill="White" Opacity=".1" Width="20" Height="20" Margin="2,0,0,0"/>
+            </StackPanel>
+            <materialDesign:PackIcon x:Name="Star1" Kind="Star" Foreground="Goldenrod" Margin="0,300,0,0" Height="148" Width="158" Visibility="Hidden"></materialDesign:PackIcon>
+            <materialDesign:PackIcon x:Name="Star2" Kind="Star" Foreground="Goldenrod" Margin="762,300,0,0" Height="148" Width="158" Visibility="Hidden"></materialDesign:PackIcon>
+            <materialDesign:PackIcon x:Name="Star3" Kind="Star" Foreground="Goldenrod" Height="148" Width="158" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
+            <TextBlock x:Name="First" Text="#1" Foreground="White" FontSize="25" Margin="444,280,444,280" Visibility="Hidden"></TextBlock>
+            <TextBlock x:Name="Second" Text="#2" Foreground="White" FontSize="25" Margin="63,356,825,205" Visibility="Hidden"></TextBlock>
+            <TextBlock x:Name="Third" Text="#3" Foreground="White" FontSize="25" Margin="825,356,63,204" RenderTransformOrigin="0.469,0.525" Visibility="Hidden"></TextBlock>
+            <TextBlock x:Name="Place" Text="You are placed " Foreground="White" FontSize="30" FontWeight="ExtraLight" Margin="298,512,298,50" Visibility="Hidden"></TextBlock>
+
+
+
+        </Grid>
+    </Border>
+
 </Window>

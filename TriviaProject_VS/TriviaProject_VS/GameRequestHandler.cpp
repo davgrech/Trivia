@@ -64,6 +64,9 @@ RequestResult GameRequestHandler::getQuestions(RequestInfo myInfo)
 
     myResponse.question == "" ? myResponse.status = 0 : myResponse.status = 1;
 
+    if (!myResponse.status) {
+        leaveGame(myInfo);
+    }
 
     return RequestResult{JRPS::serializeResponse(myResponse), this};
 }
@@ -150,6 +153,7 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo myInfo)
     this->m_gameManager.getGame(this->m_game.getId()).removePlayer(this->m_user);
     if (isZeroPlayersActive())
     {
+        //TODO: update stats of the game
         this->m_handlerFactory.getRoomManager().deleteRoom(this->m_game.getId());
         this->m_gameManager.deleteGame(this->m_game);
        
