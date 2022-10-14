@@ -57,11 +57,14 @@ namespace ClientGui
         string userName;
         private BackgroundWorker background_worker = new BackgroundWorker();
         private DispatcherTimer Timer;
+        private DispatcherTimer suspend;
         private int timeQuestion = 0;
         private int time = 0;
+        private int time_of_suspend = 0;
         private int maxQuestion = 0;
         int howmuchQuestionsLeft = 0;
         private GetQuestionResponse currentQuestion = null;
+        private DispatcherTimer _time = null;
         public GameWindow(Socket socket, string user, int timePerQuestion, int _maxQuestion)
         {
             InitializeComponent();
@@ -71,12 +74,16 @@ namespace ClientGui
             timeQuestion = timePerQuestion;
             txtQuestionsLeft.Text = _maxQuestion.ToString();
             howmuchQuestionsLeft = _maxQuestion;
-            Timer = new DispatcherTimer();
-            Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Tick += myGame;
-            Timer.Start();
-            
+            _time = new DispatcherTimer {};
+            _time.Interval = new TimeSpan(0, 0, 1);
+            _time.Tick += myGame;
+            _time.Start();
+           
 
+            suspend = new DispatcherTimer {};
+            suspend.Interval = new TimeSpan(0, 0, 1);
+            suspend.Tick += mySuspend;
+            time_of_suspend = 5;
 
           
             int res = getQuestion();
@@ -86,7 +93,20 @@ namespace ClientGui
             
 
         }
-
+        void mySuspend(object sender, EventArgs e)
+        {
+            if(time_of_suspend > 0)
+            {
+                time_of_suspend--;
+                buttonTimmerSuspend.Content = time_of_suspend.ToString();
+            }
+            else
+            {
+                getQuestion();
+                suspend.Stop();
+                buttonTimmerSuspend.Visibility = Visibility.Hidden;
+            }
+        }
 
 
         void myGame(object sender, EventArgs e)
@@ -100,10 +120,7 @@ namespace ClientGui
             {
                 string recv = submitAnswer("X");
                 int res = getQuestion();
-                if(res == 0)
-                {
-                    txtQUESTION.Text = "Finished";
-                }
+               
 
                 time = timeQuestion;
                
@@ -116,6 +133,17 @@ namespace ClientGui
 
         private int getQuestion()
         {
+            Next.Visibility = Visibility.Hidden;
+            buttonTimmerSuspend.Visibility = Visibility.Hidden;
+            StarR.Visibility = Visibility.Hidden;
+            StarG.Visibility = Visibility.Hidden;
+            StarB.Visibility = Visibility.Hidden;
+            StarY.Visibility = Visibility.Hidden;
+
+            time_of_suspend = 10;
+            time = timeQuestion;
+            _time.Start();
+            suspend.Stop();
             string to_send = "?0000";
             SendInfrmaionToServer(to_send);
             string reciv = ReciveInformationFromServer();
@@ -135,12 +163,31 @@ namespace ClientGui
 
 
             }
+            if(currentQuestion != null)
+            {
+                if (myQuestion.question == "")
+                {
+                    
+                    _time.Stop();
+                    suspend.Stop();
+                    waitingForResults window = new waitingForResults(mysock, userName);
+                    this.Close();
+
+                    window.Show();
+
+                }
+            }
+            
            
+        
             return myQuestion.status;
         }
         private string submitAnswer(string myAnswer)
         {
-            
+
+            Next.Visibility = Visibility.Visible;
+            buttonTimmerSuspend.Visibility = Visibility.Visible;
+
             var mySubmit = new SubmitAnswerRequest
             {
                 answerId = myAnswer,
@@ -155,48 +202,53 @@ namespace ClientGui
             if (magic["status"] == 1)
             {
 
-                int x = Int32.Parse(txtCorrect.Text) + 1;
-                txtCorrect.Text = x.ToString();
+                string correct = txtCorrect.Text;
+               
+                int x = Int32.Parse(correct.Substring(17)) + 1;
+                txtCorrect.Text ="correct Answers: " + x.ToString();
             }
-            check_right_answer(myAnswer);
-            
-            
+
+
+            if ((string)txtANSWER_BLUE.Content == currentQuestion.correct)
+            {
+                StarB.Visibility = Visibility.Visible;
+
+
+            }
+
+            else if ((string)txtANSWER_GREEN.Content == currentQuestion.correct)
+            {
+                StarG.Visibility = Visibility.Visible;
+
+
+
+            }
+
+            else if ((string)txtANSWER_RED.Content == currentQuestion.correct)
+            {
+                StarR.Visibility = Visibility.Visible;
+
+
+            }
+            else if ((string)txtANSWER_YELLOW.Content == currentQuestion.correct)
+            {
+                StarY.Visibility = Visibility.Visible;
+
+
+            }
+           
+            suspend.Start();
+            _time.Stop();
+            buttonTimmerSuspend.Visibility = Visibility.Visible;
+
+
+
 
             return reciv;
 
 
         }
-        private void check_right_answer(string myAnswer)
-        {
-            switch (myAnswer)
-            {
-                case "A":
-                    if (txtANSWER_BLUE.Content == currentQuestion.correct)
-                    {
-                        txtANSWER_BLUE.BorderBrush = new SolidColorBrush(Colors.Green);
-                    }
-
-                    break;
-                case "B":
-                    if (txtANSWER_GREEN.Content == currentQuestion.correct)
-                    {
-                        txtANSWER_GREEN.BorderBrush = new SolidColorBrush(Colors.Green);
-                    }
-                    break;
-                case "C":
-                    if (txtANSWER_RED.Content == currentQuestion.correct)
-                    {
-                        txtANSWER_RED.BorderBrush = new SolidColorBrush(Colors.Green);
-                    }
-                    break;
-                case "D":
-                    if (txtANSWER_YELLOW.Content == currentQuestion.correct)
-                    {
-                        txtANSWER_YELLOW.BorderBrush = new SolidColorBrush(Colors.Green);
-                    }
-                    break;
-            }
-        }
+       
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
@@ -278,48 +330,50 @@ namespace ClientGui
 
         private void blue_event(object sender, RoutedEventArgs e)
         {
-            submitAnswer("A");
-            int res = getQuestion();
-            time = timeQuestion;
-            if (res== 0)
+            if(_time.IsEnabled == true)
             {
-                txtANSWER_BLUE.Content = "Finished";
+                submitAnswer("A");
             }
+            
+          
             
         }
 
         private void green_event(object sender, RoutedEventArgs e)
         {
-            submitAnswer("B");
-            int res = getQuestion();
-            time = timeQuestion;
-            if (res == 0)
+            if (_time.IsEnabled == true)
             {
-                txtANSWER_GREEN.Content = "Finished";
+                submitAnswer("B");
             }
+            
         }
 
         private void yellow_event(object sender, RoutedEventArgs e)
         {
-            submitAnswer("D");
-            int res = getQuestion();
-            time = timeQuestion;
-            if (res == 0)
+            if (_time.IsEnabled == true)
             {
-                txtANSWER_YELLOW.Content = "Finished";
+                submitAnswer("D");
             }
+           
         }
 
         private void red_event(object sender, RoutedEventArgs e)
         {
-            submitAnswer("C");
-            int res = getQuestion();
-            time = timeQuestion;
-            if (res == 0)
+            if (_time.IsEnabled == true)
             {
-                txtANSWER_RED.Content = "Finished";
+                submitAnswer("C");
             }
+           
         }
+
+
+
+
+        private void nexttQuestion(object sender, RoutedEventArgs e)
+        {
+            int res = getQuestion();
+
+        }       
     }
 }
 

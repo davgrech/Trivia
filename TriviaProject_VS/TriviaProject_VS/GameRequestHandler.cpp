@@ -61,13 +61,10 @@ RequestResult GameRequestHandler::getQuestions(RequestInfo myInfo)
 
     myResponse.question = myQuestion.getQuestion();
     myResponse.results = myQuestion.getPossibleAnswers();
-
+    myResponse.correct = myQuestion.getCorrectAnswer();
     myResponse.question == "" ? myResponse.status = 0 : myResponse.status = 1;
 
-    if (!myResponse.status) {
-        leaveGame(myInfo);
-    }
-
+   
     return RequestResult{JRPS::serializeResponse(myResponse), this};
 }
 
@@ -140,7 +137,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo myInfo)
     }
     else
     {
-        //update 
+        leaveGame(myInfo);
         return RequestResult{ JRPS::serializeResponse(myResponse), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
     }
     

@@ -70,9 +70,9 @@ namespace ClientGui
         public void openLogin()
         {
             //show login handler
-            waitingForResults hi = new waitingForResults(_clientSocket);
+            //waitingForResults hi = new waitingForResults(_clientSocket);
 
-            //loginWindow hi = new loginWindow(_clientSocket);
+            loginWindow hi = new loginWindow(_clientSocket);
             hi.Show();
         }
         public void rememberMeCheck()

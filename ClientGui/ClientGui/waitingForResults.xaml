@@ -32,7 +32,8 @@
                 <Ellipse Name="Dot2" Fill="White" Opacity=".1" Width="20" Height="20" Margin="2,0,0,0"/>
                 <Ellipse Name="Dot3" Fill="White" Opacity=".1" Width="20" Height="20" Margin="2,0,0,0"/>
             </StackPanel>
-            <materialDesign:PackIcon x:Name="Star1" Kind="Star" Foreground="Goldenrod" Margin="0,300,0,0" Height="148" Width="158" Visibility="Hidden"></materialDesign:PackIcon>
+
+            <materialDesign:PackIcon x:Name="Star1" Kind="Star"  Foreground="Goldenrod" Margin="0,300,0,0" Height="148" Width="158" Visibility="Hidden"/>
             <materialDesign:PackIcon x:Name="Star2" Kind="Star" Foreground="Goldenrod" Margin="762,300,0,0" Height="148" Width="158" Visibility="Hidden"></materialDesign:PackIcon>
             <materialDesign:PackIcon x:Name="Star3" Kind="Star" Foreground="Goldenrod" Height="148" Width="158" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
             <TextBlock x:Name="First" Text="#1" Foreground="White" FontSize="25" Margin="444,280,444,280" Visibility="Hidden"></TextBlock>

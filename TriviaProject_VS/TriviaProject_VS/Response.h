@@ -90,6 +90,7 @@ struct GetQuestionResponse
 {
 	unsigned int status;
 	std::string question;
+	std::string correct;
 	std::vector<std::string> results;
 }typedef GetQuestionResponse;
 

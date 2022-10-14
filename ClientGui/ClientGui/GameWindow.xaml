@@ -36,8 +36,10 @@
             <Button x:Name="txtANSWER_RED" Content="myDquestion" FontSize="20" FontWeight="Bold" Margin="512,350,0,150" BorderThickness="4" BorderBrush="white" Background="red" Height="150" Click="red_event" />
             <TextBlock x:Name="txtQUESTION" FontSize="30" FontWeight="Bold" VerticalAlignment="Top" Text="hello world" Margin="34,10,85,0" Height="74"/>
             <Button  x:Name ="buttonTimmer" FontSize="20" FontWeight="Bold" Width="70" Background="MediumPurple" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="933,160,21,434"/>
-
-            <Button x:Name="returnBtn" Content="Give Up" Margin="922,93,10,525" Click="giveup_event" />
+            <Button  x:Name ="buttonTimmerSuspend" FontSize="20" FontWeight="Bold" Width="70" Background="MediumPurple" Style="{StaticResource MaterialDesignFloatingActionButton}" Visibility="Hidden" Margin="34,263,920,331"/>
+            <Button x:Name="returnBtn" Content="Give Up" Margin="911,108,21,510" Click="giveup_event" />
+           
+            <Button x:Name="Next" Content="Next" Margin="886,303,21,315"  Visibility="Hidden" Click="nexttQuestion" />
 
             <Button 
                          materialDesign:ButtonAssist.CornerRadius="20"
@@ -63,8 +65,15 @@
                 </Image>
 
             </Button>
-            <TextBlock x:Name="txtCorrect" Text="0" FontWeight="Bold" FontSize="30" Margin="10,98,749,506"/>
+            <TextBlock x:Name="txtCorrect" Text="Correct Answers: 0" Foreground="Green" FontWeight="Bold" FontSize="30" Margin="10,98,749,506"/>
             <TextBlock x:Name="txtQuestionsLeft" FontWeight="Bold" FontSize="30" Text="Questions left: 0" Margin="10,149,749,462"/>
+
+
+            <materialDesign:PackIcon x:Name="StarG" Kind="Star"  Foreground="Yellow" Margin="399,398,0,0" Height="54" Width="108" Visibility="Hidden"/>
+            <materialDesign:PackIcon x:Name="StarY" Kind="Star"  Foreground="Yellow" Margin="906,548,0,0" Height="54" Width="108" Visibility="Hidden"/>
+            <materialDesign:PackIcon x:Name="StarB" Kind="Star"  Foreground="Yellow" Margin="404,548,0,0" Height="54" Width="108" Visibility="Hidden"/>
+            <materialDesign:PackIcon x:Name="StarR" Kind="Star"  Foreground="Yellow" Margin="906,398,0,0" Height="54" Width="108" Visibility="Hidden"/>
+
 
         </Grid>
 

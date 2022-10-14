@@ -278,12 +278,10 @@ std::vector<unsigned char> JRPS::serializeResponse(SubmitAnswerResponse value)
 std::vector<unsigned char> JRPS::serializeResponse(GetQuestionResponse value)
 {
     json j;
-    value.question;
-    value.results;
-    value.status;
     j["question"] = value.question;
     j["status"] = value.status;
     j["results"] = value.results;
+    j["correct"] = value.correct;
 
 
 

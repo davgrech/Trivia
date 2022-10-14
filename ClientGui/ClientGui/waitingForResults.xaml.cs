@@ -45,14 +45,38 @@ namespace ClientGui
         }
 
         private static Socket mySock = null;
-
-        public waitingForResults(Socket userSock)
+        private BackgroundWorker background_worker = new BackgroundWorker();
+        public waitingForResults(Socket userSock, string user)
         {
             InitializeComponent();
             mySock = userSock;
 
-            char chr = (char)17;
-            string msg_to_send = chr+"0000";
+            background_worker.WorkerSupportsCancellation = true;
+            background_worker.WorkerReportsProgress = true;
+            background_worker.DoWork += waitForGameToFinish;
+            background_worker.ProgressChanged += DisplayAllElements;
+            background_worker.RunWorkerAsync();
+
+
+
+
+
+
+
+
+         
+            
+
+
+
+
+
+
+
+        }
+        private void waitForGameToFinish(object sender, DoWorkEventArgs e)
+        {
+            string msg_to_send = "A0000";
 
             SendInfrmaionToServer(msg_to_send);
 
@@ -66,23 +90,21 @@ namespace ClientGui
 
                     reciv = ReciveInformationFromServer();
                     myGameResult = JsonConvert.DeserializeObject<gameResults>(reciv);
+
+
+                    Thread.Sleep(1000);
                 }
 
                 //display the results on screen
-                Waiting.Visibility = Visibility.Hidden;
-                DisplayAllElements();
+                background_worker.ReportProgress(1);
+                background_worker.CancelAsync();
+
 
             }
-
-
-
-
-
-
-
         }
-        private void DisplayAllElements()
+        private void DisplayAllElements(object sender, ProgressChangedEventArgs e)
         {
+            Waiting.Visibility = Visibility.Hidden;
             Star1.Visibility = Visibility.Visible;
             Star2.Visibility = Visibility.Visible;
             Star3.Visibility = Visibility.Visible;
@@ -92,8 +114,8 @@ namespace ClientGui
             Third.Visibility = Visibility.Visible;
 
             Place.Visibility = Visibility.Visible;
-            
         }
+       
          private void SendInfrmaionToServer(string userInfo)
         {
             if (mySock.Connected)
@@ -103,6 +125,11 @@ namespace ClientGui
                 // send data to the server as byte array
                 mySock.Send(userData);
             }
+        }
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            DragMove();
         }
 
         private string ReciveInformationFromServer()
